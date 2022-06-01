@@ -1,23 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react'
 
 function App() {
+
+  const [postData, updatePostData] = React.useState("")
+
+  async function apiQuery() {
+    let response = await fetch('http://localhost:3000/john_bonham/62953db45a26ac4a67b6110c')
+    let data = await response.json()
+    console.log(data)
+    updatePostData(response)
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={apiQuery}>Click Me!</button>
+     <p></p>
     </div>
   );
 }
