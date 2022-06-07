@@ -1,8 +1,9 @@
 import "./App.css";
-import React, { useState } from "react";
+import React from "react";
 import LoginForm from "./components/LoginForm";
 
 function App() {
+  // JWT stored here, when issued.
   const [authToken, setAuthToken] = React.useState("");
 
   const [loginInfo, setLoginInfo] = React.useState({
@@ -10,6 +11,7 @@ function App() {
     password: "",
   });
 
+  // updates loginInfo state when user makes inputs to login form
   function loginChangeHandler(event) {
     setLoginInfo((prev) => ({
       ...prev,
@@ -17,6 +19,7 @@ function App() {
     }));
   }
 
+  // submits username and password info from login form component and stores JWT in React state if login successful.
   async function loginSubmitHandler(event) {
     event.preventDefault();
     let response = await fetch("http://localhost:3000/login", {
@@ -31,18 +34,6 @@ function App() {
       console.log("invalid login credentials");
     }
   }
-
-  // const [postData, updatePostData] = React.useState("");
-
-  // async function apiQuery() {
-  //   let response = await fetch(
-  //     "http://localhost:3000/john_bonham/62953db45a26ac4a67b6110c",
-  //     { method: "POST" }
-  //   );
-  //   let data = await response.json();
-  //   console.log(data);
-  //   updatePostData(response);
-  // }
 
   return (
     <div className="App">
