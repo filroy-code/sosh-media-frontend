@@ -29,9 +29,34 @@ function App() {
     });
     let responseJSON = await response.json();
     if (responseJSON !== false) {
-      setAuthToken(responseJSON.token.split(" ")[1]);
+      setAuthToken(responseJSON.token);
+      setLoginInfo({
+        username: "",
+        password: "",
+      });
     } else {
       console.log("invalid login credentials");
+      setLoginInfo({
+        username: "",
+        password: "",
+      });
+    }
+  }
+
+  async function getPost() {
+    let response = await fetch(
+      "http://localhost:3000/john_bonham/62990856fb0466ba9cc23a39",
+      {
+        method: "GET",
+        mode: "cors",
+        headers: { Authorization: authToken, Origin: "localhost:8080" },
+      }
+    );
+    if (response.status === 200) {
+      let json = await response.json();
+      console.log(json);
+    } else {
+      console.log("You are not authorized to view this resource.");
     }
   }
 
@@ -42,7 +67,7 @@ function App() {
         changeHandler={loginChangeHandler}
         loginInfo={loginInfo}
       ></LoginForm>
-      <button onClick={() => console.log(authToken)}>Click me!</button>
+      <button onClick={getPost}>Click me!</button>
     </div>
   );
 }

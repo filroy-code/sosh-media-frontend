@@ -14,14 +14,14 @@ export default function LoginForm(props) {
         name="username"
         placeholder="Username"
         onChange={props.changeHandler}
-        value={props.loginInfo.Username}
+        value={props.loginInfo.username}
       />
       <input
         type="password"
         name="password"
         placeholder="Password"
         onChange={props.changeHandler}
-        value={props.loginInfo.Password}
+        value={props.loginInfo.password}
       />
       <button>Log-In</button>
     </form>
