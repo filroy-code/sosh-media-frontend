@@ -3,6 +3,7 @@ import React from "react";
 import LoginForm from "./components/LoginForm";
 import Home from "./components/Home";
 import NewPostForm from "./components/NewPostForm";
+import { UserContext } from "./components/UserContext";
 
 function App() {
   // JWT stored here, when issued.
@@ -118,34 +119,36 @@ function App() {
   }
 
   return (
-    <div className="App">
-      {authToken ? (
-        <div>
-          <h1>Sosh</h1>
-          <p className="userDisplay">
-            Logged in as {loggedInUser.username}{" "}
-            <button onClick={logout}>Logout</button>
-          </p>
-          <NewPostForm
-            loggedInUser={loggedInUser}
-            newPostContent={newPostContent}
-            changeHandler={newPostChangeHandler}
-            submitHandler={newPostSubmitHandler}
-          ></NewPostForm>
-          <Home
-            getUserData={getUserData}
-            authToken={authToken}
-            postFeed={postFeed}
-          ></Home>
-        </div>
-      ) : (
-        <LoginForm
-          submitHandler={loginSubmitHandler}
-          changeHandler={loginChangeHandler}
-          loginInfo={loginInfo}
-        ></LoginForm>
-      )}
-    </div>
+    <UserContext.Provider value={loggedInUser}>
+      <div className="App">
+        {authToken ? (
+          <div>
+            <h1>Sosh</h1>
+            <p className="userDisplay">
+              Logged in as {loggedInUser.username}{" "}
+              <button onClick={logout}>Logout</button>
+            </p>
+            <NewPostForm
+              loggedInUser={loggedInUser}
+              newPostContent={newPostContent}
+              changeHandler={newPostChangeHandler}
+              submitHandler={newPostSubmitHandler}
+            ></NewPostForm>
+            <Home
+              getUserData={getUserData}
+              authToken={authToken}
+              postFeed={postFeed}
+            ></Home>
+          </div>
+        ) : (
+          <LoginForm
+            submitHandler={loginSubmitHandler}
+            changeHandler={loginChangeHandler}
+            loginInfo={loginInfo}
+          ></LoginForm>
+        )}
+      </div>
+    </UserContext.Provider>
   );
 }
 

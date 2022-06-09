@@ -3,11 +3,14 @@ import ReactDOM from "react-dom";
 import TextField from "@mui/material/TextField";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import Button from "@mui/material/Button";
+import { UserContext } from "./UserContext";
 
 export default function Post(props) {
+  const userInfo = React.useContext(UserContext);
+
   const [commentState, updateCommentState] = React.useState({
     content: "",
-    author: "",
+    author: userInfo.userID,
     targetPost: "",
   });
 
@@ -17,7 +20,11 @@ export default function Post(props) {
 
   async function commentSubmitHandler(event) {
     event.preventDefault();
-    console.log(event.target);
+    updateCommentState((prev) => ({
+      ...prev,
+      targetPost: event.target.parentElement.id,
+    }));
+    console.log(commentState);
   }
 
   return (
@@ -27,9 +34,9 @@ export default function Post(props) {
       </p>
       <p>{props.post.content}</p>
       <p>{props.post.formatted_date}</p>
-      <StarBorderIcon fontSize="small"></StarBorderIcon>{" "}
+      <StarBorderIcon fontSize="small"></StarBorderIcon>
       {props.post.stars.length}
-      <form onSubmit={commentSubmitHandler}>
+      <form onSubmit={commentSubmitHandler} id={props.post._id}>
         <TextField
           size="small"
           name="comment"
@@ -37,7 +44,9 @@ export default function Post(props) {
           value={commentState.content}
           onChange={commentChangeHandler}
         ></TextField>
-        <Button variant="outlined">Comment</Button>
+        <Button variant="outlined" onClick={commentSubmitHandler}>
+          Comment
+        </Button>
       </form>
     </div>
   );
