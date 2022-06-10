@@ -8,6 +8,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import Button from "@mui/material/Button";
 import { UserContext } from "./UserContext";
+import CommentList from "./CommentList";
 import NewCommentInput from "./NewCommentInput";
 
 export default function Post(props) {
@@ -15,6 +16,11 @@ export default function Post(props) {
 
   const [commentsToggle, setCommentsToggle] = React.useState(false);
   const [starsToggle, setStarsToggle] = React.useState(false);
+
+  function starClickHandler(event) {
+    console.log(event.target.dataset.targetpost);
+    setStarsToggle((prev) => !prev);
+  }
 
   return (
     <div className="post">
@@ -26,9 +32,8 @@ export default function Post(props) {
       <span className="postButtonContainer">
         <IconButton
           className="starsButton"
-          onClick={() => {
-            setStarsToggle((prev) => !prev);
-          }}
+          data-targetpost={props.post._id}
+          onClick={starClickHandler}
         >
           {starsToggle ? <StarIcon /> : <StarBorderIcon />}
           {props.post.stars.length}
@@ -45,7 +50,10 @@ export default function Post(props) {
       </span>
       <hr></hr>
       {commentsToggle ? (
-        <NewCommentInput targetPost={props.post._id}></NewCommentInput>
+        <div>
+          <CommentList comments={props.post.comments}></CommentList>
+          <NewCommentInput targetPostURL={props.post.url}></NewCommentInput>
+        </div>
       ) : null}
     </div>
   );

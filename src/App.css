@@ -48,12 +48,12 @@ form {
   padding-left: 8px;
 }
 
-.stars {
+.starsButton {
   display: flex;
   gap: 2.5px;
 }
 
-.comments {
+.commentsButton {
   display: flex;
   gap: 2.5px;
 }
@@ -63,7 +63,11 @@ form {
   align-items: center;
 }
 
+.comment {
+  padding-left: 25px;
+}
+
 hr {
   border: 0.5px dotted rgb(4, 4, 60) ;
-  margin: 20px 0px;
+  margin: 20px 0px 5px 0px;
 }

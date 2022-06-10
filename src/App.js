@@ -76,7 +76,7 @@ function App() {
         userID: userData._doc._id,
         username: userData._doc.username,
       });
-      console.log(userData);
+      // console.log(userData);
       updatePostFeed(userData._doc.posts);
     } else {
       console.log("You are not logged in.");

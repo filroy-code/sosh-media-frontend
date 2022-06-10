@@ -14,7 +14,6 @@ export default function NewCommentInput(props) {
   const [commentState, updateCommentState] = React.useState({
     content: "",
     author: userInfo.userID,
-    targetPost: props.targetPost,
   });
 
   function commentChangeHandler(event) {
@@ -23,8 +22,34 @@ export default function NewCommentInput(props) {
 
   async function commentSubmitHandler(event) {
     event.preventDefault();
+    let response = await fetch(`http://localhost:3000${props.targetPostURL}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(commentState),
+    });
     console.log(commentState);
   }
+
+  // submits content and author from newPostContent and creates a new post in database
+  // async function newPostSubmitHandler(event) {
+  //   event.preventDefault();
+  //   let response = await fetch(
+  //     `http://localhost:3000/${loggedInUser.username}`,
+  //     {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(newPostContent),
+  //     }
+  //   );
+  //   if (response.status === 200) {
+  //     let postData = await response.json();
+  //     console.log(postData);
+  //     setNewPostContent({ content: "", author: loggedInUser.userID });
+  //     getUserData();
+  //   } else {
+  //     console.log("There was an error creating your post.");
+  //   }
+  // }
 
   return (
     <form className="commentInput" onSubmit={commentSubmitHandler}>
