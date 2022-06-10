@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import TextField from "@mui/material/TextField";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
+import StarIcon from "@mui/icons-material/Star";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import Button from "@mui/material/Button";
 import { UserContext } from "./UserContext";
 
@@ -29,14 +31,33 @@ export default function Post(props) {
 
   return (
     <div className="post">
-      <p>
+      <p className="postAuthor">
         <b>{props.post.author.username}</b> posted:
       </p>
-      <p>{props.post.content}</p>
+      <p className="postContent">{props.post.content}</p>
       <p>{props.post.formatted_date}</p>
-      <StarBorderIcon fontSize="small"></StarBorderIcon>
-      {props.post.stars.length}
-      <form onSubmit={commentSubmitHandler} id={props.post._id}>
+      <span className="postButtonContainer">
+        <span className="stars">
+          <StarBorderIcon
+            className="commentIcon"
+            fontSize="small"
+          ></StarBorderIcon>
+          {props.post.stars.length}
+        </span>
+        <span className="comments">
+          <ChatBubbleOutlineIcon
+            className="commentIcon"
+            fontSize="small"
+          ></ChatBubbleOutlineIcon>
+          {props.post.comments.length}
+        </span>
+      </span>
+      <hr></hr>
+      <form
+        className="commentInput"
+        onSubmit={commentSubmitHandler}
+        id={props.post._id}
+      >
         <TextField
           size="small"
           name="comment"

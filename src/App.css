@@ -23,4 +23,47 @@
   margin: 5px;
   padding: 5px;
   width: 65vw;
+  border-radius: 5px;
+}
+
+.postContent {
+  border: 1px solid black;
+  margin: 10px;
+  padding: 18px;
+  border-radius: 5px;
+}
+
+.postAuthor {
+  padding: 3px;
+}
+
+form {
+  padding: 3.5px 8px;
+  align-items: center;
+}
+
+.postButtonContainer {
+  display: flex;
+  gap: 15px;
+  padding-left: 8px;
+}
+
+.stars {
+  display: flex;
+  gap: 2.5px;
+}
+
+.comments {
+  display: flex;
+  gap: 2.5px;
+}
+
+.commentInput {
+  display: flex;
+  align-items: center;
+}
+
+hr {
+  border: 0.5px dotted rgb(4, 4, 60) ;
+  margin: 20px 0px;
 }
