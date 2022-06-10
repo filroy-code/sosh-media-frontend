@@ -1,33 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import Button from "@mui/material/Button";
 import { UserContext } from "./UserContext";
+import NewCommentInput from "./NewCommentInput";
 
 export default function Post(props) {
   const userInfo = React.useContext(UserContext);
 
-  const [commentState, updateCommentState] = React.useState({
-    content: "",
-    author: userInfo.userID,
-    targetPost: "",
-  });
-
-  function commentChangeHandler(event) {
-    updateCommentState((prev) => ({ ...prev, content: event.target.value }));
-  }
-
-  async function commentSubmitHandler(event) {
-    event.preventDefault();
-    updateCommentState((prev) => ({
-      ...prev,
-      targetPost: event.target.parentElement.id,
-    }));
-    console.log(commentState);
-  }
+  const [commentsToggle, setCommentsToggle] = React.useState(false);
+  const [starsToggle, setStarsToggle] = React.useState(false);
 
   return (
     <div className="post">
@@ -37,38 +24,29 @@ export default function Post(props) {
       <p className="postContent">{props.post.content}</p>
       <p>{props.post.formatted_date}</p>
       <span className="postButtonContainer">
-        <span className="stars">
-          <StarBorderIcon
-            className="commentIcon"
-            fontSize="small"
-          ></StarBorderIcon>
+        <IconButton
+          className="starsButton"
+          onClick={() => {
+            setStarsToggle((prev) => !prev);
+          }}
+        >
+          {starsToggle ? <StarIcon /> : <StarBorderIcon />}
           {props.post.stars.length}
-        </span>
-        <span className="comments">
-          <ChatBubbleOutlineIcon
-            className="commentIcon"
-            fontSize="small"
-          ></ChatBubbleOutlineIcon>
+        </IconButton>
+        <IconButton
+          className="commentsButton"
+          onClick={() => {
+            setCommentsToggle((prev) => !prev);
+          }}
+        >
+          {commentsToggle ? <ChatBubbleIcon /> : <ChatBubbleOutlineIcon />}
           {props.post.comments.length}
-        </span>
+        </IconButton>
       </span>
       <hr></hr>
-      <form
-        className="commentInput"
-        onSubmit={commentSubmitHandler}
-        id={props.post._id}
-      >
-        <TextField
-          size="small"
-          name="comment"
-          placeholder="comment on this post..."
-          value={commentState.content}
-          onChange={commentChangeHandler}
-        ></TextField>
-        <Button variant="outlined" onClick={commentSubmitHandler}>
-          Comment
-        </Button>
-      </form>
+      {commentsToggle ? (
+        <NewCommentInput targetPost={props.post._id}></NewCommentInput>
+      ) : null}
     </div>
   );
 }
