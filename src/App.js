@@ -4,8 +4,16 @@ import LoginForm from "./components/LoginForm";
 import Home from "./components/Home";
 import NewPostForm from "./components/NewPostForm";
 import { UserContext } from "./components/UserContext";
+import SignupForm from "./components/SignupForm";
 
 function App() {
+  //if user is not logged in, determines whether the login or signup form is shown.
+  const [signupState, setSignupState] = React.useState(false);
+
+  function showSignup() {
+    setSignupState((prev) => !prev);
+  }
+
   // JWT stored here, when issued.
   const [authToken, setAuthToken] = React.useState("");
 
@@ -76,7 +84,6 @@ function App() {
         userID: userData._doc._id,
         username: userData._doc.username,
       });
-      // console.log(userData);
       updatePostFeed(userData._doc.posts);
     } else {
       console.log("You are not logged in.");
@@ -140,11 +147,14 @@ function App() {
               postFeed={postFeed}
             ></Home>
           </div>
+        ) : signupState ? (
+          <SignupForm showSignup={showSignup} />
         ) : (
           <LoginForm
             submitHandler={loginSubmitHandler}
             changeHandler={loginChangeHandler}
             loginInfo={loginInfo}
+            showSignup={showSignup}
           ></LoginForm>
         )}
       </div>

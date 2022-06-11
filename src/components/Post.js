@@ -17,9 +17,19 @@ export default function Post(props) {
   const [commentsToggle, setCommentsToggle] = React.useState(false);
   const [starsToggle, setStarsToggle] = React.useState(false);
 
-  function starClickHandler(event) {
+  async function starClickHandler(event) {
+    event.preventDefault();
     setStarsToggle((prev) => !prev);
-    console.log(event.target.dataset.targetpost);
+    let response = await fetch(`http://localhost:3000${props.post.url}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userStar: userInfo.userID,
+        content: null,
+      }),
+    });
+    let json = await response.json();
+    console.log(json);
   }
 
   return (
@@ -30,11 +40,7 @@ export default function Post(props) {
       <p className="postContent">{props.post.content}</p>
       <p>{props.post.formatted_date}</p>
       <span className="postButtonContainer">
-        <IconButton
-          className="starsButton"
-          data-targetpost={props.post._id}
-          onClick={starClickHandler}
-        >
+        <IconButton className="starsButton" onClick={starClickHandler}>
           {starsToggle ? <StarIcon /> : <StarBorderIcon />}
           {props.post.stars.length}
         </IconButton>

@@ -40,6 +40,10 @@ export default function LoginForm(props) {
       >
         Log-In
       </Button>
+      Or{" "}
+      <span display="inline" onClick={props.showSignup} color="blue">
+        <u>sign up.</u>
+      </span>
     </form>
   );
 }

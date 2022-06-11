@@ -27,7 +27,8 @@ export default function NewCommentInput(props) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(commentState),
     });
-    console.log(commentState);
+    let json = await response.json();
+    console.log(json);
   }
 
   // submits content and author from newPostContent and creates a new post in database
