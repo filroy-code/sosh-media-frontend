@@ -1,6 +1,6 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
-import TextareaAutosize from "react-textarea-autosize";
+import Button from "@mui/material/Button";
 
 export default function NewPostForm(props) {
   return (
@@ -20,7 +20,7 @@ export default function NewPostForm(props) {
         value={props.newPostContent.content}
       />
 
-      <button>Post</button>
+      <Button onClick={props.submitHandler}>Post</Button>
     </form>
   );
 }

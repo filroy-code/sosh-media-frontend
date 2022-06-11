@@ -9,6 +9,7 @@ import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import Button from "@mui/material/Button";
 import { UserContext } from "./UserContext";
 import NewCommentInput from "./NewCommentInput";
+import Comment from "./Comment";
 
 export default function CommentList(props) {
   const userInfo = React.useContext(UserContext);
@@ -22,17 +23,7 @@ export default function CommentList(props) {
   //   }
 
   let commentList = props.comments.map((comment) => {
-    return (
-      <div key={comment._id}>
-        <div className="comment">
-          <p>
-            <b>{comment.author.username}</b> commented:
-          </p>
-          <p>{comment.content}</p>
-        </div>
-        <hr></hr>
-      </div>
-    );
+    return <Comment key={comment._id} comment={comment}></Comment>;
   });
 
   return <div className="commentList">{commentList}</div>;

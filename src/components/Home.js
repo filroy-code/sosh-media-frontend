@@ -6,27 +6,6 @@ export default function Home(props) {
     return <Post post={x} key={x._id}></Post>;
   });
 
-  async function commentSubmitHandler(event) {
-    event.preventDefault();
-    console.log(event.target);
-    // let response = await fetch(
-    //   `http://localhost:3000/${loggedInUser.username}`,
-    //   {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(newPostContent),
-    //   }
-    // );
-    // if (response.status === 200) {
-    //   let postData = await response.json();
-    //   console.log(postData);
-    //   setNewPostContent({ content: "", author: loggedInUser.userID });
-    //   getUserData();
-    // } else {
-    //   console.log("There was an error creating your post.");
-    // }
-  }
-
   let { getUserData } = props;
 
   //populates home feed on user login.

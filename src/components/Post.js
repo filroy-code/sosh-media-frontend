@@ -18,8 +18,8 @@ export default function Post(props) {
   const [starsToggle, setStarsToggle] = React.useState(false);
 
   function starClickHandler(event) {
-    console.log(event.target.dataset.targetpost);
     setStarsToggle((prev) => !prev);
+    console.log(event.target.dataset.targetpost);
   }
 
   return (
