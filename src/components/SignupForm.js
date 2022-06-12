@@ -1,8 +1,11 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignupForm(props) {
+  let navigate = useNavigate();
+
   const buttonStyle = {
     margin: "5px",
   };
@@ -30,11 +33,12 @@ export default function SignupForm(props) {
     });
     let responseJSON = await response.json();
     if (responseJSON !== false) {
-      console.log(responseJSON);
       setSignupInfo({
         username: "",
         password: "",
       });
+      props.setLoginMessage("User successfully created. Please log in.");
+      navigate("/login");
     } else {
       console.log("signup failed");
       setSignupInfo({
@@ -77,9 +81,9 @@ export default function SignupForm(props) {
         Sign Up
       </Button>
       Or{" "}
-      <span onClick={props.showSignup} color="blue">
-        <u>log in.</u>
-      </span>
+      <Button>
+        <Link to="/login">log in.</Link>
+      </Button>
     </form>
   );
 }

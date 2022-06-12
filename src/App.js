@@ -1,5 +1,6 @@
 import "./App.css";
 import React from "react";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
 import Home from "./components/Home";
 import NewPostForm from "./components/NewPostForm";
@@ -7,13 +8,6 @@ import { UserContext } from "./components/UserContext";
 import SignupForm from "./components/SignupForm";
 
 function App() {
-  //if user is not logged in, determines whether the login or signup form is shown.
-  const [signupState, setSignupState] = React.useState(false);
-
-  function showSignup() {
-    setSignupState((prev) => !prev);
-  }
-
   // JWT stored here, when issued.
   const [authToken, setAuthToken] = React.useState("");
 
@@ -25,46 +19,7 @@ function App() {
     setNewPostContent({ content: "", author: loggedInUser.userID });
   }
 
-  // login form state
-  const [loginInfo, setLoginInfo] = React.useState({
-    username: "",
-    password: "",
-  });
-
-  // updates loginInfo state when user makes inputs to LoginForm component
-  function loginChangeHandler(event) {
-    setLoginInfo((prev) => ({
-      ...prev,
-      [event.target.name]: event.target.value,
-    }));
-  }
-
-  // submits username and password info from login form component and stores JWT in React state if login successful.
-  async function loginSubmitHandler(event) {
-    event.preventDefault();
-    let response = await fetch("http://localhost:3000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(loginInfo),
-    });
-    let responseJSON = await response.json();
-    if (responseJSON !== false) {
-      setAuthToken(responseJSON.token);
-      setLoginInfo({
-        username: "",
-        password: "",
-      });
-      setLoginMessage(null);
-    } else {
-      setLoginMessage("Invalid login credentials.");
-      setLoginInfo({
-        username: "",
-        password: "",
-      });
-    }
-  }
-
-  // if login info is incorrect, this message will be displayed - this message is managed by loginSubmitHandler
+  // controls the message to be displayed on login screen on unsuccessful login or on successful signup, used in Login and Signup Form components
   const [loginMessage, setLoginMessage] = React.useState(null);
 
   // logged in user info
@@ -73,9 +28,10 @@ function App() {
     username: "",
   });
 
+  // an array of objects which are retrieved from database and populate home feed.
   const [postFeed, updatePostFeed] = React.useState([]);
 
-  // sends a GET request which verifies the stored JWT and saves logged in user data to state if valid.
+  // sends a GET request which verifies the stored JWT and saves logged in user data (including home feed) to state if valid.
   async function getUserData() {
     let response = await fetch("http://localhost:3000/", {
       method: "GET",
@@ -122,7 +78,6 @@ function App() {
       }
     );
     if (response.status === 200) {
-      let postData = await response.json();
       setNewPostContent({ content: "", author: loggedInUser.userID });
       getUserData();
     } else {
@@ -132,38 +87,55 @@ function App() {
 
   return (
     <UserContext.Provider value={loggedInUser}>
-      <div className="App">
-        {authToken ? (
-          <div>
-            <h1>Sosh</h1>
-            <p className="userDisplay">
-              Logged in as {loggedInUser.username}{" "}
-              <button onClick={logout}>Logout</button>
-            </p>
-            <NewPostForm
-              loggedInUser={loggedInUser}
-              newPostContent={newPostContent}
-              changeHandler={newPostChangeHandler}
-              submitHandler={newPostSubmitHandler}
-            ></NewPostForm>
-            <Home
-              getUserData={getUserData}
-              authToken={authToken}
-              postFeed={postFeed}
-            ></Home>
-          </div>
-        ) : signupState ? (
-          <SignupForm showSignup={showSignup} />
-        ) : (
-          <LoginForm
-            submitHandler={loginSubmitHandler}
-            changeHandler={loginChangeHandler}
-            loginInfo={loginInfo}
-            showSignup={showSignup}
-            loginMessage={loginMessage}
-          ></LoginForm>
-        )}
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              authToken ? (
+                <>
+                  <div className="App">
+                    <div>
+                      <h1>Sosh</h1>
+                      <p className="userDisplay">
+                        Logged in as {loggedInUser.username}{" "}
+                        <button onClick={logout}>Logout</button>
+                      </p>
+                      <NewPostForm
+                        loggedInUser={loggedInUser}
+                        newPostContent={newPostContent}
+                        changeHandler={newPostChangeHandler}
+                        submitHandler={newPostSubmitHandler}
+                      ></NewPostForm>
+                      <Home
+                        getUserData={getUserData}
+                        authToken={authToken}
+                        postFeed={postFeed}
+                      ></Home>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <Navigate to="/login"></Navigate>
+              )
+            }
+          ></Route>
+          <Route
+            path="/signup"
+            element={<SignupForm setLoginMessage={setLoginMessage} />}
+          ></Route>
+          <Route
+            path="/login"
+            element={
+              <LoginForm
+                setAuthToken={setAuthToken}
+                loginMessage={loginMessage}
+                setLoginMessage={setLoginMessage}
+              ></LoginForm>
+            }
+          ></Route>
+        </Routes>
+      </BrowserRouter>
     </UserContext.Provider>
   );
 }
