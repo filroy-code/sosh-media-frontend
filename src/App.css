@@ -80,3 +80,9 @@ hr {
   border: 0.5px dotted rgb(4, 4, 60) ;
   margin: 20px 0px 5px 0px;
 }
+
+.userInputProblemNotification {
+  background-color: rgb(255, 75, 75);
+  margin: 10px;
+  padding: 10px;
+}

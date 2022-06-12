@@ -7,6 +7,7 @@ import StarIcon from "@mui/icons-material/Star";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
 import { UserContext } from "./UserContext";
 import CommentList from "./CommentList";
 import NewCommentInput from "./NewCommentInput";
@@ -30,6 +31,7 @@ export default function Post(props) {
     });
     let json = await response.json();
     console.log(json);
+    props.getUserData();
   }
 
   return (
@@ -41,26 +43,36 @@ export default function Post(props) {
       <p>{props.post.formatted_date}</p>
       <span className="postButtonContainer">
         <IconButton className="starsButton" onClick={starClickHandler}>
-          {starsToggle ? <StarIcon /> : <StarBorderIcon />}
+          {props.post.stars.includes(userInfo.userID) ? (
+            <StarIcon />
+          ) : (
+            <StarBorderIcon />
+          )}
           {props.post.stars.length}
         </IconButton>
-        <IconButton
-          className="commentsButton"
-          onClick={() => {
-            setCommentsToggle((prev) => !prev);
-          }}
-        >
-          {commentsToggle ? <ChatBubbleIcon /> : <ChatBubbleOutlineIcon />}
-          {props.post.comments.length}
-        </IconButton>
+        <Tooltip title="Add a comment." placement="right">
+          <IconButton
+            className="commentsButton"
+            onClick={() => {
+              setCommentsToggle((prev) => !prev);
+            }}
+          >
+            {commentsToggle ? <ChatBubbleIcon /> : <ChatBubbleOutlineIcon />}
+            {props.post.comments.length}
+          </IconButton>
+        </Tooltip>
       </span>
       <hr></hr>
-      {commentsToggle ? (
-        <div>
-          <CommentList comments={props.post.comments}></CommentList>
-          <NewCommentInput targetPostURL={props.post.url}></NewCommentInput>
-        </div>
-      ) : null}
+      <div>
+        <CommentList comments={props.post.comments}></CommentList>
+        {commentsToggle ? (
+          <NewCommentInput
+            targetPostURL={props.post.url}
+            getUserData={props.getUserData}
+            setCommentsToggle={setCommentsToggle}
+          ></NewCommentInput>
+        ) : null}
+      </div>
     </div>
   );
 }

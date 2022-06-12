@@ -29,6 +29,8 @@ export default function NewCommentInput(props) {
     });
     let json = await response.json();
     console.log(json);
+    props.getUserData();
+    props.setCommentsToggle((prev) => !prev);
   }
 
   // submits content and author from newPostContent and creates a new post in database

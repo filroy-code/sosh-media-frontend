@@ -54,14 +54,18 @@ function App() {
         username: "",
         password: "",
       });
+      setLoginMessage(null);
     } else {
-      console.log("invalid login credentials");
+      setLoginMessage("Invalid login credentials.");
       setLoginInfo({
         username: "",
         password: "",
       });
     }
   }
+
+  // if login info is incorrect, this message will be displayed - this message is managed by loginSubmitHandler
+  const [loginMessage, setLoginMessage] = React.useState(null);
 
   // logged in user info
   const [loggedInUser, setLoggedInUser] = React.useState({
@@ -80,10 +84,12 @@ function App() {
     });
     if (response.status === 200) {
       let userData = await response.json();
-      setLoggedInUser({
-        userID: userData._doc._id,
-        username: userData._doc.username,
-      });
+      if (!loggedInUser.userID) {
+        setLoggedInUser({
+          userID: userData._doc._id,
+          username: userData._doc.username,
+        });
+      }
       updatePostFeed(userData._doc.posts);
     } else {
       console.log("You are not logged in.");
@@ -117,7 +123,6 @@ function App() {
     );
     if (response.status === 200) {
       let postData = await response.json();
-      console.log(postData);
       setNewPostContent({ content: "", author: loggedInUser.userID });
       getUserData();
     } else {
@@ -155,6 +160,7 @@ function App() {
             changeHandler={loginChangeHandler}
             loginInfo={loginInfo}
             showSignup={showSignup}
+            loginMessage={loginMessage}
           ></LoginForm>
         )}
       </div>

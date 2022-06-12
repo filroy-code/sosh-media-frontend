@@ -33,6 +33,9 @@ export default function LoginForm(props) {
         onChange={props.changeHandler}
         value={props.loginInfo.password}
       />
+      {props.loginMessage ? (
+        <div className="userInputProblemNotification">{props.loginMessage}</div>
+      ) : null}
       <Button
         variant="contained"
         style={buttonStyle}

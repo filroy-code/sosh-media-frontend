@@ -3,7 +3,7 @@ import Post from "./Post";
 
 export default function Home(props) {
   const postFeed = props.postFeed.map((x) => {
-    return <Post post={x} key={x._id}></Post>;
+    return <Post post={x} key={x._id} getUserData={props.getUserData}></Post>;
   });
 
   let { getUserData } = props;
