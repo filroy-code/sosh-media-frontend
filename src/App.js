@@ -16,7 +16,6 @@ function App() {
     setAuthToken("");
     setLoggedInUser({ userID: "", username: "" });
     updatePostFeed([]);
-    setNewPostContent({ content: "", author: loggedInUser.userID });
   }
 
   // controls the message to be displayed on login screen on unsuccessful login or on successful signup, used in Login and Signup Form components
@@ -52,39 +51,6 @@ function App() {
     }
   }
 
-  //content of a new post to be made is stored here (along with the author, who is the logged in user) until the form is submitted.
-  const [newPostContent, setNewPostContent] = React.useState({
-    content: "",
-    author: loggedInUser.userID,
-  });
-
-  // updates newPostContent state when user inputs into NewPostForm
-  function newPostChangeHandler(event) {
-    setNewPostContent({
-      author: loggedInUser.userID,
-      content: event.target.value,
-    });
-  }
-
-  // submits content and author from newPostContent and creates a new post in database
-  async function newPostSubmitHandler(event) {
-    event.preventDefault();
-    let response = await fetch(
-      `http://localhost:3000/${loggedInUser.username}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newPostContent),
-      }
-    );
-    if (response.status === 200) {
-      setNewPostContent({ content: "", author: loggedInUser.userID });
-      getUserData();
-    } else {
-      console.log("There was an error creating your post.");
-    }
-  }
-
   return (
     <UserContext.Provider value={loggedInUser}>
       <BrowserRouter>
@@ -101,12 +67,7 @@ function App() {
                         Logged in as {loggedInUser.username}{" "}
                         <button onClick={logout}>Logout</button>
                       </p>
-                      <NewPostForm
-                        loggedInUser={loggedInUser}
-                        newPostContent={newPostContent}
-                        changeHandler={newPostChangeHandler}
-                        submitHandler={newPostSubmitHandler}
-                      ></NewPostForm>
+                      <NewPostForm getUserData={getUserData}></NewPostForm>
                       <Home
                         getUserData={getUserData}
                         authToken={authToken}

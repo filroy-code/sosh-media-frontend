@@ -1,13 +1,46 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { UserContext } from "./UserContext";
 
 export default function NewPostForm(props) {
+  const userInfo = React.useContext(UserContext);
+
+  //content of a new post to be made is stored here (along with the author, who is the logged in user) until the form is submitted.
+  const [newPostContent, setNewPostContent] = React.useState({
+    author: userInfo.userID,
+    content: "",
+  });
+
+  // updates newPostContent state when user inputs into NewPostForm
+  function newPostChangeHandler(event) {
+    setNewPostContent({
+      author: userInfo.userID,
+      content: event.target.value,
+    });
+  }
+
+  // submits content and author from newPostContent and creates a new post in database
+  async function newPostSubmitHandler(event) {
+    event.preventDefault();
+    let response = await fetch(`http://localhost:3000/${userInfo.username}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newPostContent),
+    });
+    if (response.status === 200) {
+      setNewPostContent({ content: "", author: userInfo.userID });
+      props.getUserData();
+    } else {
+      console.log("There was an error creating your post.");
+    }
+  }
+
   return (
     <form
       className="newPostForm"
-      onSubmit={props.submitHandler}
-      action={`/${props.loggedInUser.username}`}
+      onSubmit={newPostSubmitHandler}
+      action={`/${userInfo.username}`}
       method="POST"
     >
       <TextField
@@ -16,11 +49,11 @@ export default function NewPostForm(props) {
         size="small"
         name="content"
         placeholder="Speak your mind..."
-        onChange={props.changeHandler}
-        value={props.newPostContent.content}
+        onChange={newPostChangeHandler}
+        value={newPostContent.content}
       />
 
-      <Button onClick={props.submitHandler}>Post</Button>
+      <Button onClick={newPostSubmitHandler}>Post</Button>
     </form>
   );
 }
