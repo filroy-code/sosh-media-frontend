@@ -86,3 +86,32 @@ hr {
   margin: 10px;
   padding: 10px;
 }
+
+.App {
+  display: flex;
+  flex-direction: column;
+}
+
+.body {
+  display: flex;
+  gap: 3vw;
+}
+
+.mainSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.sideBar {
+  border: 1px solid black;
+  border-radius: 5px;
+  height: 100%;
+  padding: 5px;
+  width: 25vw;
+}
+
+.pageHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

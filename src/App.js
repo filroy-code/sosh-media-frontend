@@ -4,12 +4,19 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
 import Home from "./components/Home";
 import NewPostForm from "./components/NewPostForm";
-import { UserContext } from "./components/UserContext";
 import SignupForm from "./components/SignupForm";
+import Sidebar from "./components/Sidebar";
+import { UserContext } from "./components/UserContext";
 
 function App() {
   // JWT stored here, when issued.
   const [authToken, setAuthToken] = React.useState("");
+
+  // logged in user info
+  const [loggedInUser, setLoggedInUser] = React.useState({
+    userID: "",
+    username: "",
+  });
 
   // logs user out, setting all states back to default
   function logout() {
@@ -20,12 +27,6 @@ function App() {
 
   // controls the message to be displayed on login screen on unsuccessful login or on successful signup, used in Login and Signup Form components
   const [loginMessage, setLoginMessage] = React.useState(null);
-
-  // logged in user info
-  const [loggedInUser, setLoggedInUser] = React.useState({
-    userID: "",
-    username: "",
-  });
 
   // an array of objects which are retrieved from database and populate home feed.
   const [postFeed, updatePostFeed] = React.useState([]);
@@ -59,14 +60,16 @@ function App() {
             path="/"
             element={
               authToken ? (
-                <>
-                  <div className="App">
-                    <div>
-                      <h1>Sosh</h1>
-                      <p className="userDisplay">
-                        Logged in as {loggedInUser.username}{" "}
-                        <button onClick={logout}>Logout</button>
-                      </p>
+                <div className="App">
+                  <div className="pageHeader">
+                    <h1>Sosh</h1>
+                    <p className="userDisplay">
+                      Logged in as {loggedInUser.username}{" "}
+                      <button onClick={logout}>Logout</button>
+                    </p>
+                  </div>
+                  <div className="body">
+                    <div className="mainSection">
                       <NewPostForm getUserData={getUserData}></NewPostForm>
                       <Home
                         getUserData={getUserData}
@@ -74,8 +77,9 @@ function App() {
                         postFeed={postFeed}
                       ></Home>
                     </div>
+                    <Sidebar authToken={authToken}></Sidebar>
                   </div>
-                </>
+                </div>
               ) : (
                 <Navigate to="/login"></Navigate>
               )
