@@ -107,6 +107,7 @@ hr {
   border-radius: 5px;
   height: 100%;
   padding: 5px;
+  margin: 5px;
   width: 25vw;
 }
 
@@ -114,4 +115,9 @@ hr {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
 }

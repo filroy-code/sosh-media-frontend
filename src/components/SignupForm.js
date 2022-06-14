@@ -1,6 +1,7 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Alert from "@mui/material/Alert";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function SignupForm(props) {
@@ -8,6 +9,14 @@ export default function SignupForm(props) {
 
   const buttonStyle = {
     margin: "5px",
+  };
+
+  const inputStyle = {
+    margin: "5px",
+  };
+
+  const alertStyle = {
+    margin: "10px 0px 5px 0px",
   };
 
   const [signupInfo, setSignupInfo] = React.useState({
@@ -31,21 +40,25 @@ export default function SignupForm(props) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(signupInfo),
     });
-    let responseJSON = await response.json();
-    if (responseJSON !== false) {
+    if (response.status === 200) {
       setSignupInfo({
         username: "",
         password: "",
       });
-      props.setLoginMessage("User successfully created. Please log in.");
+      props.setStatusMessage("User successfully created. Please log in.");
       navigate("/login");
     } else {
-      console.log("signup failed");
+      props.setStatusMessage("This username already exists.");
       setSignupInfo({
         username: "",
         password: "",
       });
     }
+  }
+
+  function loginLink() {
+    props.setStatusMessage(null);
+    navigate("/login");
   }
 
   return (
@@ -64,6 +77,7 @@ export default function SignupForm(props) {
         placeholder="Username"
         onChange={signupChangeHandler}
         value={signupInfo.username}
+        style={inputStyle}
       />
       <TextField
         variant="outlined"
@@ -72,7 +86,20 @@ export default function SignupForm(props) {
         placeholder="Password"
         onChange={signupChangeHandler}
         value={signupInfo.password}
+        style={inputStyle}
       />
+      {props.statusMessage ? (
+        <Alert
+          severity={
+            props.statusMessage === "This username already exists."
+              ? "error"
+              : "success"
+          }
+          style={alertStyle}
+        >
+          {props.statusMessage}
+        </Alert>
+      ) : null}
       <Button
         variant="contained"
         style={buttonStyle}
@@ -81,7 +108,7 @@ export default function SignupForm(props) {
         Sign Up
       </Button>
       Or{" "}
-      <Button>
+      <Button onClick={loginLink}>
         <Link to="/login">log in.</Link>
       </Button>
     </form>

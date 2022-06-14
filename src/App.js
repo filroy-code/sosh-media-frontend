@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import NewPostForm from "./components/NewPostForm";
 import SignupForm from "./components/SignupForm";
 import Sidebar from "./components/Sidebar";
+import UserDetails from "./components/UserDetails";
 import { UserContext } from "./components/UserContext";
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
   }
 
   // controls the message to be displayed on login screen on unsuccessful login or on successful signup, used in Login and Signup Form components
-  const [loginMessage, setLoginMessage] = React.useState(null);
+  const [statusMessage, setStatusMessage] = React.useState(null);
 
   // an array of objects which are retrieved from database and populate home feed.
   const [postFeed, updatePostFeed] = React.useState([]);
@@ -87,18 +88,24 @@ function App() {
           ></Route>
           <Route
             path="/signup"
-            element={<SignupForm setLoginMessage={setLoginMessage} />}
+            element={
+              <SignupForm
+                setStatusMessage={setStatusMessage}
+                statusMessage={statusMessage}
+              />
+            }
           ></Route>
           <Route
             path="/login"
             element={
               <LoginForm
                 setAuthToken={setAuthToken}
-                loginMessage={loginMessage}
-                setLoginMessage={setLoginMessage}
+                statusMessage={statusMessage}
+                setStatusMessage={setStatusMessage}
               ></LoginForm>
             }
           ></Route>
+          <Route path="/userDetails" element={<UserDetails />}></Route>
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>

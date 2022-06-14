@@ -26,6 +26,9 @@ export default function Sidebar(props) {
 
   return (
     <div className="sideBar">
+      <Button>
+        <Link to="/userDetails">Edit user details.</Link>
+      </Button>
       <form onSubmit={searchSubmitHandler}>
         <TextField
           fullWidth

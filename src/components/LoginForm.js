@@ -13,6 +13,10 @@ export default function LoginForm(props) {
     margin: "5px",
   };
 
+  const inputStyle = {
+    margin: "5px",
+  };
+
   const alertStyle = {
     margin: "10px 0px 5px 0px",
   };
@@ -46,15 +50,20 @@ export default function LoginForm(props) {
         username: "",
         password: "",
       });
-      props.setLoginMessage(null);
+      props.setStatusMessage(null);
       navigate("/", { replace: true });
     } else {
-      props.setLoginMessage("Invalid login credentials.");
+      props.setStatusMessage("Invalid login credentials.");
       setLoginInfo({
         username: "",
         password: "",
       });
     }
+  }
+
+  function signupLink() {
+    props.setStatusMessage(null);
+    navigate("/signup");
   }
 
   return (
@@ -73,6 +82,7 @@ export default function LoginForm(props) {
         placeholder="Username"
         onChange={loginChangeHandler}
         value={loginInfo.username}
+        style={inputStyle}
       />
       <TextField
         variant="outlined"
@@ -81,17 +91,18 @@ export default function LoginForm(props) {
         placeholder="Password"
         onChange={loginChangeHandler}
         value={loginInfo.password}
+        style={inputStyle}
       />
-      {props.loginMessage ? (
+      {props.statusMessage ? (
         <Alert
           severity={
-            props.loginMessage === "User successfully created. Please log in."
+            props.statusMessage === "User successfully created. Please log in."
               ? "success"
               : "error"
           }
           style={alertStyle}
         >
-          {props.loginMessage}
+          {props.statusMessage}
         </Alert>
       ) : null}
       <Button
@@ -102,7 +113,7 @@ export default function LoginForm(props) {
         Log-In
       </Button>
       Or
-      <Button>
+      <Button onClick={signupLink}>
         <Link to="/signup">sign up.</Link>
       </Button>
     </form>
