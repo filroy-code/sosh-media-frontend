@@ -7,6 +7,7 @@ import StarIcon from "@mui/icons-material/Star";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import Button from "@mui/material/Button";
+import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import { UserContext } from "./UserContext";
 import CommentList from "./CommentList";
@@ -17,6 +18,10 @@ export default function Post(props) {
 
   const [commentsToggle, setCommentsToggle] = React.useState(false);
   const [starsToggle, setStarsToggle] = React.useState(false);
+
+  const avatarStyle = {
+    margin: "0px 10px 0px 10px",
+  };
 
   async function starClickHandler(event) {
     event.preventDefault();
@@ -36,9 +41,17 @@ export default function Post(props) {
 
   return (
     <div className="post">
-      <p className="postAuthor">
+      <div className="postAuthor">
+        <Avatar
+          alt={`${props.post.author.username}'s Avatar`}
+          img="./placeholder.jpg"
+          variant="rounded"
+          style={avatarStyle}
+        >
+          {props.post.author.username[0].toUpperCase()}
+        </Avatar>
         <b>{props.post.author.username}</b> posted:
-      </p>
+      </div>
       <p className="postContent">{props.post.content}</p>
       <p>{props.post.formatted_date}</p>
       <span className="postButtonContainer">

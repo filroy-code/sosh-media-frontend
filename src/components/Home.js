@@ -20,7 +20,7 @@ export default function Home(props) {
   return (
     <motion.div
       initial={{ width: "0vw" }}
-      animate={{ width: "65vw", transition: { duration: 0.8 } }}
+      animate={{ width: "70vw", transition: { duration: 0.8 } }}
       exit={{ width: "0vw", transition: { duration: 0.4 } }}
       className="mainSection"
     >
