@@ -1,7 +1,6 @@
 #root {
   height: 95vh;
   width: 98vw;
-  display: flex;
 }
 
 .loginForm {
@@ -25,13 +24,14 @@
 .newPostForm {
   margin: 5px;
   padding: 5px;
+  display: flex;
 }
 
 .post {
   border: 1px solid black;
   margin: 5px;
   padding: 5px;
-  width: 65vw;
+  width: 100%;
   border-radius: 5px;
 }
 
@@ -108,7 +108,6 @@ hr {
   height: 100%;
   padding: 5px;
   margin: 5px;
-  width: 25vw;
 }
 
 .pageHeader {

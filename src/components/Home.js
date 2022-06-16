@@ -1,5 +1,7 @@
 import React from "react";
 import Post from "./Post";
+import NewPostForm from "./NewPostForm";
+import { motion } from "framer-motion";
 
 export default function Home(props) {
   const postFeed = props.postFeed.map((x) => {
@@ -15,5 +17,15 @@ export default function Home(props) {
     }
   }, [props.authToken]);
 
-  return <div>{postFeed}</div>;
+  return (
+    <motion.div
+      initial={{ width: "0vw" }}
+      animate={{ width: "65vw", transition: { duration: 0.8 } }}
+      exit={{ width: "0vw", transition: { duration: 0.4 } }}
+      className="mainSection"
+    >
+      <NewPostForm getUserData={props.getUserData}></NewPostForm>
+      {postFeed}
+    </motion.div>
+  );
 }

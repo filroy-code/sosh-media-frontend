@@ -11,31 +11,34 @@ export default function UserDetails(props) {
   async function findUserDetails(event) {
     event.preventDefault();
     let response = await fetch(
-      `http://localhost:3000/userDetails/${userInfo.username}`,
+      `http://localhost:3000/image/${userInfo.userID}`,
       {
-        method: "GET",
+        method: "POST",
         headers: {
           Authorization: props.authToken,
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       }
     );
-    let json = await response.json();
-    console.log(json);
+    console.log(response);
   }
 
   return (
     <div className="userDetails">
-      <Button onClick={findUserDetails}>Find User Details</Button>
-      <form>
-        <label htmlFor="avatarUpload">Upload a new avatar: </label>
+      <form
+        encType="multipart/form-data"
+        action={`/image/${userInfo.userID}`}
+        method="POST"
+      >
+        <label htmlFor="image">Upload a new avatar: </label>
         <input
           type="file"
-          name="avatarUpload"
+          name="image"
           placeholder="upload an avatar"
           //   value=""
           required
         ></input>
+        <Button onClick={findUserDetails}>Submit</Button>
       </form>
     </div>
   );

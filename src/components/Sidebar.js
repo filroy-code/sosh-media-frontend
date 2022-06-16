@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function Sidebar(props) {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -25,7 +26,7 @@ export default function Sidebar(props) {
   }
 
   return (
-    <div className="sideBar">
+    <motion.div className="sideBar">
       <Button>
         <Link to="/userDetails">Edit user details.</Link>
       </Button>
@@ -39,6 +40,6 @@ export default function Sidebar(props) {
         ></TextField>
         <Button onClick={searchSubmitHandler}>Search</Button>
       </form>
-    </div>
+    </motion.div>
   );
 }
