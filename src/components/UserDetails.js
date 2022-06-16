@@ -8,6 +8,8 @@ import { UserContext } from "./UserContext";
 export default function UserDetails(props) {
   const userInfo = React.useContext(UserContext);
 
+  const [uploadedPhoto, setUploadedPhoto] = React.useState("");
+
   async function findUserDetails(event) {
     event.preventDefault();
     let response = await fetch(
@@ -23,8 +25,13 @@ export default function UserDetails(props) {
     console.log(response);
   }
 
+  function updatePhoto(event) {
+    setUploadedPhoto(event.target.value);
+  }
+
   return (
     <div className="userDetails">
+      <Link to="/">Go back to home feed.</Link>
       <form
         encType="multipart/form-data"
         action={`/image/${userInfo.userID}`}
@@ -34,8 +41,10 @@ export default function UserDetails(props) {
         <input
           type="file"
           name="image"
+          id="image"
+          onChange={updatePhoto}
           placeholder="upload an avatar"
-          //   value=""
+          value={uploadedPhoto}
           required
         ></input>
         <Button onClick={findUserDetails}>Submit</Button>

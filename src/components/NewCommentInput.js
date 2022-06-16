@@ -8,7 +8,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import Button from "@mui/material/Button";
 import { UserContext } from "./UserContext";
 
-export default function NewCommentInput(props) {
+const NewCommentInput = React.forwardRef((props, ref) => {
   const userInfo = React.useContext(UserContext);
 
   const [commentState, updateCommentState] = React.useState({
@@ -33,41 +33,29 @@ export default function NewCommentInput(props) {
     props.setCommentsToggle((prev) => !prev);
   }
 
-  // submits content and author from newPostContent and creates a new post in database
-  // async function newPostSubmitHandler(event) {
-  //   event.preventDefault();
-  //   let response = await fetch(
-  //     `http://localhost:3000/${loggedInUser.username}`,
-  //     {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(newPostContent),
-  //     }
-  //   );
-  //   if (response.status === 200) {
-  //     let postData = await response.json();
-  //     console.log(postData);
-  //     setNewPostContent({ content: "", author: loggedInUser.userID });
-  //     getUserData();
-  //   } else {
-  //     console.log("There was an error creating your post.");
-  //   }
-  // }
+  React.useEffect(() => {
+    ref.current.childNodes[0].childNodes[0].focus();
+  });
 
   return (
-    <form className="commentInput" onSubmit={commentSubmitHandler}>
-      <TextField
-        multiline
-        fullWidth
-        size="small"
-        name="comment"
-        placeholder="comment on this post..."
-        value={commentState.content}
-        onChange={commentChangeHandler}
-      ></TextField>
-      <Button variant="outlined" onClick={commentSubmitHandler}>
-        Comment
-      </Button>
-    </form>
+    <div>
+      <form className="commentInput" onSubmit={commentSubmitHandler}>
+        <TextField
+          ref={ref}
+          multiline
+          fullWidth
+          size="small"
+          name="comment"
+          placeholder="comment on this post..."
+          value={commentState.content}
+          onChange={commentChangeHandler}
+        ></TextField>
+        <Button variant="outlined" onClick={commentSubmitHandler}>
+          Comment
+        </Button>
+      </form>
+    </div>
   );
-}
+});
+
+export default NewCommentInput;

@@ -12,9 +12,12 @@ import Tooltip from "@mui/material/Tooltip";
 import { UserContext } from "./UserContext";
 import CommentList from "./CommentList";
 import NewCommentInput from "./NewCommentInput";
+import { stringAvatar } from "../services/AvatarColor";
 
 export default function Post(props) {
   const userInfo = React.useContext(UserContext);
+
+  const inputRef = React.useRef();
 
   const [commentsToggle, setCommentsToggle] = React.useState(false);
   const [starsToggle, setStarsToggle] = React.useState(false);
@@ -39,12 +42,17 @@ export default function Post(props) {
     props.getUserData();
   }
 
+  function commentClickHandler() {
+    setCommentsToggle((prev) => !prev);
+  }
+
   return (
     <div className="post">
       <div className="postAuthor">
         <Avatar
+          {...stringAvatar(`${props.post.author.username}`)}
           alt={`${props.post.author.username}'s Avatar`}
-          img="./placeholder.jpg"
+          src="./placeholder.jpg"
           variant="rounded"
           style={avatarStyle}
         >
@@ -53,7 +61,7 @@ export default function Post(props) {
         <b>{props.post.author.username}</b> posted:
       </div>
       <p className="postContent">{props.post.content}</p>
-      <p>{props.post.formatted_date}</p>
+      <p className="postDate">{props.post.formatted_date}</p>
       <span className="postButtonContainer">
         <IconButton className="starsButton" onClick={starClickHandler}>
           {props.post.stars.includes(userInfo.userID) ? (
@@ -64,12 +72,7 @@ export default function Post(props) {
           {props.post.stars.length}
         </IconButton>
         <Tooltip title="Add a comment." placement="right">
-          <IconButton
-            className="commentsButton"
-            onClick={() => {
-              setCommentsToggle((prev) => !prev);
-            }}
-          >
+          <IconButton className="commentsButton" onClick={commentClickHandler}>
             {commentsToggle ? <ChatBubbleIcon /> : <ChatBubbleOutlineIcon />}
             {props.post.comments.length}
           </IconButton>
@@ -80,6 +83,7 @@ export default function Post(props) {
         <CommentList comments={props.post.comments}></CommentList>
         {commentsToggle ? (
           <NewCommentInput
+            ref={inputRef}
             targetPostURL={props.post.url}
             getUserData={props.getUserData}
             setCommentsToggle={setCommentsToggle}
