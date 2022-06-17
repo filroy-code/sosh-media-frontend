@@ -8,25 +8,19 @@ import { UserContext } from "./UserContext";
 export default function UserDetails(props) {
   const userInfo = React.useContext(UserContext);
 
-  const [uploadedPhoto, setUploadedPhoto] = React.useState("");
+  const fileRef = React.useRef();
 
-  async function findUserDetails(event) {
+  async function sendImageData(event) {
     event.preventDefault();
+    const image = new FormData();
+    image.append("image", fileRef.current.files[0]);
     let response = await fetch(
       `http://localhost:3000/image/${userInfo.userID}`,
       {
         method: "POST",
-        headers: {
-          Authorization: props.authToken,
-          "Content-Type": "multipart/form-data",
-        },
+        body: image,
       }
     );
-    console.log(response);
-  }
-
-  function updatePhoto(event) {
-    setUploadedPhoto(event.target.value);
   }
 
   return (
@@ -42,12 +36,11 @@ export default function UserDetails(props) {
           type="file"
           name="image"
           id="image"
-          onChange={updatePhoto}
+          ref={fileRef}
           placeholder="upload an avatar"
-          value={uploadedPhoto}
           required
         ></input>
-        <Button onClick={findUserDetails}>Submit</Button>
+        <Button onClick={sendImageData}>Submit</Button>
       </form>
     </div>
   );
