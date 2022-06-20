@@ -52,7 +52,7 @@ export default function Post(props) {
         <Avatar
           {...stringAvatar(`${props.post.author.username}`)}
           alt={`${props.post.author.username}'s Avatar`}
-          src="./placeholder.jpg"
+          src={props.post.author.avatar}
           variant="rounded"
           style={avatarStyle}
         >

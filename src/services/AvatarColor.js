@@ -1,5 +1,6 @@
 import Avatar from "@mui/material/Avatar";
 
+// if user has not uploaded an avatar, their avatar is a letter with a color background. These functions choose the background color based on username.
 export function stringToColor(string) {
   let hash = 0;
   let i;

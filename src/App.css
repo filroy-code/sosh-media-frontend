@@ -112,6 +112,7 @@ hr {
   display: flex;
   flex-direction: column;
   padding: 3px;
+  width: 70vw;
 }
 
 .sideBar {
@@ -132,4 +133,9 @@ hr {
 .userDetails {
   display: flex;
   flex-direction: column;
+}
+
+.avatarUpload {
+  display: flex;
+  justify-content: center;
 }

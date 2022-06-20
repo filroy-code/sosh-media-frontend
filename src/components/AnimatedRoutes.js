@@ -104,7 +104,10 @@ export default function AnimatedRoutes(props) {
               ></LoginForm>
             }
           ></Route>
-          <Route path="/userDetails" element={<UserDetails />}></Route>
+          <Route
+            path="/userDetails"
+            element={<UserDetails authToken={authToken} />}
+          ></Route>
         </Routes>
       </AnimatePresence>
     </UserContext.Provider>

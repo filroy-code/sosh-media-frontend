@@ -26,7 +26,12 @@ export default function Sidebar(props) {
   }
 
   return (
-    <motion.div className="sideBar">
+    <motion.div
+      initial={{ x: "100vw" }}
+      animate={{ x: "0vw", transition: { duration: 0.8 } }}
+      exit={{ x: "100vw", transition: { duration: 0.4 } }}
+      className="sideBar"
+    >
       <Button>
         <Link to="/userDetails">Edit user details.</Link>
       </Button>

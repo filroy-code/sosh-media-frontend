@@ -19,9 +19,9 @@ export default function Home(props) {
 
   return (
     <motion.div
-      initial={{ width: "0vw" }}
-      animate={{ width: "70vw", transition: { duration: 0.8 } }}
-      exit={{ width: "0vw", transition: { duration: 0.4 } }}
+      initial={{ x: "-100vw" }}
+      animate={{ x: "0vw", transition: { duration: 0.8 } }}
+      exit={{ x: "-100vw", transition: { duration: 0.4 } }}
       className="mainSection"
     >
       <NewPostForm getUserData={props.getUserData}></NewPostForm>
