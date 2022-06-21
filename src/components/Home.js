@@ -4,8 +4,10 @@ import NewPostForm from "./NewPostForm";
 import { motion } from "framer-motion";
 
 export default function Home(props) {
-  const postFeed = props.postFeed.map((x) => {
-    return <Post post={x} key={x._id} getUserData={props.getUserData}></Post>;
+  const postFeed = props.postFeed.map((post) => {
+    return (
+      <Post post={post} key={post._id} getUserData={props.getUserData}></Post>
+    );
   });
 
   let { getUserData } = props;

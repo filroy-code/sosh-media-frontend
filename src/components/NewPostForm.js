@@ -53,7 +53,9 @@ export default function NewPostForm(props) {
         value={newPostContent.content}
       />
 
-      <Button onClick={newPostSubmitHandler}>Post</Button>
+      <Button variant="outlined" onClick={newPostSubmitHandler}>
+        Post
+      </Button>
     </form>
   );
 }

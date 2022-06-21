@@ -54,7 +54,7 @@ export default function LoginForm(props) {
       props.setStatusMessage(null);
       navigate("/", { replace: true });
     } else {
-      props.setStatusMessage("Invalid login credentials.");
+      props.setStatusMessage((prev) => "Invalid login credentials.");
       setLoginInfo({
         username: "",
         password: "",

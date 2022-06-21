@@ -7,6 +7,8 @@ import Home from "./Home";
 import SignupForm from "./SignupForm";
 import Sidebar from "./Sidebar";
 import UserDetails from "./UserDetails";
+import PageHeader from "./PageHeader";
+import ExploreOtherUsers from "./ExploreOtherUsers";
 
 export default function AnimatedRoutes(props) {
   const location = useLocation();
@@ -19,6 +21,7 @@ export default function AnimatedRoutes(props) {
   const [loggedInUser, setLoggedInUser] = React.useState({
     userID: "",
     username: "",
+    avatar: "",
   });
 
   // logs user out, setting all states back to default
@@ -43,72 +46,90 @@ export default function AnimatedRoutes(props) {
     });
     if (response.status === 200) {
       let userData = await response.json();
-      if (!loggedInUser.userID) {
-        setLoggedInUser({
-          userID: userData._doc._id,
-          username: userData._doc.username,
-        });
-      }
+      setLoggedInUser({
+        userID: userData._doc._id,
+        username: userData._doc.username,
+        avatar: userData._doc.avatar,
+      });
       updatePostFeed(userData._doc.posts);
-    } else {
-      console.log("You are not logged in.");
     }
   }
 
   return (
     <UserContext.Provider value={loggedInUser}>
       <AnimatePresence>
-        <Routes location={location} key={location.pathname}>
-          <Route
-            path="/"
-            element={
-              authToken ? (
-                <div className="App">
-                  <div className="pageHeader">
-                    <h1>Sosh</h1>
-                    <p className="userDisplay">
-                      Logged in as {loggedInUser.username}{" "}
-                      <button onClick={logout}>Logout</button>
-                    </p>
-                  </div>
-                  <div className="body">
+        <div className="App">
+          {authToken && <PageHeader logout={logout} />}
+          <div className="body">
+            <Routes location={location} key={location.pathname}>
+              <Route
+                path="/"
+                element={
+                  authToken ? (
                     <Home
                       getUserData={getUserData}
                       authToken={authToken}
                       postFeed={postFeed}
                     ></Home>
-                    <Sidebar authToken={authToken}></Sidebar>
-                  </div>
-                </div>
-              ) : (
-                <Navigate to="/login"></Navigate>
-              )
-            }
-          ></Route>
-          <Route
-            path="/signup"
-            element={
-              <SignupForm
-                setStatusMessage={setStatusMessage}
-                statusMessage={statusMessage}
-              />
-            }
-          ></Route>
-          <Route
-            path="/login"
-            element={
-              <LoginForm
-                setAuthToken={setAuthToken}
-                statusMessage={statusMessage}
-                setStatusMessage={setStatusMessage}
-              ></LoginForm>
-            }
-          ></Route>
-          <Route
-            path="/userDetails"
-            element={<UserDetails authToken={authToken} />}
-          ></Route>
-        </Routes>
+                  ) : (
+                    <Navigate to="/login"></Navigate>
+                  )
+                }
+              ></Route>
+              <Route
+                path="/userDetails"
+                element={
+                  authToken ? (
+                    <UserDetails
+                      authToken={authToken}
+                      getUserData={getUserData}
+                    />
+                  ) : (
+                    <Navigate to="/login"></Navigate>
+                  )
+                }
+              ></Route>
+              <Route
+                path="/exploreUsers"
+                element={
+                  authToken ? (
+                    <ExploreOtherUsers>
+                      authToken={authToken}
+                      getUserData={getUserData}
+                    </ExploreOtherUsers>
+                  ) : (
+                    <Navigate to="/login"></Navigate>
+                  )
+                }
+              ></Route>
+              <Route
+                path="/signup"
+                element={
+                  <SignupForm
+                    setStatusMessage={setStatusMessage}
+                    statusMessage={statusMessage}
+                  />
+                }
+              ></Route>
+              <Route
+                path="/login"
+                element={
+                  <LoginForm
+                    setAuthToken={setAuthToken}
+                    statusMessage={statusMessage}
+                    setStatusMessage={setStatusMessage}
+                  ></LoginForm>
+                }
+              ></Route>
+            </Routes>
+            {authToken && (
+              <Sidebar
+                authToken={authToken}
+                getUserData={getUserData}
+              ></Sidebar>
+            )}
+          </div>
+        </div>
       </AnimatePresence>
     </UserContext.Provider>
   );
