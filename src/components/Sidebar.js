@@ -76,7 +76,7 @@ export default function Sidebar(props) {
       <Button
         style={buttonStyle}
         variant="outlined"
-        // onClick={() => navigate("/userDetails", { replace: true })}
+        onClick={() => navigate("/exploreUsers", { replace: true })}
       >
         <PeopleIcon fontSize="large">
           {/* <NavLink to="/userDetails">Edit user details.</NavLink> */}

@@ -128,6 +128,7 @@ hr {
   position: sticky;
   top: 5%;
   margin-top: 10px;
+  margin-right: 2px;
 }
 
 .pageHeader {
@@ -169,6 +170,43 @@ hr {
 
 canvas {
   border: 2px solid black;
+  border-radius: 5px;
   padding: 1px;
   margin: 8px;
+}
+
+@media screen and (max-width: 1268px) {
+  .post, .newPostForm {
+      width: 99%;
+  }
+}
+
+@media screen and (max-width: 1136px) {
+  .post, .newPostForm {
+      width: 98%;
+  }
+}
+
+@media screen and (max-width: 903px) {
+  .post, .newPostForm {
+      width: 97%;
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .post, .newPostForm {
+      width: 96%;
+  }
+}
+
+@media screen and (max-width: 496px) {
+  .post, .newPostForm {
+      width: 95%;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .post, .newPostForm {
+      width: 94%;
+  }
 }

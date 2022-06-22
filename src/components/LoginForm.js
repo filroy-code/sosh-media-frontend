@@ -116,8 +116,8 @@ export default function LoginForm(props) {
       >
         Log-In
       </Button>
-      Or
-      <Button onClick={signupLink}>
+      <p>Or</p>
+      <Button variant="outlined" onClick={signupLink}>
         <Link to="/signup">sign up.</Link>
       </Button>
     </motion.form>

@@ -83,7 +83,7 @@ export default function UserDetails(props) {
               ref={fileRef}
               onChange={() => {
                 setFileAttached(true);
-                setAvatarZoom((prev) => prev + 0.5);
+                setAvatarZoom((prev) => (prev === 1 ? prev + 0.1 : 1));
               }}
               placeholder="upload an avatar"
               required
@@ -96,11 +96,14 @@ export default function UserDetails(props) {
         </div>
       </div>
       <hr></hr>
-      <form
+      <motion.form
         className="userDetailsLower"
         encType="multipart/form-data"
         action={`/image/${userInfo.userID}`}
         method="POST"
+        initial={{ y: "100vh" }}
+        animate={{ y: "0vh", transition: { duration: 0.8 } }}
+        exit={{ y: "100vh", transition: { duration: 0.4 } }}
       >
         {/* <input
           type="file"
@@ -141,7 +144,7 @@ export default function UserDetails(props) {
             </Button>
           </div>
         )}
-      </form>
+      </motion.form>
     </motion.div>
   );
 }
