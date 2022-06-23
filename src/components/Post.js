@@ -29,7 +29,7 @@ export default function Post(props) {
   async function starClickHandler(event) {
     event.preventDefault();
     setStarsToggle((prev) => !prev);
-    let response = await fetch(`http://localhost:3000${props.post.url}`, {
+    let response = await fetch(`http://localhost:3000/users${props.post.url}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

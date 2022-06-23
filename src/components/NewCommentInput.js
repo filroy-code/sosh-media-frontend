@@ -22,11 +22,14 @@ const NewCommentInput = React.forwardRef((props, ref) => {
 
   async function commentSubmitHandler(event) {
     event.preventDefault();
-    let response = await fetch(`http://localhost:3000${props.targetPostURL}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(commentState),
-    });
+    let response = await fetch(
+      `http://localhost:3000/users${props.targetPostURL}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(commentState),
+      }
+    );
     let json = await response.json();
     console.log(json);
     props.getUserData();

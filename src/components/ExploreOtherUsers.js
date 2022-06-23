@@ -1,14 +1,34 @@
 import React from "react";
+import Button from "@mui/material/Button";
+import UserCard from "./UserCard";
 import { motion } from "framer-motion";
 
 export default function ExploreOtherUsers(props) {
-  //   const postFeed = props.postFeed.map((post) => {
-  //     return (
-  //       <Post post={post} key={post._id} getUserData={props.getUserData}></Post>
-  //     );
-  //   });
+  const [userList, setUserList] = React.useState([]);
 
+  function generateUserCards(userList) {
+    let userListDisplay = userList.map((user) => {
+      return <UserCard user={user} key={user._id}></UserCard>;
+    });
+    setUserList(userListDisplay);
+  }
+
+  async function findUsers() {
+    let response = await fetch("http://localhost:3000/users", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(loginInfo),
+    });
+    let responseJSON = await response.json();
+    generateUserCards(responseJSON.userList);
+  }
+
+  React.useEffect(() => {
+    findUsers();
+  }, []);
   //   let { getUserData } = props;
+
+  // const [searchQuery, setSearchQuery] = React.useState("");
 
   //populates home feed on user login.
   //   React.useEffect(() => {
@@ -17,15 +37,22 @@ export default function ExploreOtherUsers(props) {
   //     }
   //   }, [props.authToken]);
 
-  async function findUsers(event) {
-    event.preventDefault();
-    let response = await fetch("http://localhost:3000/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(loginInfo),
-    });
-    let responseJSON = await response.json();
-  }
+  // async function searchSubmitHandler(event) {
+  //   event.preventDefault();
+  //   let response = await fetch(`http://localhost:3000/search/${searchQuery}`, {
+  //     method: "GET",
+  //     headers: {
+  //       Authorization: props.authToken,
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   let json = await response.json();
+  //   console.log(json);
+  // }
+
+  // function searchChangeHandler(event) {
+  //   setSearchQuery(event.target.value);
+  // }
 
   return (
     <motion.div
@@ -34,10 +61,9 @@ export default function ExploreOtherUsers(props) {
       exit={{ x: "-100vw", transition: { duration: 0.4 } }}
       className="mainSection"
     >
-      <div
-        style={{ width: "90vw", height: "90vh", border: "1px solid black" }}
-      ></div>
-      {/* <NewPostForm getUserData={props.getUserData}></NewPostForm> */}
+      <div className="exploreOtherUsers">
+        <div className="userList">{userList}</div>
+      </div>
     </motion.div>
   );
 }

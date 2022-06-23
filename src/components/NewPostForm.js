@@ -23,11 +23,14 @@ export default function NewPostForm(props) {
   // submits content and author from newPostContent and creates a new post in database
   async function newPostSubmitHandler(event) {
     event.preventDefault();
-    let response = await fetch(`http://localhost:3000/${userInfo.username}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newPostContent),
-    });
+    let response = await fetch(
+      `http://localhost:3000/users/${userInfo.username}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newPostContent),
+      }
+    );
     if (response.status === 200) {
       setNewPostContent({ content: "", author: userInfo.userID });
       props.getUserData();

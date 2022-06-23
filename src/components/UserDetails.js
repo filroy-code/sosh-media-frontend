@@ -37,9 +37,9 @@ export default function UserDetails(props) {
       )
     );
     let response = await fetch(
-      `http://localhost:3000/image/${userInfo.userID}`,
+      `http://localhost:3000/users/${userInfo.userID}/details`,
       {
-        method: "POST",
+        method: "PUT",
         body: image,
         headers: { Authorization: props.authToken },
       }

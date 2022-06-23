@@ -21,24 +21,13 @@ export default function Sidebar(props) {
     height: "4rem",
     width: "4rem",
   };
-  // const [searchQuery, setSearchQuery] = React.useState("");
 
-  // async function searchSubmitHandler(event) {
-  //   event.preventDefault();
-  //   let response = await fetch(`http://localhost:3000/search/${searchQuery}`, {
-  //     method: "GET",
-  //     headers: {
-  //       Authorization: props.authToken,
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  //   let json = await response.json();
-  //   console.log(json);
-  // }
-
-  // function searchChangeHandler(event) {
-  //   setSearchQuery(event.target.value);
-  // }
+  const activeButtonStyle = {
+    margin: "5px",
+    height: "4rem",
+    width: "4rem",
+    "background-color": "grey",
+  };
 
   return (
     <motion.nav

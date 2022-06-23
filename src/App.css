@@ -145,6 +145,7 @@ hr {
   padding: 8px;
   border-radius: 5px;
   width: 90vw;
+  margin: 5px;
 }
 
 .userDetailButtonContainer {
@@ -175,9 +176,57 @@ canvas {
   margin: 8px;
 }
 
+.exploreOtherUsers {
+  display: flex;
+  justify-content: center;
+  width: 90vw; 
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.userList {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.userCard {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 15px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 8rem;
+}
+
+.userCard > h3 {
+  margin: 7px;
+}
+
+.userCard > p {
+  margin-top: 10px;
+}
+
+.userCardInfoContainer {
+  display: flex;
+  gap: 15px;
+}
+
+@media screen and (max-width: 1376px) {
+  .userList {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
 @media screen and (max-width: 1268px) {
   .post, .newPostForm {
       width: 99%;
+  }
+  .userList {
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 
@@ -185,11 +234,29 @@ canvas {
   .post, .newPostForm {
       width: 98%;
   }
+  .exploreOtherUsers, .userDetails {
+    width: 88vw; 
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .userList {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 @media screen and (max-width: 903px) {
   .post, .newPostForm {
       width: 97%;
+  }
+  .exploreOtherUsers, .userDetails {
+    width: 86vw; 
+  }
+}
+
+@media screen and (max-width: 805px) {
+  .userList {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -197,16 +264,34 @@ canvas {
   .post, .newPostForm {
       width: 96%;
   }
+  .exploreOtherUsers, .userDetails {
+    width: 84vw; 
+  }
+  .userList {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media screen and (max-width: 496px) {
   .post, .newPostForm {
       width: 95%;
   }
+  .exploreOtherUsers, .userDetails {
+    width: 78vw; 
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .userList {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 @media screen and (max-width: 390px) {
   .post, .newPostForm {
       width: 94%;
+  }
+  .exploreOtherUsers, .userDetails {
+    width: 74vw; 
   }
 }
