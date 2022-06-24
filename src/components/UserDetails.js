@@ -96,16 +96,17 @@ export default function UserDetails(props) {
         </div>
       </div>
       <hr></hr>
-      <motion.form
-        className="userDetailsLower"
-        encType="multipart/form-data"
-        action={`/image/${userInfo.userID}`}
-        method="POST"
-        initial={{ y: "100vh" }}
-        animate={{ y: "0vh", transition: { duration: 0.8 } }}
-        exit={{ y: "100vh", transition: { duration: 0.4 } }}
-      >
-        {/* <input
+      {fileAttached && (
+        <motion.form
+          className="userDetailsLower"
+          encType="multipart/form-data"
+          action={`/image/${userInfo.userID}`}
+          method="POST"
+          initial={{ y: "100vh" }}
+          animate={{ y: "0vh", transition: { duration: 0.8 } }}
+          exit={{ y: "100vh", transition: { duration: 0.4 } }}
+        >
+          {/* <input
           type="file"
           name="image"
           id="image"
@@ -114,37 +115,39 @@ export default function UserDetails(props) {
           placeholder="upload an avatar"
           required
         ></input> */}
-        {fileRef.current && (
-          <div className="avatarPreview">
-            <AvatarEditor
-              image={fileAttached ? fileRef.current.files[0] : null}
-              ref={croppedRef}
-              width={250}
-              height={250}
-              border={50}
-              borderRadius={5}
-              color={[255, 255, 255, 0.6]} // RGBA
-              scale={avatarZoom}
-              rotate={0}
-            ></AvatarEditor>
-            New Avatar Zoom
-            <Slider
-              defaultValue={1}
-              min={1}
-              max={5}
-              step={0.1}
-              onChange={(event) => setAvatarZoom(event.target.value)}
-            ></Slider>
-            <Button
-              style={buttonStyle}
-              variant="contained"
-              onClick={sendImageData}
-            >
-              Submit
-            </Button>
-          </div>
-        )}
-      </motion.form>
+          {fileRef.current && (
+            <div className="avatarPreview">
+              <AvatarEditor
+                image={fileAttached ? fileRef.current.files[0] : null}
+                ref={croppedRef}
+                backgroundColor="white"
+                width={250}
+                height={250}
+                border={50}
+                borderRadius={5}
+                color={[255, 255, 255, 0.6]} // RGBA
+                scale={avatarZoom}
+                rotate={0}
+              ></AvatarEditor>
+              New Avatar Zoom
+              <Slider
+                defaultValue={1}
+                min={1}
+                max={5}
+                step={0.1}
+                onChange={(event) => setAvatarZoom(event.target.value)}
+              ></Slider>
+              <Button
+                style={buttonStyle}
+                variant="contained"
+                onClick={sendImageData}
+              >
+                Submit
+              </Button>
+            </div>
+          )}
+        </motion.form>
+      )}
     </motion.div>
   );
 }

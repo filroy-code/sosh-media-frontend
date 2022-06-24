@@ -178,7 +178,8 @@ canvas {
 
 .exploreOtherUsers {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   width: 90vw; 
   border: 1px solid black;
   border-radius: 5px;
@@ -213,6 +214,11 @@ canvas {
 .userCardInfoContainer {
   display: flex;
   gap: 15px;
+}
+
+.userSearch {
+  margin: 20px 0px 5px 0px;
+  width: 90%;
 }
 
 @media screen and (max-width: 1376px) {

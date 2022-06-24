@@ -8,10 +8,6 @@ export default function PageHeader(props) {
   return (
     <div className="pageHeader">
       <h1>Sosh</h1>
-      <p className="userDisplay">
-        Logged in as {userInfo.username}{" "}
-        <button onClick={props.logout}>Logout</button>
-      </p>
     </div>
   );
 }

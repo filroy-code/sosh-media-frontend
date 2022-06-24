@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import UserCard from "./UserCard";
 import { motion } from "framer-motion";
 
@@ -28,7 +29,11 @@ export default function ExploreOtherUsers(props) {
   }, []);
   //   let { getUserData } = props;
 
-  // const [searchQuery, setSearchQuery] = React.useState("");
+  const [searchQuery, setSearchQuery] = React.useState("");
+
+  function searchChangeHandler(event) {
+    setSearchQuery(event.target.value);
+  }
 
   //populates home feed on user login.
   //   React.useEffect(() => {
@@ -50,10 +55,6 @@ export default function ExploreOtherUsers(props) {
   //   console.log(json);
   // }
 
-  // function searchChangeHandler(event) {
-  //   setSearchQuery(event.target.value);
-  // }
-
   return (
     <motion.div
       initial={{ x: "-100vw" }}
@@ -62,6 +63,17 @@ export default function ExploreOtherUsers(props) {
       className="mainSection"
     >
       <div className="exploreOtherUsers">
+        <div className="userSearch">
+          <TextField
+            fullWidth
+            multiline
+            size="small"
+            name="content"
+            placeholder="Search for users..."
+            onChange={searchChangeHandler}
+            value={searchQuery}
+          />
+        </div>
         <div className="userList">{userList}</div>
       </div>
     </motion.div>

@@ -4,6 +4,7 @@ import { useLocation, Routes, Route, Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import LoginForm from "./LoginForm";
 import Home from "./Home";
+import Feed from "./Feed";
 import SignupForm from "./SignupForm";
 import Sidebar from "./Sidebar";
 import UserDetails from "./UserDetails";
@@ -59,7 +60,7 @@ export default function AnimatedRoutes(props) {
     <UserContext.Provider value={loggedInUser}>
       <AnimatePresence>
         <div className="App">
-          {authToken && <PageHeader logout={logout} />}
+          {authToken && <PageHeader />}
           <div className="body">
             <Routes location={location} key={location.pathname}>
               <Route
@@ -93,10 +94,23 @@ export default function AnimatedRoutes(props) {
                 path="/exploreUsers"
                 element={
                   authToken ? (
-                    <ExploreOtherUsers>
+                    <ExploreOtherUsers
                       authToken={authToken}
-                      getUserData={getUserData}
-                    </ExploreOtherUsers>
+                    ></ExploreOtherUsers>
+                  ) : (
+                    <Navigate to="/login"></Navigate>
+                  )
+                }
+              ></Route>
+              <Route
+                path="/users/:user"
+                element={
+                  authToken ? (
+                    <Feed
+                    // getUserData={getUserData}
+                    // authToken={authToken}
+                    // postFeed={postFeed}
+                    ></Feed>
                   ) : (
                     <Navigate to="/login"></Navigate>
                   )
@@ -114,11 +128,15 @@ export default function AnimatedRoutes(props) {
               <Route
                 path="/login"
                 element={
-                  <LoginForm
-                    setAuthToken={setAuthToken}
-                    statusMessage={statusMessage}
-                    setStatusMessage={setStatusMessage}
-                  ></LoginForm>
+                  !authToken ? (
+                    <LoginForm
+                      setAuthToken={setAuthToken}
+                      statusMessage={statusMessage}
+                      setStatusMessage={setStatusMessage}
+                    ></LoginForm>
+                  ) : (
+                    <Navigate to="/"></Navigate>
+                  )
                 }
               ></Route>
             </Routes>
@@ -126,6 +144,7 @@ export default function AnimatedRoutes(props) {
               <Sidebar
                 authToken={authToken}
                 getUserData={getUserData}
+                logout={logout}
               ></Sidebar>
             )}
           </div>

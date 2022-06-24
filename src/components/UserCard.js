@@ -9,13 +9,13 @@ import { motion } from "framer-motion";
 import getData from "../services/getData";
 
 function UserCard(props) {
+  let navigate = useNavigate();
+
   return (
     <div className="userCard">
       <Avatar
         onClick={() =>
-          getData(props.user.username).then((result) => {
-            console.log(result[0]);
-          })
+          navigate(`/users/${props.user.username}`, { replace: true })
         }
         {...stringAvatar(`${props.user.username}`)}
         src={props.user.avatar}

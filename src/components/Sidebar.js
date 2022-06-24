@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
+import LogoutIcon from "@mui/icons-material/Logout";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import PeopleIcon from "@mui/icons-material/People";
@@ -70,6 +71,11 @@ export default function Sidebar(props) {
         <PeopleIcon fontSize="large">
           {/* <NavLink to="/userDetails">Edit user details.</NavLink> */}
         </PeopleIcon>
+      </Button>
+      <Button style={buttonStyle} variant="outlined" onClick={props.logout}>
+        <LogoutIcon fontSize="large">
+          {/* <NavLink to="/userDetails">Edit user details.</NavLink> */}
+        </LogoutIcon>
       </Button>
 
       {/* <form onSubmit={searchSubmitHandler}>
