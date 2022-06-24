@@ -37,7 +37,7 @@ export default function Sidebar(props) {
       exit={{ x: "100vw", transition: { duration: 0.4 } }}
       className="sideBar"
     >
-      <Button onClick={() => props.getUserData()}>CLICK</Button>
+      <Button onClick={() => console.log(userInfo.authToken)}>CLICK</Button>
       <Button
         style={buttonStyle}
         variant="outlined"

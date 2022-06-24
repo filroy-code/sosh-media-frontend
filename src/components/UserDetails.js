@@ -10,6 +10,7 @@ import Slider from "@mui/material/Slider";
 import DataURLtoFile from "../services/DataURLToFile";
 import { stringAvatar, stringToColor } from "../services/AvatarColor";
 import { motion } from "framer-motion";
+import getLoggedinUserData from "../services/getLoggedinUserData";
 
 export default function UserDetails(props) {
   const userInfo = React.useContext(UserContext);
@@ -41,10 +42,16 @@ export default function UserDetails(props) {
       {
         method: "PUT",
         body: image,
-        headers: { Authorization: props.authToken },
+        headers: { Authorization: userInfo.authToken },
       }
     );
-    props.getUserData();
+    if (response.status === 200) {
+      let userData = await getLoggedinUserData(userInfo.authToken);
+      props.setLoggedInUser((prev) => ({
+        ...prev,
+        avatar: userData._doc.avatar,
+      }));
+    }
   }
 
   const [fileAttached, setFileAttached] = React.useState(false);

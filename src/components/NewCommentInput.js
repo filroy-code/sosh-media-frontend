@@ -7,6 +7,7 @@ import StarIcon from "@mui/icons-material/Star";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import Button from "@mui/material/Button";
 import { UserContext } from "./UserContext";
+import getLoggedinUserData from "../services/getLoggedinUserData";
 
 const NewCommentInput = React.forwardRef((props, ref) => {
   const userInfo = React.useContext(UserContext);
@@ -30,10 +31,9 @@ const NewCommentInput = React.forwardRef((props, ref) => {
         body: JSON.stringify(commentState),
       }
     );
-    let json = await response.json();
-    console.log(json);
-    props.getUserData();
+    getLoggedinUserData(userInfo.authToken);
     props.setCommentsToggle((prev) => !prev);
+    props.update();
   }
 
   React.useEffect(() => {

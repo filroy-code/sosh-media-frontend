@@ -3,7 +3,6 @@ import { UserContext } from "./UserContext";
 import { useLocation, Routes, Route, Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import LoginForm from "./LoginForm";
-import Home from "./Home";
 import Feed from "./Feed";
 import SignupForm from "./SignupForm";
 import Sidebar from "./Sidebar";
@@ -13,65 +12,35 @@ import ExploreOtherUsers from "./ExploreOtherUsers";
 
 export default function AnimatedRoutes(props) {
   const location = useLocation();
-  const userInfo = React.useContext(UserContext);
 
-  // JWT stored here, when issued.
-  const [authToken, setAuthToken] = React.useState("");
-
-  // logged in user info
+  // logged in user info, including JWT to attach to requests
   const [loggedInUser, setLoggedInUser] = React.useState({
     userID: "",
     username: "",
     avatar: "",
+    authToken: "",
   });
 
   // logs user out, setting all states back to default
   function logout() {
-    setAuthToken("");
-    setLoggedInUser({ userID: "", username: "" });
-    updatePostFeed([]);
+    setLoggedInUser({ userID: "", username: "", avatar: "", authToken: "" });
   }
 
   // controls the message to be displayed on login screen on unsuccessful login or on successful signup, used in Login and Signup Form components
   const [statusMessage, setStatusMessage] = React.useState(null);
 
-  // an array of objects which are retrieved from database and populate home feed.
-  const [postFeed, updatePostFeed] = React.useState([]);
-
-  // sends a GET request which verifies the stored JWT and saves logged in user data (including home feed) to state if valid.
-  async function getUserData() {
-    let response = await fetch("http://localhost:3000/", {
-      method: "GET",
-      mode: "cors",
-      headers: { Authorization: authToken, Origin: "localhost:8080" },
-    });
-    if (response.status === 200) {
-      let userData = await response.json();
-      setLoggedInUser({
-        userID: userData._doc._id,
-        username: userData._doc.username,
-        avatar: userData._doc.avatar,
-      });
-      updatePostFeed(userData._doc.posts);
-    }
-  }
-
   return (
     <UserContext.Provider value={loggedInUser}>
       <AnimatePresence>
         <div className="App">
-          {authToken && <PageHeader />}
+          {loggedInUser.authToken && <PageHeader />}
           <div className="body">
             <Routes location={location} key={location.pathname}>
               <Route
                 path="/"
                 element={
-                  authToken ? (
-                    <Home
-                      getUserData={getUserData}
-                      authToken={authToken}
-                      postFeed={postFeed}
-                    ></Home>
+                  loggedInUser.authToken ? (
+                    <Feed></Feed>
                   ) : (
                     <Navigate to="/login"></Navigate>
                   )
@@ -80,11 +49,8 @@ export default function AnimatedRoutes(props) {
               <Route
                 path="/userDetails"
                 element={
-                  authToken ? (
-                    <UserDetails
-                      authToken={authToken}
-                      getUserData={getUserData}
-                    />
+                  loggedInUser.authToken ? (
+                    <UserDetails setLoggedInUser={setLoggedInUser} />
                   ) : (
                     <Navigate to="/login"></Navigate>
                   )
@@ -93,10 +59,8 @@ export default function AnimatedRoutes(props) {
               <Route
                 path="/exploreUsers"
                 element={
-                  authToken ? (
-                    <ExploreOtherUsers
-                      authToken={authToken}
-                    ></ExploreOtherUsers>
+                  loggedInUser.authToken ? (
+                    <ExploreOtherUsers></ExploreOtherUsers>
                   ) : (
                     <Navigate to="/login"></Navigate>
                   )
@@ -105,12 +69,8 @@ export default function AnimatedRoutes(props) {
               <Route
                 path="/users/:user"
                 element={
-                  authToken ? (
-                    <Feed
-                    // getUserData={getUserData}
-                    // authToken={authToken}
-                    // postFeed={postFeed}
-                    ></Feed>
+                  loggedInUser.authToken ? (
+                    <Feed></Feed>
                   ) : (
                     <Navigate to="/login"></Navigate>
                   )
@@ -128,9 +88,9 @@ export default function AnimatedRoutes(props) {
               <Route
                 path="/login"
                 element={
-                  !authToken ? (
+                  !loggedInUser.authToken ? (
                     <LoginForm
-                      setAuthToken={setAuthToken}
+                      setLoggedInUser={setLoggedInUser}
                       statusMessage={statusMessage}
                       setStatusMessage={setStatusMessage}
                     ></LoginForm>
@@ -140,13 +100,7 @@ export default function AnimatedRoutes(props) {
                 }
               ></Route>
             </Routes>
-            {authToken && (
-              <Sidebar
-                authToken={authToken}
-                getUserData={getUserData}
-                logout={logout}
-              ></Sidebar>
-            )}
+            {loggedInUser.authToken && <Sidebar logout={logout}></Sidebar>}
           </div>
         </div>
       </AnimatePresence>

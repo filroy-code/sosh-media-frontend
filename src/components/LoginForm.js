@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import getLoggedinUserData from "../services/getLoggedinUserData";
 
 export default function LoginForm(props) {
   let navigate = useNavigate();
@@ -46,12 +47,18 @@ export default function LoginForm(props) {
     });
     let responseJSON = await response.json();
     if (responseJSON !== false) {
-      props.setAuthToken(responseJSON.token);
       setLoginInfo({
         username: "",
         password: "",
       });
       props.setStatusMessage(null);
+      let userData = await getLoggedinUserData(responseJSON.token);
+      props.setLoggedInUser({
+        userID: userData._doc._id,
+        username: userData._doc.username,
+        avatar: userData._doc.avatar,
+        authToken: responseJSON.token,
+      });
       navigate("/", { replace: true });
     } else {
       props.setStatusMessage((prev) => "Invalid login credentials.");

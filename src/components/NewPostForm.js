@@ -2,6 +2,7 @@ import React from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { UserContext } from "./UserContext";
+import getLoggedinUserData from "../services/getLoggedinUserData";
 
 export default function NewPostForm(props) {
   const userInfo = React.useContext(UserContext);
@@ -33,7 +34,7 @@ export default function NewPostForm(props) {
     );
     if (response.status === 200) {
       setNewPostContent({ content: "", author: userInfo.userID });
-      props.getUserData();
+      getLoggedinUserData(userInfo.authToken);
     } else {
       console.log("There was an error creating your post.");
     }

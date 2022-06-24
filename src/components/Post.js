@@ -13,6 +13,7 @@ import { UserContext } from "./UserContext";
 import CommentList from "./CommentList";
 import NewCommentInput from "./NewCommentInput";
 import { stringAvatar } from "../services/AvatarColor";
+import getLoggedinUserData from "../services/getLoggedinUserData";
 
 export default function Post(props) {
   const userInfo = React.useContext(UserContext);
@@ -38,8 +39,8 @@ export default function Post(props) {
       }),
     });
     let json = await response.json();
-    console.log(json);
-    props.getUserData();
+    getLoggedinUserData(userInfo.authToken);
+    props.update();
   }
 
   function commentClickHandler() {
@@ -85,8 +86,8 @@ export default function Post(props) {
           <NewCommentInput
             ref={inputRef}
             targetPostURL={props.post.url}
-            getUserData={props.getUserData}
             setCommentsToggle={setCommentsToggle}
+            update={props.update}
           ></NewCommentInput>
         ) : null}
       </div>

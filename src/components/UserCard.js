@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import { stringAvatar, stringToColor } from "../services/AvatarColor";
 import { motion } from "framer-motion";
-import getData from "../services/getData";
+import getOtherUserData from "../services/getOtherUserData";
 
 function UserCard(props) {
   let navigate = useNavigate();

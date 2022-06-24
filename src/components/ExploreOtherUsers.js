@@ -27,33 +27,12 @@ export default function ExploreOtherUsers(props) {
   React.useEffect(() => {
     findUsers();
   }, []);
-  //   let { getUserData } = props;
 
   const [searchQuery, setSearchQuery] = React.useState("");
 
   function searchChangeHandler(event) {
     setSearchQuery(event.target.value);
   }
-
-  //populates home feed on user login.
-  //   React.useEffect(() => {
-  //     if (props.authToken) {
-  //       getUserData();
-  //     }
-  //   }, [props.authToken]);
-
-  // async function searchSubmitHandler(event) {
-  //   event.preventDefault();
-  //   let response = await fetch(`http://localhost:3000/search/${searchQuery}`, {
-  //     method: "GET",
-  //     headers: {
-  //       Authorization: props.authToken,
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  //   let json = await response.json();
-  //   console.log(json);
-  // }
 
   return (
     <motion.div

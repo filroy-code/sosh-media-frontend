@@ -1,49 +1,64 @@
 import React from "react";
 import Post from "./Post";
 import NewPostForm from "./NewPostForm";
-import getData from "../services/getData";
+import getOtherUserData from "../services/getOtherUserData";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@mui/material";
+import getLoggedinUserData from "../services/getLoggedinUserData";
+import { UserContext } from "./UserContext";
 
 export default function Feed(props) {
   const { user } = useParams();
-  const [initialRender, setInitialRender] = React.useState(false);
+  const userInfo = React.useContext(UserContext);
+  const [initialRenderCompleted, setInitialRenderCompleted] =
+    React.useState(false);
 
   const [userData, updateUserData] = React.useState([]);
   const [postFeed, updatePostFeed] = React.useState([]);
 
+  async function retrieveUser() {
+    let userDataResult = await getOtherUserData(user);
+    updateUserData(userDataResult[0]);
+  }
+  async function retrieveUserHome() {
+    let loggedinUserData = await getLoggedinUserData(userInfo.authToken);
+    updateUserData(loggedinUserData._doc);
+  }
+
+  async function retrieveAppropriateUserData() {
+    //if the user param is truthy, populated the feed with posts from that user. Else, the feed is the home feed for the logged in user.
+    if (user) {
+      retrieveUser();
+    } else {
+      retrieveUserHome();
+    }
+  }
+
   function generatePosts(userData) {
     const posts = userData.posts;
-    console.log(posts);
     let postsDisplay = posts.map((post) => {
-      return <Post post={post} key={post._id}></Post>;
+      return (
+        <Post
+          post={post}
+          key={post._id}
+          update={retrieveAppropriateUserData}
+        ></Post>
+      );
     });
     updatePostFeed(postsDisplay);
   }
 
-  // const postFeedDisplay = postFeed.map((post) => {
-  //   return (
-  //     <Post post={post} key={post._id} getUserData={props.getUserData}></Post>
-  //   );
-  // });
-
   //populates feed based on which user is being viewed
   React.useEffect(() => {
-    async function retrieveUser() {
-      updateUserData(await getData(user));
-    }
-    //if the user param is truthy, populated the feed with posts from that user. Else, the feed is the home feed for the logged in user.
-    if (user) {
-      retrieveUser();
-    }
+    retrieveAppropriateUserData();
   }, [user]);
 
   React.useEffect(() => {
-    if (initialRender) {
-      generatePosts(userData[0]);
+    if (initialRenderCompleted) {
+      generatePosts(userData);
     } else {
-      setInitialRender(true);
+      setInitialRenderCompleted(true);
     }
   }, [userData]);
 
@@ -54,7 +69,7 @@ export default function Feed(props) {
       exit={{ x: "-100vw", transition: { duration: 0.4 } }}
       className="mainSection"
     >
-      {/* <NewPostForm getUserData={props.getUserData}></NewPostForm> */}
+      {!user && <NewPostForm></NewPostForm>}
       {postFeed}
       <Button onClick={() => console.log(postFeed)}>CLICK</Button>
     </motion.div>
