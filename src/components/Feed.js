@@ -69,9 +69,10 @@ export default function Feed(props) {
       exit={{ x: "-100vw", transition: { duration: 0.4 } }}
       className="mainSection"
     >
-      {!user && <NewPostForm></NewPostForm>}
+      {!user && (
+        <NewPostForm update={retrieveAppropriateUserData}></NewPostForm>
+      )}
       {postFeed}
-      <Button onClick={() => console.log(postFeed)}>CLICK</Button>
     </motion.div>
   );
 }

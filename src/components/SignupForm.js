@@ -106,6 +106,7 @@ export default function SignupForm(props) {
       ) : null}
       <Button
         variant="contained"
+        type="submit"
         style={buttonStyle}
         onClick={signupSubmitHandler}
       >

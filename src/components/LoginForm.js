@@ -118,6 +118,7 @@ export default function LoginForm(props) {
       ) : null}
       <Button
         variant="contained"
+        type="submit"
         style={buttonStyle}
         onClick={loginSubmitHandler}
       >

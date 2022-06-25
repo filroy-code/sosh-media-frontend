@@ -37,7 +37,15 @@ export default function Sidebar(props) {
       exit={{ x: "100vw", transition: { duration: 0.4 } }}
       className="sideBar"
     >
-      <Button onClick={() => console.log(userInfo.authToken)}>CLICK</Button>
+      <Button
+        style={buttonStyle}
+        variant="outlined"
+        onClick={() => navigate("/", { replace: true })}
+      >
+        <HomeIcon fontSize="large">
+          <NavLink to="/">Home</NavLink>
+        </HomeIcon>
+      </Button>
       <Button
         style={buttonStyle}
         variant="outlined"
@@ -51,17 +59,8 @@ export default function Sidebar(props) {
           variant="rounded"
         >
           {userInfo.username && userInfo.username[0].toUpperCase()}
-          <NavLink to="/userDetails"></NavLink>
+          <NavLink to="/userDetails">Edit User Details</NavLink>
         </Avatar>
-      </Button>
-      <Button
-        style={buttonStyle}
-        variant="outlined"
-        onClick={() => navigate("/", { replace: true })}
-      >
-        <HomeIcon fontSize="large">
-          <NavLink to="/">Edit user details.</NavLink>
-        </HomeIcon>
       </Button>
       <Button
         style={buttonStyle}
@@ -69,7 +68,7 @@ export default function Sidebar(props) {
         onClick={() => navigate("/exploreUsers", { replace: true })}
       >
         <PeopleIcon fontSize="large">
-          {/* <NavLink to="/userDetails">Edit user details.</NavLink> */}
+          <NavLink to="/exploreUsers">Explore Users</NavLink>
         </PeopleIcon>
       </Button>
       <Button style={buttonStyle} variant="outlined" onClick={props.logout}>

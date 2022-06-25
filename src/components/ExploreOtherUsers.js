@@ -3,13 +3,18 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import UserCard from "./UserCard";
 import { motion } from "framer-motion";
+import { UserContext } from "./UserContext";
 
 export default function ExploreOtherUsers(props) {
+  const userInfo = React.useContext(UserContext);
   const [userList, setUserList] = React.useState([]);
 
   function generateUserCards(userList) {
     let userListDisplay = userList.map((user) => {
-      return <UserCard user={user} key={user._id}></UserCard>;
+      if (user._id !== userInfo.userID)
+        return (
+          <UserCard user={user} key={user._id} findUsers={findUsers}></UserCard>
+        );
     });
     setUserList(userListDisplay);
   }
