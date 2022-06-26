@@ -192,6 +192,10 @@ canvas {
   grid-template-rows: repeat(2, 1fr);
 }
 
+.userListAbsent {
+  margin: 20px;
+}
+
 .userCard {
   border: 1px solid black;
   border-radius: 5px;
@@ -219,6 +223,10 @@ canvas {
 .userSearch {
   margin: 20px 0px 5px 0px;
   width: 90%;
+}
+
+.activeTab {
+  background: radial-gradient(circle, rgba(255,255,255,1) 41%, rgb(106, 128, 162) 100%) !important;
 }
 
 @media screen and (max-width: 1376px) {

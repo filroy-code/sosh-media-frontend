@@ -13,7 +13,11 @@ export default function ExploreOtherUsers(props) {
     let userListDisplay = userList.map((user) => {
       if (user._id !== userInfo.userID)
         return (
-          <UserCard user={user} key={user._id} findUsers={findUsers}></UserCard>
+          <UserCard
+            user={user}
+            key={user._id}
+            findUsersAndGenerateCards={findUsersAndGenerateCards}
+          ></UserCard>
         );
     });
     setUserList(userListDisplay);
@@ -26,18 +30,43 @@ export default function ExploreOtherUsers(props) {
       //   body: JSON.stringify(loginInfo),
     });
     let responseJSON = await response.json();
-    generateUserCards(responseJSON.userList);
+    return responseJSON.userList;
+  }
+
+  async function findUsersAndGenerateCards() {
+    let users = await findUsers();
+    generateUserCards(users);
   }
 
   React.useEffect(() => {
-    findUsers();
+    findUsersAndGenerateCards();
   }, []);
 
   const [searchQuery, setSearchQuery] = React.useState("");
 
-  function searchChangeHandler(event) {
+  async function searchChangeHandler(event) {
     setSearchQuery(event.target.value);
+    let filteredUsers = await searchUsers(event.target.value);
+    generateUserCards(filteredUsers);
   }
+
+  async function searchUsers(searchQuery) {
+    let response = await fetch("http://localhost:3000/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ searchQuery: searchQuery }),
+    });
+    let responseJSON = await response.json();
+    return responseJSON;
+  }
+
+  // React.useEffect(() => {
+  //   async function findUsersAndGenerateCards() {
+  //     let users = await findUsers();
+  //     generateUserCards(users);
+  //   }
+  //   findUsersAndGenerateCards();
+  // }, [searchQuery]);
 
   return (
     <motion.div
@@ -58,7 +87,11 @@ export default function ExploreOtherUsers(props) {
             value={searchQuery}
           />
         </div>
-        <div className="userList">{userList}</div>
+        {userList.length > 0 ? (
+          <div className="userList">{userList}</div>
+        ) : (
+          <div className="userListAbsent">No users matched your search.</div>
+        )}
       </div>
     </motion.div>
   );

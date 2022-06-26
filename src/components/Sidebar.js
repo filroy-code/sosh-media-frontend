@@ -8,13 +8,14 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import PeopleIcon from "@mui/icons-material/People";
-import { Link, useNavigate, NavLink } from "react-router-dom";
+import { Link, useNavigate, NavLink, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { UserContext } from "./UserContext";
 import { stringAvatar } from "../services/AvatarColor";
 
 export default function Sidebar(props) {
   let navigate = useNavigate();
+  let location = useLocation();
   const userInfo = React.useContext(UserContext);
 
   const buttonStyle = {
@@ -38,6 +39,7 @@ export default function Sidebar(props) {
       className="sideBar"
     >
       <Button
+        className={location.pathname === "/" ? "activeTab" : null}
         style={buttonStyle}
         variant="outlined"
         onClick={() => navigate("/", { replace: true })}
@@ -47,6 +49,7 @@ export default function Sidebar(props) {
         </HomeIcon>
       </Button>
       <Button
+        className={location.pathname === "/userDetails" ? "activeTab" : null}
         style={buttonStyle}
         variant="outlined"
         onClick={() => navigate("/userDetails", { replace: true })}
@@ -63,6 +66,7 @@ export default function Sidebar(props) {
         </Avatar>
       </Button>
       <Button
+        className={location.pathname === "/exploreUsers" ? "activeTab" : null}
         style={buttonStyle}
         variant="outlined"
         onClick={() => navigate("/exploreUsers", { replace: true })}

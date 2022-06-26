@@ -31,7 +31,7 @@ function UserCard(props) {
       }
     );
     if (response.status === 200) {
-      props.findUsers();
+      props.findUsersAndGenerateCards();
     }
   }
 
