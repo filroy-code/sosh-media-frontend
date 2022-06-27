@@ -68,15 +68,18 @@ function UserCard(props) {
         <p>Followers: {props.user.followers.length}</p>
         <p>Posts: {props.user.posts.length}</p>
       </div>
+
       {props.user.followers.includes(userInfo.userID) ? (
-        <Button
-          value={props.user._id}
-          onClick={followButtonClickHandler}
-          variant="contained"
-        >
-          Following
-        </Button>
-      ) : (
+        props.user._id === userInfo.userID ? null : (
+          <Button
+            value={props.user._id}
+            onClick={followButtonClickHandler}
+            variant="contained"
+          >
+            Following
+          </Button>
+        )
+      ) : props.user._id === userInfo.userID ? null : (
         <Button
           value={props.user._id}
           onClick={followButtonClickHandler}

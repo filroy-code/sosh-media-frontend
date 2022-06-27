@@ -4,5 +4,6 @@ export default async function getOtherUserData(username) {
     headers: { "Content-Type": "application/json" },
   });
   let responseJSON = await response.json();
+  console.log(responseJSON);
   return responseJSON;
 }

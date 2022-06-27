@@ -229,6 +229,10 @@ canvas {
   background: radial-gradient(circle, rgba(255,255,255,1) 41%, rgb(106, 128, 162) 100%) !important;
 }
 
+.soshTitle {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 1376px) {
   .userList {
     grid-template-columns: repeat(6, 1fr);

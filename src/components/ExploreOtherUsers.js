@@ -11,14 +11,13 @@ export default function ExploreOtherUsers(props) {
 
   function generateUserCards(userList) {
     let userListDisplay = userList.map((user) => {
-      if (user._id !== userInfo.userID)
-        return (
-          <UserCard
-            user={user}
-            key={user._id}
-            findUsersAndGenerateCards={findUsersAndGenerateCards}
-          ></UserCard>
-        );
+      return (
+        <UserCard
+          user={user}
+          key={user._id}
+          findUsersAndGenerateCards={findUsersAndGenerateCards}
+        ></UserCard>
+      );
     });
     setUserList(userListDisplay);
   }
