@@ -62,7 +62,7 @@ export default function Sidebar(props) {
           variant="rounded"
         >
           {userInfo.username && userInfo.username[0].toUpperCase()}
-          <NavLink to="/userDetails">Edit User Details</NavLink>
+          <NavLink to="/userDetails"></NavLink>
         </Avatar>
       </Button>
       <Button

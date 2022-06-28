@@ -12,17 +12,21 @@ export default function Comment(props) {
         className="comment"
         onMouseEnter={() => {
           setMouseOver(true);
-          console.log(props.comment);
         }}
         onMouseLeave={() => {
           setMouseOver(false);
         }}
+        onMouseDown={() => {
+          setMouseOver((prev) => !prev);
+        }}
       >
-        <p>
-          <b>{props.comment.author.username}</b> commented:
-        </p>
+        <div className="commentHeader">
+          <p>
+            <b>{props.comment.author.username}</b> commented:{" "}
+          </p>
+          <p>{mouseOver && props.comment.formatted_date}</p>
+        </div>
         <p>{props.comment.content}</p>
-        {mouseOver && <p>{props.comment.formatted_date}</p>}
       </div>
       <hr></hr>
     </div>

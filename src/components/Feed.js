@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { Button } from "@mui/material";
 import getLoggedinUserData from "../services/getLoggedinUserData";
 import { UserContext } from "./UserContext";
+import ExtendedUserCard from "./ExtendedUserCard";
 
 export default function Feed(props) {
   const { user } = useParams();
@@ -16,6 +17,7 @@ export default function Feed(props) {
 
   const [userData, updateUserData] = React.useState([]);
   const [postFeed, updatePostFeed] = React.useState([]);
+  const [dataLoaded, setDataLoaded] = React.useState(false);
 
   async function retrieveUser() {
     let userDataResult = await getOtherUserData(user);
@@ -29,9 +31,9 @@ export default function Feed(props) {
   async function retrieveAppropriateUserData() {
     //if the user param is truthy, populated the feed with posts from that user. Else, the feed is the home feed for the logged in user.
     if (user) {
-      retrieveUser();
+      await retrieveUser();
     } else {
-      retrieveUserHome();
+      await retrieveUserHome();
     }
   }
 
@@ -51,7 +53,11 @@ export default function Feed(props) {
 
   //populates feed based on which user is being viewed
   React.useEffect(() => {
-    retrieveAppropriateUserData();
+    async function retrieveAndRender() {
+      await retrieveAppropriateUserData();
+      setDataLoaded(true);
+    }
+    retrieveAndRender();
   }, [user]);
 
   React.useEffect(() => {
@@ -69,6 +75,12 @@ export default function Feed(props) {
       exit={{ x: "-100vw", transition: { duration: 0.4 } }}
       className="mainSection"
     >
+      {user && dataLoaded ? (
+        <ExtendedUserCard
+          user={userData}
+          retrieveUser={retrieveUser}
+        ></ExtendedUserCard>
+      ) : null}
       {!user && (
         <NewPostForm update={retrieveAppropriateUserData}></NewPostForm>
       )}

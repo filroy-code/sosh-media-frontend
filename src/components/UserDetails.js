@@ -54,6 +54,27 @@ export default function UserDetails(props) {
     }
   }
 
+  async function removeAvatar() {
+    let response = await fetch(
+      `http://localhost:3000/users/${userInfo.userID}/details`,
+      {
+        method: "PUT",
+        body: JSON.stringify({ noImage: true }),
+        headers: {
+          Authorization: userInfo.authToken,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.status === 200) {
+      let userData = await getLoggedinUserData(userInfo.authToken);
+      props.setLoggedInUser((prev) => ({
+        ...prev,
+        avatar: userData._doc.avatar,
+      }));
+    }
+  }
+
   const [fileAttached, setFileAttached] = React.useState(false);
 
   const [avatarZoom, setAvatarZoom] = React.useState(1);
@@ -97,7 +118,11 @@ export default function UserDetails(props) {
               hidden
             />
           </Button>
-          <Button style={buttonStyle} variant="contained">
+          <Button
+            onClick={removeAvatar}
+            style={buttonStyle}
+            variant="contained"
+          >
             Remove Your Avatar
           </Button>
         </div>
