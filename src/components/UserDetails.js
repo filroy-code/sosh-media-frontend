@@ -11,6 +11,7 @@ import DataURLtoFile from "../services/DataURLToFile";
 import { stringAvatar, stringToColor } from "../services/AvatarColor";
 import { motion } from "framer-motion";
 import getLoggedinUserData from "../services/getLoggedinUserData";
+import ExtendedUserCard from "./ExtendedUserCard";
 
 export default function UserDetails(props) {
   const userInfo = React.useContext(UserContext);
@@ -86,6 +87,7 @@ export default function UserDetails(props) {
       animate={{ x: "0vw", transition: { duration: 0.8 } }}
       exit={{ x: "-100vw", transition: { duration: 0.4 } }}
     >
+      {/* <ExtendedUserCard></ExtendedUserCard> */}
       <div className="userDetailsUpper">
         <Avatar
           style={avatarStyle}

@@ -66,7 +66,7 @@ export default function Post(props) {
       <span className="postButtonContainer">
         <IconButton className="starsButton" onClick={starClickHandler}>
           {props.post.stars.includes(userInfo.userID) ? (
-            <StarIcon />
+            <StarIcon sx={{ color: "gold" }} />
           ) : (
             <StarBorderIcon />
           )}

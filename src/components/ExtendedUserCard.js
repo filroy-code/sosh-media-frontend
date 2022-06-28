@@ -46,7 +46,6 @@ function ExtendedUserCard(props) {
     props.user && (
       <div className="extendedUserCard">
         <div className="extendedCardUserIdentifier">
-          <Button onClick={() => console.log(backdrop)}>CLICK</Button>
           <Avatar
             onClick={() =>
               navigate(`/users/${props.user.username}`, { replace: true })
@@ -98,7 +97,7 @@ function ExtendedUserCard(props) {
           <div
             onClick={() => {
               setBackdrop((prev) => !prev);
-              setModalTitle(`${props.user.username} follows:`);
+              setModalTitle(`Users following ${props.user.username}:`);
               setModalType(props.user.followers);
             }}
           >
@@ -116,13 +115,13 @@ function ExtendedUserCard(props) {
           <div
             onClick={() => {
               setBackdrop((prev) => !prev);
-              setModalTitle(`${props.user.username} is following:`);
+              setModalTitle(`Users ${props.user.username} follows:`);
               setModalType(props.user.following);
             }}
           >
             <span>Following:</span> <b>{props.user.following.length}</b>
           </div>
-          <div onClick={() => setBackdrop(true)}>
+          <div>
             <span>Posts:</span> <b>{props.user.posts.length}</b>
           </div>
         </div>
