@@ -287,12 +287,26 @@ canvas {
 
 .modal {
   position: fixed;
-  top: 50%;
+  top: 17%;
   left: 50%;
   background-color: white;
   padding: 40px;
   z-index: 1001;
   border-radius: 5px;
+}
+
+.modal > h2 {
+  margin: 5px 5px 20px 5px;
+}
+
+.modalList {
+  margin: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.modalList > hr {
+  margin: 0px;
 }
 
 .backdrop {
@@ -301,9 +315,19 @@ canvas {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: black;
-  opacity: 0.7;
+  background-color: rgba(0, 0, 0, 0.705);
   z-index: 1000;
+}
+
+.modalUserCard {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.modalUserCard:hover {
+  background-color: antiquewhite;
 }
 
 @media screen and (max-width: 1376px) {

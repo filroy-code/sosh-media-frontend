@@ -10,12 +10,15 @@ import getOtherUserData from "../services/getOtherUserData";
 import getLoggedinUserData from "../services/getLoggedinUserData";
 import { Backdrop } from "@mui/material";
 import Modal from "./Modal";
+import ModalUserList from "./ModalUserList";
 
 function ExtendedUserCard(props) {
   const userInfo = React.useContext(UserContext);
   let navigate = useNavigate();
 
   const [backdrop, setBackdrop] = React.useState(false);
+  const [modalTitle, setModalTitle] = React.useState(null);
+  const [modalType, setModalType] = React.useState(null);
 
   async function followButtonClickHandler(event) {
     event.preventDefault();
@@ -43,6 +46,7 @@ function ExtendedUserCard(props) {
     props.user && (
       <div className="extendedUserCard">
         <div className="extendedCardUserIdentifier">
+          <Button onClick={() => console.log(backdrop)}>CLICK</Button>
           <Avatar
             onClick={() =>
               navigate(`/users/${props.user.username}`, { replace: true })
@@ -91,11 +95,31 @@ function ExtendedUserCard(props) {
           )}
         </div>
         <div className="extendedCardUserInfo">
-          <div onClick={() => setBackdrop((prev) => !prev)}>
-            <Modal open={backdrop} children={"Hello"}></Modal>
+          <div
+            onClick={() => {
+              setBackdrop((prev) => !prev);
+              setModalTitle(`${props.user.username} follows:`);
+              setModalType(props.user.followers);
+            }}
+          >
+            <Modal
+              open={backdrop}
+              children={
+                <ModalUserList
+                  modalTitle={modalTitle}
+                  userList={modalType}
+                ></ModalUserList>
+              }
+            ></Modal>
             <span>Followers:</span> <b>{props.user.followers.length}</b>
           </div>
-          <div onClick={() => setBackdrop(true)}>
+          <div
+            onClick={() => {
+              setBackdrop((prev) => !prev);
+              setModalTitle(`${props.user.username} is following:`);
+              setModalType(props.user.following);
+            }}
+          >
             <span>Following:</span> <b>{props.user.following.length}</b>
           </div>
           <div onClick={() => setBackdrop(true)}>
