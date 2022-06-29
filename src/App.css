@@ -177,6 +177,7 @@ hr {
   margin: 5px;
   box-shadow: 8px 9px 0px -1px rgba(0,0,0,0.81);
   border: 1px solid black;
+  z-index: 1000;
 }
 
 .userDetails {
