@@ -25,6 +25,7 @@ export default function LoginForm(props) {
 
   const inputStyle = {
     margin: "5px",
+    color: "success",
   };
 
   const alertStyle = {

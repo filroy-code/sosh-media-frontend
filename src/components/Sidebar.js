@@ -45,7 +45,12 @@ export default function Sidebar(props) {
         </HomeIcon>
       </Button>
       <Button
-        className={location.pathname === "/userDetails" ? "activeTab" : null}
+        className={
+          location.pathname === "/userDetails" ||
+          location.pathname === `/users/${userInfo.username}`
+            ? "activeTab"
+            : null
+        }
         style={buttonStyle}
         variant="outlined"
         onClick={() =>

@@ -10,6 +10,7 @@ export default function NewPostForm(props) {
   const buttonStyle = {
     color: "rgb(0, 109, 119)",
     border: "1px solid rgb(0, 109, 119)",
+    margin: "8px",
   };
 
   //content of a new post to be made is stored here (along with the author, who is the logged in user) until the form is submitted.

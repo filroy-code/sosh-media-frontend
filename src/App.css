@@ -37,6 +37,7 @@ html {
   border: 1px solid black;
   padding: 10px 0px 10px 0px;
   align-self: center;
+  flex-wrap: wrap;
 }
 
 .post {
@@ -175,6 +176,8 @@ hr {
   width: 98%;
   margin: 5px;
   background-color: rgb(237, 246, 249);
+  align-self: center;
+  justify-self: center;
   /* box-shadow: 8px 9px 0px -1px rgba(0,0,0,0.81); */
 }
 
@@ -186,7 +189,9 @@ hr {
 
 .userDetailsUpper {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
 }
 
 .userDetailsLower {
@@ -272,6 +277,8 @@ canvas {
   display: flex;
   align-items: center;
   box-shadow: 8px 6px 0px -1px rgba(0,0,0,0.81);
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .extendedCardUserIdentifier {
@@ -324,7 +331,7 @@ canvas {
 }
 
 .activeTab {
-  background: radial-gradient(circle,rgb(237, 246, 249) 5%, rgb(255, 255, 255) 100%) !important;
+  background: radial-gradient(circle,rgb(237, 246, 249) 5%, rgb(131, 197, 190) 100%) !important;
 }
 
 .soshTitle {
@@ -399,27 +406,9 @@ canvas {
   }
 }
 
-@media screen and (max-width: 1136px) {
-  .post, .newPostForm {
-      width: 98%;
-  }
-  .exploreOtherUsers, .userDetails {
-    width: 88vw; 
-  }
-}
-
 @media screen and (max-width: 990px) {
   .userList {
     grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media screen and (max-width: 903px) {
-  .post, .newPostForm {
-      width: 97%;
-  }
-  .exploreOtherUsers, .userDetails {
-    width: 86vw; 
   }
 }
 
@@ -430,37 +419,13 @@ canvas {
 }
 
 @media screen and (max-width: 630px) {
-  .post, .newPostForm {
-      width: 96%;
-  }
-  .exploreOtherUsers, .userDetails {
-    width: 84vw; 
-  }
   .userList {
     grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media screen and (max-width: 496px) {
-  .post, .newPostForm {
-      width: 95%;
-  }
-  .exploreOtherUsers, .userDetails {
-    width: 78vw; 
   }
 }
 
 @media screen and (max-width: 420px) {
   .userList {
     grid-template-columns: repeat(1, 1fr);
-  }
-}
-
-@media screen and (max-width: 390px) {
-  .post, .newPostForm {
-      width: 94%;
-  }
-  .exploreOtherUsers, .userDetails {
-    width: 74vw; 
   }
 }

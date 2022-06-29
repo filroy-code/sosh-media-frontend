@@ -65,6 +65,18 @@ function ExtendedUserCard(props) {
   }
 
   const followCheck = (follower) => follower._id === userInfo.userID;
+  const settingsRedirect = () => {
+    navigate("/userDetails", { replace: true });
+  };
+
+  const [pageRendered, setPageRendered] = React.useState(false);
+  const [buttonCounter, setButtonCounter] = React.useState(0);
+
+  React.useEffect(() => {
+    pageRendered
+      ? navigate("/userDetails", { replace: true })
+      : setPageRendered(true);
+  }, [buttonCounter]);
 
   return (
     props.user && (
@@ -151,7 +163,7 @@ function ExtendedUserCard(props) {
             <Button
               style={settingsButtonStyle}
               variant="outlined"
-              onClick={() => navigate("/userDetails", { replace: true })}
+              onClick={() => setButtonCounter((prev) => prev + 1)}
             >
               <SettingsIcon fontSize="large">
                 <Link to="/userDetails"></Link>

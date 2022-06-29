@@ -29,6 +29,10 @@ export default function UserDetails(props) {
     border: "1px solid rgb(0, 109, 119)",
   };
 
+  const sliderStyle = {
+    color: "rgb(0, 109, 119)",
+  };
+
   const filledButtonStyle = {
     backgroundColor: "rgb(0, 109, 119)",
     color: "white",
@@ -175,6 +179,7 @@ export default function UserDetails(props) {
                 ></AvatarEditor>
                 New Avatar Zoom
                 <Slider
+                  style={sliderStyle}
                   defaultValue={1}
                   min={1}
                   max={5}
@@ -182,7 +187,7 @@ export default function UserDetails(props) {
                   onChange={(event) => setAvatarZoom(event.target.value)}
                 ></Slider>
                 <Button
-                  style={buttonStyle}
+                  style={filledButtonStyle}
                   variant="contained"
                   onClick={sendImageData}
                 >
