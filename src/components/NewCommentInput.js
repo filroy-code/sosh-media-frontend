@@ -12,6 +12,12 @@ import getLoggedinUserData from "../services/getLoggedinUserData";
 const NewCommentInput = React.forwardRef((props, ref) => {
   const userInfo = React.useContext(UserContext);
 
+  const buttonStyle = {
+    color: "rgb(0, 109, 119)",
+    border: "1px solid rgb(0, 109, 119)",
+    margin: "8px",
+  };
+
   const [commentState, updateCommentState] = React.useState({
     content: "",
     author: userInfo.userID,
@@ -52,8 +58,13 @@ const NewCommentInput = React.forwardRef((props, ref) => {
           placeholder="comment on this post..."
           value={commentState.content}
           onChange={commentChangeHandler}
+          style={{ width: "88%" }}
         ></TextField>
-        <Button variant="outlined" onClick={commentSubmitHandler}>
+        <Button
+          style={buttonStyle}
+          variant="outlined"
+          onClick={commentSubmitHandler}
+        >
           Comment
         </Button>
       </form>

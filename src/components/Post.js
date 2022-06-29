@@ -74,7 +74,11 @@ export default function Post(props) {
         </IconButton>
         <Tooltip title="Add a comment." placement="right">
           <IconButton className="commentsButton" onClick={commentClickHandler}>
-            {commentsToggle ? <ChatBubbleIcon /> : <ChatBubbleOutlineIcon />}
+            {commentsToggle ? (
+              <ChatBubbleIcon sx={{ color: "rgb(0, 109, 119)" }} />
+            ) : (
+              <ChatBubbleOutlineIcon sx={{ color: "rgb(0, 109, 119)" }} />
+            )}
             {props.post.comments.length}
           </IconButton>
         </Tooltip>
