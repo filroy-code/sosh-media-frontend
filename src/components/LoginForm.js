@@ -12,6 +12,14 @@ export default function LoginForm(props) {
 
   // styles for components
   const buttonStyle = {
+    color: "rgb(0, 109, 119)",
+    border: "1px solid rgb(0, 109, 119)",
+  };
+
+  const filledButtonStyle = {
+    backgroundColor: "rgb(0, 109, 119)",
+    color: "white",
+    border: "1px solid rgb(0, 109, 119)",
     margin: "5px",
   };
 
@@ -119,14 +127,14 @@ export default function LoginForm(props) {
       <Button
         variant="contained"
         type="submit"
-        style={buttonStyle}
+        style={filledButtonStyle}
         onClick={loginSubmitHandler}
       >
         Log-In
       </Button>
       <p>Or</p>
-      <Button variant="outlined" onClick={signupLink}>
-        <Link to="/signup">sign up.</Link>
+      <Button style={buttonStyle} variant="outlined" onClick={signupLink}>
+        Sign Up
       </Button>
     </motion.form>
   );

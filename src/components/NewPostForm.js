@@ -7,6 +7,11 @@ import getLoggedinUserData from "../services/getLoggedinUserData";
 export default function NewPostForm(props) {
   const userInfo = React.useContext(UserContext);
 
+  const buttonStyle = {
+    color: "rgb(0, 109, 119)",
+    border: "1px solid rgb(0, 109, 119)",
+  };
+
   //content of a new post to be made is stored here (along with the author, who is the logged in user) until the form is submitted.
   const [newPostContent, setNewPostContent] = React.useState({
     author: userInfo.userID,
@@ -60,7 +65,11 @@ export default function NewPostForm(props) {
         style={{ width: "88%" }}
       />
 
-      <Button variant="outlined" onClick={newPostSubmitHandler}>
+      <Button
+        style={buttonStyle}
+        variant="outlined"
+        onClick={newPostSubmitHandler}
+      >
         Post
       </Button>
     </form>

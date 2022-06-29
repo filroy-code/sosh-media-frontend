@@ -25,6 +25,15 @@ export default function UserDetails(props) {
 
   const buttonStyle = {
     margin: "5px",
+    color: "rgb(0, 109, 119)",
+    border: "1px solid rgb(0, 109, 119)",
+  };
+
+  const filledButtonStyle = {
+    backgroundColor: "rgb(0, 109, 119)",
+    color: "white",
+    border: "1px solid rgb(0, 109, 119)",
+    margin: "5px",
   };
 
   //submits cropped image from Avatar Editor to backend to be saved in the cloud.
@@ -82,65 +91,66 @@ export default function UserDetails(props) {
 
   return (
     <motion.div
-      className="userDetails"
+      className="mainSection"
       initial={{ x: "-100vw" }}
       animate={{ x: "0vw", transition: { duration: 0.3 } }}
       exit={{ x: "-100vw", transition: { duration: 0.4 } }}
     >
-      {/* <ExtendedUserCard></ExtendedUserCard> */}
-      <div className="userDetailsUpper">
-        <Avatar
-          style={avatarStyle}
-          {...stringAvatar(`${userInfo.username}`)}
-          src={userInfo.avatar}
-          alt={`${userInfo.username}'s Avatar`}
-          variant="rounded"
-          sx={{
-            width: "10rem",
-            height: "10rem",
-            bgcolor: stringToColor(userInfo.username),
-          }}
-        >
-          {userInfo.username && userInfo.username[0].toUpperCase()}
-        </Avatar>
-        <div className="userDetailButtonContainer">
-          <Button style={buttonStyle} variant="outlined" component="label">
-            Upload New Avatar
-            <input
-              type="file"
-              name="image"
-              id="image"
-              ref={fileRef}
-              onChange={() => {
-                setFileAttached(true);
-                setAvatarZoom((prev) => (prev === 1 ? prev + 0.1 : 1));
-              }}
-              placeholder="upload an avatar"
-              required
-              hidden
-            />
-          </Button>
-          <Button
-            onClick={removeAvatar}
-            style={buttonStyle}
-            variant="contained"
+      <div className="userDetails">
+        {/* <ExtendedUserCard></ExtendedUserCard> */}
+        <div className="userDetailsUpper">
+          <Avatar
+            style={avatarStyle}
+            {...stringAvatar(`${userInfo.username}`)}
+            src={userInfo.avatar}
+            alt={`${userInfo.username}'s Avatar`}
+            variant="rounded"
+            sx={{
+              width: "10rem",
+              height: "10rem",
+              bgcolor: stringToColor(userInfo.username),
+            }}
           >
-            Remove Your Avatar
-          </Button>
+            {userInfo.username && userInfo.username[0].toUpperCase()}
+          </Avatar>
+          <div className="userDetailButtonContainer">
+            <Button style={buttonStyle} variant="outlined" component="label">
+              Upload New Avatar
+              <input
+                type="file"
+                name="image"
+                id="image"
+                ref={fileRef}
+                onChange={() => {
+                  setFileAttached(true);
+                  setAvatarZoom((prev) => (prev === 1 ? prev + 0.1 : 1));
+                }}
+                placeholder="upload an avatar"
+                required
+                hidden
+              />
+            </Button>
+            <Button
+              onClick={removeAvatar}
+              style={filledButtonStyle}
+              variant="contained"
+            >
+              Remove Your Avatar
+            </Button>
+          </div>
         </div>
-      </div>
-      <hr></hr>
-      {fileAttached && (
-        <motion.form
-          className="userDetailsLower"
-          encType="multipart/form-data"
-          action={`/image/${userInfo.userID}`}
-          method="POST"
-          initial={{ y: "100vh" }}
-          animate={{ y: "0vh", transition: { duration: 0.8 } }}
-          exit={{ y: "100vh", transition: { duration: 0.4 } }}
-        >
-          {/* <input
+        <hr></hr>
+        {fileAttached && (
+          <motion.form
+            className="userDetailsLower"
+            encType="multipart/form-data"
+            action={`/image/${userInfo.userID}`}
+            method="POST"
+            initial={{ y: "100vh" }}
+            animate={{ y: "0vh", transition: { duration: 0.8 } }}
+            exit={{ y: "100vh", transition: { duration: 0.4 } }}
+          >
+            {/* <input
           type="file"
           name="image"
           id="image"
@@ -149,39 +159,40 @@ export default function UserDetails(props) {
           placeholder="upload an avatar"
           required
         ></input> */}
-          {fileRef.current && (
-            <div className="avatarPreview">
-              <AvatarEditor
-                image={fileAttached ? fileRef.current.files[0] : null}
-                ref={croppedRef}
-                backgroundColor="white"
-                width={250}
-                height={250}
-                border={50}
-                borderRadius={5}
-                color={[255, 255, 255, 0.6]} // RGBA
-                scale={avatarZoom}
-                rotate={0}
-              ></AvatarEditor>
-              New Avatar Zoom
-              <Slider
-                defaultValue={1}
-                min={1}
-                max={5}
-                step={0.1}
-                onChange={(event) => setAvatarZoom(event.target.value)}
-              ></Slider>
-              <Button
-                style={buttonStyle}
-                variant="contained"
-                onClick={sendImageData}
-              >
-                Submit
-              </Button>
-            </div>
-          )}
-        </motion.form>
-      )}
+            {fileRef.current && (
+              <div className="avatarPreview">
+                <AvatarEditor
+                  image={fileAttached ? fileRef.current.files[0] : null}
+                  ref={croppedRef}
+                  backgroundColor="white"
+                  width={250}
+                  height={250}
+                  border={50}
+                  borderRadius={5}
+                  color={[255, 255, 255, 0.6]} // RGBA
+                  scale={avatarZoom}
+                  rotate={0}
+                ></AvatarEditor>
+                New Avatar Zoom
+                <Slider
+                  defaultValue={1}
+                  min={1}
+                  max={5}
+                  step={0.1}
+                  onChange={(event) => setAvatarZoom(event.target.value)}
+                ></Slider>
+                <Button
+                  style={buttonStyle}
+                  variant="contained"
+                  onClick={sendImageData}
+                >
+                  Submit
+                </Button>
+              </div>
+            )}
+          </motion.form>
+        )}
+      </div>
     </motion.div>
   );
 }

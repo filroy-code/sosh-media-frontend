@@ -13,8 +13,20 @@ function UserCard(props) {
   const userInfo = React.useContext(UserContext);
   let navigate = useNavigate();
 
+  const buttonStyle = {
+    color: "rgb(0, 109, 119)",
+    border: "1px solid rgb(0, 109, 119)",
+  };
+
+  const filledButtonStyle = {
+    backgroundColor: "rgb(0, 109, 119)",
+    color: "white",
+    border: "1px solid rgb(0, 109, 119)",
+  };
+
   async function followButtonClickHandler(event) {
     event.preventDefault();
+    event.stopPropagation();
     let data = {
       followee: event.target.value,
       follower: userInfo.userID,
@@ -43,9 +55,6 @@ function UserCard(props) {
       }
     >
       <Avatar
-        onClick={() =>
-          navigate(`/users/${props.user.username}`, { replace: true })
-        }
         {...stringAvatar(`${props.user.username}`)}
         src={props.user.avatar}
         alt={`${props.user.username}'s Avatar`}
@@ -61,14 +70,7 @@ function UserCard(props) {
         {" "}
         {props.user.username && props.user.username[0].toUpperCase()}
       </Avatar>
-      <h3
-        onClick={() =>
-          navigate(`/users/${props.user.username}`, { replace: true })
-        }
-        style={{ cursor: "pointer" }}
-      >
-        {props.user.username}
-      </h3>
+      <h3 style={{ cursor: "pointer" }}>{props.user.username}</h3>
       <div className="userCardInfoContainer">
         <p>Followers: {props.user.followers.length}</p>
         <p>Posts: {props.user.posts.length}</p>
@@ -77,6 +79,7 @@ function UserCard(props) {
       {props.user.followers.includes(userInfo.userID) ? (
         props.user._id === userInfo.userID ? null : (
           <Button
+            style={filledButtonStyle}
             value={props.user._id}
             onClick={followButtonClickHandler}
             variant="contained"
@@ -86,6 +89,7 @@ function UserCard(props) {
         )
       ) : props.user._id === userInfo.userID ? null : (
         <Button
+          style={buttonStyle}
           value={props.user._id}
           onClick={followButtonClickHandler}
           variant="outlined"

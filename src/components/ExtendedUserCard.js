@@ -2,6 +2,9 @@ import React from "react";
 import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import SettingsIcon from "@mui/icons-material/Settings";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import { stringAvatar, stringToColor } from "../services/AvatarColor";
@@ -15,6 +18,25 @@ import ModalUserList from "./ModalUserList";
 function ExtendedUserCard(props) {
   const userInfo = React.useContext(UserContext);
   let navigate = useNavigate();
+
+  const settingsButtonStyle = {
+    height: "4rem",
+    width: "3.5rem",
+    margin: "20px",
+    border: "1px solid rgb(0, 109, 119)",
+    color: "rgb(0, 109, 119)",
+  };
+
+  const buttonStyle = {
+    color: "rgb(0, 109, 119)",
+    border: "1px solid rgb(0, 109, 119)",
+  };
+
+  const filledButtonStyle = {
+    backgroundColor: "rgb(0, 109, 119)",
+    color: "white",
+    border: "1px solid rgb(0, 109, 119)",
+  };
 
   const [backdrop, setBackdrop] = React.useState(false);
   const [modalTitle, setModalTitle] = React.useState(null);
@@ -42,6 +64,8 @@ function ExtendedUserCard(props) {
     }
   }
 
+  const followCheck = (follower) => follower._id === userInfo.userID;
+
   return (
     props.user && (
       <div
@@ -52,9 +76,6 @@ function ExtendedUserCard(props) {
       >
         <div className="extendedCardUserIdentifier">
           <Avatar
-            onClick={() =>
-              navigate(`/users/${props.user.username}`, { replace: true })
-            }
             {...stringAvatar(`${props.user.username}`)}
             src={props.user.avatar}
             alt={`${props.user.username}'s Avatar`}
@@ -70,26 +91,21 @@ function ExtendedUserCard(props) {
             {" "}
             {props.user.username && props.user.username[0].toUpperCase()}
           </Avatar>
-          <h3
-            onClick={() =>
-              navigate(`/users/${props.user.username}`, { replace: true })
-            }
-            style={{ cursor: "pointer" }}
-          >
-            {props.user.username}
-          </h3>
-          {props.user.followers.includes(userInfo.userID) ? (
+          <h3 style={{ cursor: "pointer" }}>{props.user.username}</h3>
+          {props.user.followers.some(followCheck) ? (
             props.user._id === userInfo.userID ? null : (
               <Button
                 value={props.user._id}
                 onClick={followButtonClickHandler}
                 variant="contained"
+                style={filledButtonStyle}
               >
                 Following
               </Button>
             )
           ) : props.user._id === userInfo.userID ? null : (
             <Button
+              style={buttonStyle}
               value={props.user._id}
               onClick={followButtonClickHandler}
               variant="outlined"
@@ -130,6 +146,19 @@ function ExtendedUserCard(props) {
             <span>Posts:</span> <b>{props.user.posts.length}</b>
           </div>
         </div>
+        {props.user._id === userInfo.userID && (
+          <Tooltip title="Change your user avatar." placement="right">
+            <Button
+              style={settingsButtonStyle}
+              variant="outlined"
+              onClick={() => navigate("/userDetails", { replace: true })}
+            >
+              <SettingsIcon fontSize="large">
+                <Link to="/userDetails"></Link>
+              </SettingsIcon>
+            </Button>
+          </Tooltip>
+        )}
       </div>
     )
   );

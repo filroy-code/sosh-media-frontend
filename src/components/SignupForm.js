@@ -9,6 +9,14 @@ export default function SignupForm(props) {
   let navigate = useNavigate();
 
   const buttonStyle = {
+    color: "rgb(0, 109, 119)",
+    border: "1px solid rgb(0, 109, 119)",
+  };
+
+  const filledButtonStyle = {
+    backgroundColor: "rgb(0, 109, 119)",
+    color: "white",
+    border: "1px solid rgb(0, 109, 119)",
     margin: "5px",
   };
 
@@ -107,14 +115,14 @@ export default function SignupForm(props) {
       <Button
         variant="contained"
         type="submit"
-        style={buttonStyle}
+        style={filledButtonStyle}
         onClick={signupSubmitHandler}
       >
         Sign Up
       </Button>
       <p>Or</p>
-      <Button variant="outlined" onClick={loginLink}>
-        <Link to="/login">log in.</Link>
+      <Button style={buttonStyle} variant="outlined" onClick={loginLink}>
+        Log In
       </Button>
     </motion.form>
   );

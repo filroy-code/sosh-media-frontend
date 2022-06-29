@@ -84,6 +84,9 @@ export default function Feed(props) {
       {!user && (
         <NewPostForm update={retrieveAppropriateUserData}></NewPostForm>
       )}
+      {user === userInfo.username && (
+        <NewPostForm update={retrieveAppropriateUserData}></NewPostForm>
+      )}
       {postFeed}
     </motion.div>
   );

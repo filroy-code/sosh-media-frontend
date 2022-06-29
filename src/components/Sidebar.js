@@ -24,6 +24,7 @@ export default function Sidebar(props) {
     width: "3.5rem",
     backgroundColor: "rgb(237, 246, 249)",
     color: "rgb(0, 109, 119)",
+    border: "1px solid black",
   };
 
   return (
@@ -47,8 +48,10 @@ export default function Sidebar(props) {
         className={location.pathname === "/userDetails" ? "activeTab" : null}
         style={buttonStyle}
         variant="outlined"
-        onClick={() => navigate("/userDetails", { replace: true })}
-        // onMouseOver={() => console.log("hover")}
+        onClick={() =>
+          navigate(`/users/${userInfo.username}`, { replace: true })
+        }
+        // onClick={() => navigate("/userDetails", { replace: true })}
       >
         <Avatar
           {...stringAvatar(`${userInfo.username}`)}
