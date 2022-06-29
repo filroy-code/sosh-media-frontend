@@ -1,6 +1,10 @@
+html {
+  background-color: rgb(237, 246, 249);
+}
+
 #root {
-  height: 95vh;
-  width: 98.5vw;
+  height: 100vh;
+  width: 100vw;
 }
 
 .loginForm {
@@ -25,16 +29,23 @@
   margin: 5px 5px 10px 5px;
   padding: 5px;
   display: flex;
-  gap: 20px;
-  width: 100%;
+  justify-content: space-around;
+  width: 98%;
+  background-color: rgb(237, 246, 249);
+  border-radius: 5px;
+  box-shadow: 8px 6px 0px -4px rgba(0,0,0,0.81);
+  border: 1px solid black;
+  padding: 10px 0px 10px 0px;
 }
 
 .post {
   border: 1px solid black;
   margin: 5px;
   padding: 5px;
-  width: 100%;
+  width: 98%;
   border-radius: 5px;
+  background-color: rgb(237, 246, 249);
+  box-shadow: 8px 9px 0px -1px rgba(0,0,0,0.81);
 }
 
 .postContent {
@@ -112,15 +123,20 @@ hr {
 .mainSection {
   display: flex;
   flex-direction: column;
-  padding: 3px;
+  padding: 6px;
   width: 90vw;
+  background-color: rgb(237, 246, 249);
+  box-shadow: 8px 9px 0px -1px rgba(0,0,0,0.81);
+  border-radius: 5px;
+  border: 1px solid black;
+  margin-left: 6px;
 }
 
 .sideBar {
   border: 1px solid black;
   border-radius: 5px;
   height: 100%;
-  width: 4.5rem;
+  width: 4.6rem;
   padding: 5px;
   display: flex;
   flex-direction: column;
@@ -128,13 +144,22 @@ hr {
   position: sticky;
   top: 5%;
   margin-top: 10px;
-  margin-right: 2px;
+  margin-right: 20px;
+  margin-left: 14px;
+  background-color: rgb(237, 246, 249);
+  box-shadow: 8px 9px 0px -1px rgba(0,0,0,0.81);
 }
 
 .pageHeader {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: rgb(237, 246, 249);
+  border-radius: 5px;
+  width: 89vw;
+  margin: 5px 5px 12px 5px;
+  /* box-shadow: 8px 9px 0px -1px rgba(0,0,0,0.81);
+  border: 1px solid black; */
 }
 
 .userDetails {
@@ -147,6 +172,8 @@ hr {
   border-radius: 5px;
   width: 90vw;
   margin: 5px;
+  background-color: rgb(237, 246, 249);
+  box-shadow: 8px 9px 0px -1px rgba(0,0,0,0.81);
 }
 
 .userDetailButtonContainer {
@@ -206,6 +233,13 @@ canvas {
   align-items: center;
   flex-direction: column;
   width: 8rem;
+  transition: all 0.11s;
+  cursor: pointer;
+}
+
+.userCard:hover {
+  transform: scale(1.03);
+  transition: all 0.2s;
 }
 
 .userCard > h3 {
@@ -243,6 +277,19 @@ canvas {
   border: 1px solid black;
   border-radius: 5px;
   padding: 12px;
+  transition: all 0.11s;
+  cursor: pointer;
+  user-select: none;
+}
+
+.extendedCardUserIdentifier:hover {
+  transform: scale(1.03);
+  transition: all 0.2s;
+}
+
+.extendedCardUserIdentifier:active {
+  transform: scale(1.00);
+  transition: all 0.2s;
 }
 
 .extendedCardUserInfo {
@@ -272,7 +319,7 @@ canvas {
 }
 
 .activeTab {
-  background: radial-gradient(circle, rgba(255,255,255,1) 41%, rgb(106, 128, 162) 100%) !important;
+  background: radial-gradient(circle,rgb(237, 246, 249) 5%, rgb(255, 255, 255) 100%) !important;
 }
 
 .soshTitle {
@@ -288,12 +335,13 @@ canvas {
 
 .modal {
   position: fixed;
-  top: 17%;
+  top: 35%;
   left: 50%;
   background-color: white;
   padding: 40px;
   z-index: 1001;
   border-radius: 5px;
+  transform: translate(-50%, -50%);
 }
 
 .modal > h2 {

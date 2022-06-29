@@ -49,6 +49,7 @@ export default function NewPostForm(props) {
       method="POST"
     >
       <TextField
+        className="newPostInput"
         fullWidth
         multiline
         size="small"
@@ -56,6 +57,7 @@ export default function NewPostForm(props) {
         placeholder="Speak your mind..."
         onChange={newPostChangeHandler}
         value={newPostContent.content}
+        style={{ width: "88%" }}
       />
 
       <Button variant="outlined" onClick={newPostSubmitHandler}>

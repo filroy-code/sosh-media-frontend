@@ -44,7 +44,12 @@ function ExtendedUserCard(props) {
 
   return (
     props.user && (
-      <div className="extendedUserCard">
+      <div
+        className="extendedUserCard"
+        onClick={() =>
+          navigate(`/users/${props.user.username}`, { replace: true })
+        }
+      >
         <div className="extendedCardUserIdentifier">
           <Avatar
             onClick={() =>

@@ -21,14 +21,9 @@ export default function Sidebar(props) {
   const buttonStyle = {
     margin: "5px",
     height: "4rem",
-    width: "4rem",
-  };
-
-  const activeButtonStyle = {
-    margin: "5px",
-    height: "4rem",
-    width: "4rem",
-    "background-color": "grey",
+    width: "3.5rem",
+    backgroundColor: "rgb(237, 246, 249)",
+    color: "rgb(0, 109, 119)",
   };
 
   return (

@@ -84,7 +84,7 @@ export default function UserDetails(props) {
     <motion.div
       className="userDetails"
       initial={{ x: "-100vw" }}
-      animate={{ x: "0vw", transition: { duration: 0.8 } }}
+      animate={{ x: "0vw", transition: { duration: 0.3 } }}
       exit={{ x: "-100vw", transition: { duration: 0.4 } }}
     >
       {/* <ExtendedUserCard></ExtendedUserCard> */}

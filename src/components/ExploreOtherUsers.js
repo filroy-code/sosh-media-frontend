@@ -70,7 +70,7 @@ export default function ExploreOtherUsers(props) {
   return (
     <motion.div
       initial={{ x: "-100vw" }}
-      animate={{ x: "0vw", transition: { duration: 0.8 } }}
+      animate={{ x: "0vw", transition: { duration: 0.3 } }}
       exit={{ x: "-100vw", transition: { duration: 0.4 } }}
       className="mainSection"
     >
