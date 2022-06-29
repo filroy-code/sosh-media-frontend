@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Londrina+Outline&family=Syncopate&display=swap');
+
 html {
   background-color: rgb(237, 246, 249);
 }
@@ -336,6 +338,15 @@ canvas {
 
 .soshTitle {
   cursor: pointer;
+  color: rgb(0, 109, 119);
+  font-family: 'Londrina Outline', cursive;
+  font-family: 'Syncopate', sans-serif;
+}
+
+h2 {
+  font-family: 'Londrina Outline', cursive;
+  font-family: 'Syncopate', sans-serif;
+  color: rgb(0, 109, 119);
 }
 
 .commentHeader {
