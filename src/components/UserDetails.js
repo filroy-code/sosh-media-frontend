@@ -180,8 +180,8 @@ export default function UserDetails(props) {
                   image={fileAttached ? fileRef.current.files[0] : null}
                   ref={croppedRef}
                   backgroundColor="white"
-                  width={windowSize.innerWidth / 4}
-                  height={windowSize.innerWidth / 4}
+                  width={windowSize.innerWidth / 4.5}
+                  height={windowSize.innerWidth / 4.5}
                   border={50}
                   borderRadius={5}
                   color={[255, 255, 255, 0.6]} // RGBA
