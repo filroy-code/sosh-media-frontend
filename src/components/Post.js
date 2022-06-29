@@ -6,6 +6,8 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
@@ -17,8 +19,22 @@ import getLoggedinUserData from "../services/getLoggedinUserData";
 
 export default function Post(props) {
   const userInfo = React.useContext(UserContext);
-
   const inputRef = React.useRef();
+
+  const buttonStyle = {
+    margin: "0px 10px 0px 5px",
+    backgroundColor: "rgb(237, 246, 249)",
+    color: "rgb(0, 109, 119)",
+    border: "1px solid black",
+    borderRadius: "5px",
+  };
+
+  // const filledButtonStyle = {
+  //   margin: "0px 10px 0px 5px",
+  //   backgroundColor: "rgb(0, 109, 119)",
+  //   color: "white",
+  //   border: "1px solid rgb(0, 109, 119)",
+  // };
 
   const [commentsToggle, setCommentsToggle] = React.useState(false);
   const [starsToggle, setStarsToggle] = React.useState(false);
@@ -49,17 +65,26 @@ export default function Post(props) {
 
   return (
     <div className="post">
-      <div className="postAuthor">
-        <Avatar
-          {...stringAvatar(`${props.post.author.username}`)}
-          alt={`${props.post.author.username}'s Avatar`}
-          src={props.post.author.avatar}
-          variant="rounded"
-          style={avatarStyle}
-        >
-          {props.post.author.username[0].toUpperCase()}
-        </Avatar>
-        <b>{props.post.author.username}</b> posted:
+      <div className="postHeader">
+        <div className="postAuthor">
+          <Avatar
+            {...stringAvatar(`${props.post.author.username}`)}
+            alt={`${props.post.author.username}'s Avatar`}
+            src={props.post.author.avatar}
+            variant="rounded"
+            style={avatarStyle}
+          >
+            {props.post.author.username[0].toUpperCase()}
+          </Avatar>
+          <b>{props.post.author.username}</b> posted:
+        </div>
+        {props.post.author._id === userInfo.userID && (
+          <div className="postAuthor">
+            <IconButton style={buttonStyle}>
+              <EditIcon style={{ margin: "0px" }}></EditIcon>
+            </IconButton>
+          </div>
+        )}
       </div>
       <p className="postContent">{props.post.content}</p>
       <p className="postDate">{props.post.formatted_date}</p>
