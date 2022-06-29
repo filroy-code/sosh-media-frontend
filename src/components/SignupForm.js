@@ -71,59 +71,63 @@ export default function SignupForm(props) {
   }
 
   return (
-    <motion.form
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 0.5 } }}
-      className="signupForm"
-      onSubmit={props.submitHandler}
-      action="/"
-      method="POST"
+      className="authContainer"
     >
-      <h2>Sosh Signup</h2>
-      <br></br>
-      <TextField
-        variant="outlined"
-        type="text"
-        name="username"
-        placeholder="Username"
-        onChange={signupChangeHandler}
-        value={signupInfo.username}
-        style={inputStyle}
-      />
-      <TextField
-        variant="outlined"
-        type="password"
-        name="password"
-        placeholder="Password"
-        onChange={signupChangeHandler}
-        value={signupInfo.password}
-        style={inputStyle}
-      />
-      {props.statusMessage ? (
-        <Alert
-          severity={
-            props.statusMessage === "This username already exists."
-              ? "error"
-              : "success"
-          }
-          style={alertStyle}
-        >
-          {props.statusMessage}
-        </Alert>
-      ) : null}
-      <Button
-        variant="contained"
-        type="submit"
-        style={filledButtonStyle}
-        onClick={signupSubmitHandler}
+      <form
+        className="signupForm"
+        onSubmit={props.submitHandler}
+        action="/"
+        method="POST"
       >
-        Sign Up
-      </Button>
-      <p>Or</p>
-      <Button style={buttonStyle} variant="outlined" onClick={loginLink}>
-        Log In
-      </Button>
-    </motion.form>
+        <h2>Sosh Signup</h2>
+        <br></br>
+        <TextField
+          variant="outlined"
+          type="text"
+          name="username"
+          placeholder="Username"
+          onChange={signupChangeHandler}
+          value={signupInfo.username}
+          style={inputStyle}
+        />
+        <TextField
+          variant="outlined"
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={signupChangeHandler}
+          value={signupInfo.password}
+          style={inputStyle}
+        />
+        {props.statusMessage ? (
+          <Alert
+            severity={
+              props.statusMessage === "This username already exists."
+                ? "error"
+                : "success"
+            }
+            style={alertStyle}
+          >
+            {props.statusMessage}
+          </Alert>
+        ) : null}
+        <Button
+          variant="contained"
+          type="submit"
+          style={filledButtonStyle}
+          onClick={signupSubmitHandler}
+        >
+          Sign Up
+        </Button>
+        <p>Or</p>
+        <Button style={buttonStyle} variant="outlined" onClick={loginLink}>
+          Log In
+        </Button>
+      </form>
+    </motion.div>
   );
 }

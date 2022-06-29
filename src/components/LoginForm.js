@@ -84,59 +84,64 @@ export default function LoginForm(props) {
   }
 
   return (
-    <motion.form
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 0.5 } }}
-      className="loginForm"
-      onSubmit={loginSubmitHandler}
-      action="/"
-      method="POST"
+      className="authContainer"
     >
-      <h2>Sosh Login</h2>
-      <br></br>
-      <TextField
-        variant="outlined"
-        type="text"
-        name="username"
-        placeholder="Username"
-        onChange={loginChangeHandler}
-        value={loginInfo.username}
-        style={inputStyle}
-      />
-      <TextField
-        variant="outlined"
-        type="password"
-        name="password"
-        placeholder="Password"
-        onChange={loginChangeHandler}
-        value={loginInfo.password}
-        style={inputStyle}
-      />
-      {props.statusMessage ? (
-        <Alert
-          severity={
-            props.statusMessage === "User successfully created. Please log in."
-              ? "success"
-              : "error"
-          }
-          style={alertStyle}
-        >
-          {props.statusMessage}
-        </Alert>
-      ) : null}
-      <Button
-        variant="contained"
-        type="submit"
-        style={filledButtonStyle}
-        onClick={loginSubmitHandler}
+      <form
+        className="loginForm"
+        onSubmit={loginSubmitHandler}
+        action="/"
+        method="POST"
       >
-        Log-In
-      </Button>
-      <p>Or</p>
-      <Button style={buttonStyle} variant="outlined" onClick={signupLink}>
-        Sign Up
-      </Button>
-    </motion.form>
+        <h2>Sosh Login</h2>
+        <br></br>
+        <TextField
+          variant="outlined"
+          type="text"
+          name="username"
+          placeholder="Username"
+          onChange={loginChangeHandler}
+          value={loginInfo.username}
+          style={inputStyle}
+        />
+        <TextField
+          variant="outlined"
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={loginChangeHandler}
+          value={loginInfo.password}
+          style={inputStyle}
+        />
+        {props.statusMessage ? (
+          <Alert
+            severity={
+              props.statusMessage ===
+              "User successfully created. Please log in."
+                ? "success"
+                : "error"
+            }
+            style={alertStyle}
+          >
+            {props.statusMessage}
+          </Alert>
+        ) : null}
+        <Button
+          variant="contained"
+          type="submit"
+          style={filledButtonStyle}
+          onClick={loginSubmitHandler}
+        >
+          Log-In
+        </Button>
+        <p>Or</p>
+        <Button style={buttonStyle} variant="outlined" onClick={signupLink}>
+          Sign Up
+        </Button>
+      </form>
+    </motion.div>
   );
 }

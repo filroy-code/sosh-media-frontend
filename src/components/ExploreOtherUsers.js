@@ -81,7 +81,7 @@ export default function ExploreOtherUsers(props) {
             multiline
             size="small"
             name="content"
-            sx={{ color: "rgb(0, 109, 119)", width: "88%" }}
+            sx={{ color: "rgb(0, 109, 119)" }}
             placeholder="Search for users..."
             onChange={searchChangeHandler}
             value={searchQuery}
