@@ -40,6 +40,26 @@ export default function UserDetails(props) {
     margin: "5px",
   };
 
+  // window size retrieval function, used to calculate Canvas size of uploaded avatar preview (becasue it only accepts px values.)
+  function getWindowSize() {
+    const { innerWidth, innerHeight } = window;
+    return { innerWidth, innerHeight };
+  }
+
+  const [windowSize, setWindowSize] = React.useState(getWindowSize());
+
+  React.useEffect(() => {
+    function handleWindowResize() {
+      setWindowSize(getWindowSize());
+    }
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
+
   //submits cropped image from Avatar Editor to backend to be saved in the cloud.
   async function sendImageData(event) {
     event.preventDefault();
@@ -154,23 +174,14 @@ export default function UserDetails(props) {
             animate={{ y: "0vh", transition: { duration: 0.8 } }}
             exit={{ y: "100vh", transition: { duration: 0.4 } }}
           >
-            {/* <input
-          type="file"
-          name="image"
-          id="image"
-          ref={fileRef}
-          onChange={() => setFileAttached(true)}
-          placeholder="upload an avatar"
-          required
-        ></input> */}
             {fileRef.current && (
               <div className="avatarPreview">
                 <AvatarEditor
                   image={fileAttached ? fileRef.current.files[0] : null}
                   ref={croppedRef}
                   backgroundColor="white"
-                  width={250}
-                  height={250}
+                  width={windowSize.innerWidth / 4}
+                  height={windowSize.innerWidth / 4}
                   border={50}
                   borderRadius={5}
                   color={[255, 255, 255, 0.6]} // RGBA
