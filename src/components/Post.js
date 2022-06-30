@@ -8,9 +8,11 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import SettingsIcon from "@mui/icons-material/Settings";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
+import Popper from "@mui/material/Popper";
 import { UserContext } from "./UserContext";
 import CommentList from "./CommentList";
 import NewCommentInput from "./NewCommentInput";
@@ -29,12 +31,21 @@ export default function Post(props) {
     borderRadius: "5px",
   };
 
-  // const filledButtonStyle = {
-  //   margin: "0px 10px 0px 5px",
-  //   backgroundColor: "rgb(0, 109, 119)",
-  //   color: "white",
-  //   border: "1px solid rgb(0, 109, 119)",
-  // };
+  const popperButtonStyle = {
+    margin: "5px 0px",
+    backgroundColor: "rgb(237, 246, 249)",
+    color: "rgb(0, 109, 119)",
+    border: "1px solid black",
+    borderRadius: "5px",
+  };
+
+  const filledButtonStyle = {
+    margin: "0px 10px 0px 5px",
+    backgroundColor: "rgb(0, 109, 119)",
+    color: "white",
+    border: "1px solid rgb(0, 109, 119)",
+    borderRadius: "5px",
+  };
 
   const [commentsToggle, setCommentsToggle] = React.useState(false);
   const [starsToggle, setStarsToggle] = React.useState(false);
@@ -63,8 +74,19 @@ export default function Post(props) {
     setCommentsToggle((prev) => !prev);
   }
 
+  // functions for popper usability - taken from MUI positioned popper example code.
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+  const [placement, setPlacement] = React.useState();
+
+  const popperClickHandler = (newPlacement) => (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpen((prev) => placement !== newPlacement || !prev);
+    setPlacement(newPlacement);
+  };
+
   return (
-    <div className="post">
+    <div className={open ? "post postOptionSelect" : "post"}>
       <div className="postHeader">
         <div className="postAuthor">
           <Avatar
@@ -80,8 +102,24 @@ export default function Post(props) {
         </div>
         {props.post.author._id === userInfo.userID && (
           <div className="postAuthor">
-            <IconButton style={buttonStyle}>
-              <EditIcon style={{ margin: "0px" }}></EditIcon>
+            <IconButton
+              style={open ? filledButtonStyle : buttonStyle}
+              onClick={popperClickHandler("bottom")}
+            >
+              <Popper
+                className="postOptionPopper"
+                open={open}
+                anchorEl={anchorEl}
+                placement={placement}
+              >
+                <IconButton style={popperButtonStyle}>
+                  <EditIcon></EditIcon>
+                </IconButton>
+                <IconButton style={popperButtonStyle}>
+                  <DeleteIcon></DeleteIcon>
+                </IconButton>
+              </Popper>
+              <SettingsIcon style={{ margin: "0px" }}></SettingsIcon>
             </IconButton>
           </div>
         )}

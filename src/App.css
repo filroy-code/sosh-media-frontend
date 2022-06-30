@@ -65,6 +65,10 @@ html {
   align-self: center;
 }
 
+.postOptionSelect {
+  filter: brightness(40%)
+}
+
 .postHeader {
   display: flex;
   justify-content: space-between;
@@ -90,15 +94,16 @@ html {
   margin: 15px 0px 15px 15px;
 }
 
-form {
-  padding: 3.5px 8px;
-  align-items: center;
-}
-
 .postButtonContainer {
   display: flex;
   gap: 15px;
   padding-left: 8px;
+}
+
+.postOptionPopper {
+  display: flex;
+  flex-direction: column;
+  padding-top: 5px;
 }
 
 .starsButton {
@@ -120,6 +125,11 @@ form {
 
 .comment {
   padding-left: 25px;
+}
+
+form {
+  padding: 3.5px 8px;
+  align-items: center;
 }
 
 hr {
