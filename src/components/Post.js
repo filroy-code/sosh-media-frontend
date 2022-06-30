@@ -11,8 +11,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import Popper from "@mui/material/Popper";
+import { styled } from "@mui/material/styles";
 import { UserContext } from "./UserContext";
 import CommentList from "./CommentList";
 import NewCommentInput from "./NewCommentInput";
@@ -85,6 +86,18 @@ export default function Post(props) {
     setPlacement(newPlacement);
   };
 
+  // styled tooltip for high contrast overlay on darkened post.
+  const LightTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: theme.palette.common.white,
+      color: "rgba(0, 0, 0, 0.87)",
+      boxShadow: theme.shadows[1],
+      fontSize: "1rem",
+    },
+  }));
+
   return (
     <div className={open ? "post postOptionSelect" : "post"}>
       <div className="postHeader">
@@ -111,12 +124,24 @@ export default function Post(props) {
                 open={open}
                 anchorEl={anchorEl}
                 placement={placement}
+                modifiers={[
+                  {
+                    name: "flip",
+                    enabled: false,
+                  },
+                ]}
               >
                 <IconButton style={popperButtonStyle}>
-                  <EditIcon></EditIcon>
+                  <LightTooltip title="Edit this post." placement="left">
+                    <EditIcon onClick={() => console.log("Editing")}></EditIcon>
+                  </LightTooltip>
                 </IconButton>
                 <IconButton style={popperButtonStyle}>
-                  <DeleteIcon></DeleteIcon>
+                  <LightTooltip title="Delete this post." placement="left">
+                    <DeleteIcon
+                      onClick={() => console.log("Deleting")}
+                    ></DeleteIcon>
+                  </LightTooltip>
                 </IconButton>
               </Popper>
               <SettingsIcon style={{ margin: "0px" }}></SettingsIcon>
