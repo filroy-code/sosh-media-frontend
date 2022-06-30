@@ -137,7 +137,7 @@ export default function LoginForm(props) {
         >
           Log-In
         </Button>
-        <p>Or</p>
+        <p className="loginSignupAdditionalText">OR</p>
         <Button style={buttonStyle} variant="outlined" onClick={signupLink}>
           Sign Up
         </Button>

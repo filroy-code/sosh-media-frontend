@@ -388,6 +388,11 @@ canvas {
   color: rgb(0, 109, 119);
 }
 
+.loginSignupAdditionalText {
+  font-family: 'Londrina Outline', cursive;
+  font-family: 'Syncopate', sans-serif;
+}
+
 .commentHeader {
   display: flex;
   justify-content: space-between;
@@ -397,7 +402,7 @@ canvas {
 
 .modal {
   position: fixed;
-  top: 35%;
+  top: 45%;
   left: 50%;
   background-color: white;
   padding: 40px;
@@ -408,12 +413,16 @@ canvas {
 
 .modal > h2 {
   margin: 5px 5px 20px 5px;
+  user-select: none;
 }
 
 .modalList {
   margin: 10px;
   border: 1px solid black;
   border-radius: 5px;
+  overflow: scroll;
+  height: 50vh;
+  position: relative;
 }
 
 .modalList > hr {
@@ -435,6 +444,7 @@ canvas {
   display: flex;
   align-items: center;
   cursor: pointer;
+  user-select: none;
 }
 
 .modalUserCard:hover {

@@ -65,9 +65,6 @@ function ExtendedUserCard(props) {
   }
 
   const followCheck = (follower) => follower._id === userInfo.userID;
-  const settingsRedirect = () => {
-    navigate("/userDetails", { replace: true });
-  };
 
   const [pageRendered, setPageRendered] = React.useState(false);
   const [buttonCounter, setButtonCounter] = React.useState(0);
@@ -86,6 +83,16 @@ function ExtendedUserCard(props) {
           navigate(`/users/${props.user.username}`, { replace: true })
         }
       >
+        <Modal
+          open={backdrop}
+          closeModal={() => setBackdrop(false)}
+          children={
+            <ModalUserList
+              modalTitle={modalTitle}
+              userList={modalType}
+            ></ModalUserList>
+          }
+        ></Modal>
         <div className="extendedCardUserIdentifier">
           <Avatar
             {...stringAvatar(`${props.user.username}`)}
@@ -129,25 +136,16 @@ function ExtendedUserCard(props) {
         <div className="extendedCardUserInfo">
           <div
             onClick={() => {
-              setBackdrop((prev) => !prev);
+              setBackdrop(true);
               setModalTitle(`Users following ${props.user.username}:`);
               setModalType(props.user.followers);
             }}
           >
-            <Modal
-              open={backdrop}
-              children={
-                <ModalUserList
-                  modalTitle={modalTitle}
-                  userList={modalType}
-                ></ModalUserList>
-              }
-            ></Modal>
             <span>Followers:</span> <b>{props.user.followers.length}</b>
           </div>
           <div
             onClick={() => {
-              setBackdrop((prev) => !prev);
+              setBackdrop(true);
               setModalTitle(`Users ${props.user.username} follows:`);
               setModalType(props.user.following);
             }}
