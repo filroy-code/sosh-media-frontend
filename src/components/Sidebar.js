@@ -63,6 +63,7 @@ export default function Sidebar(props) {
           src={userInfo.avatar}
           alt={`${userInfo.username}'s Avatar`}
           variant="rounded"
+          style={{ border: "1px solid rgb(0, 109, 119)" }}
         >
           {userInfo.username && userInfo.username[0].toUpperCase()}
           <NavLink to="/userDetails"></NavLink>

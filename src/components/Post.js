@@ -62,6 +62,7 @@ export default function Post(props) {
 
   const avatarStyle = {
     margin: "0px 10px 0px 10px",
+    border: "1px solid black",
   };
 
   async function starClickHandler(event) {

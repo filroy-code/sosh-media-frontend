@@ -8,6 +8,7 @@ export default function ModalUserCard(props) {
 
   const avatarStyle = {
     margin: "0px 10px 0px 10px",
+    border: "1px solid black",
     pointerEvents: "none",
   };
 

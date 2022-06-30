@@ -127,9 +127,9 @@ export default function UserDetails(props) {
   return (
     <motion.div
       className="mainSection"
-      initial={{ x: "-100vw" }}
-      animate={{ x: "0vw", transition: { duration: 0.3 } }}
-      exit={{ x: "-100vw", transition: { duration: 0.4 } }}
+      // initial={{ x: "-100vw" }}
+      // animate={{ x: "0vw", transition: { duration: 0.3 } }}
+      // exit={{ x: "-100vw", transition: { duration: 0.4 } }}
     >
       <div className="userDetailsContainer">
         <Button
@@ -152,6 +152,7 @@ export default function UserDetails(props) {
               sx={{
                 width: "10rem",
                 height: "10rem",
+                border: "1px solid black",
                 bgcolor: stringToColor(userInfo.username),
               }}
             >

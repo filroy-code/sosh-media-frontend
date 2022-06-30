@@ -65,6 +65,7 @@ function UserCard(props) {
           bgcolor: stringToColor(props.user.username),
           marginTop: "5px",
           cursor: "pointer",
+          border: "1px solid black",
         }}
       >
         {" "}
