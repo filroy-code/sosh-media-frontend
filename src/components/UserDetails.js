@@ -31,6 +31,13 @@ export default function UserDetails(props) {
     border: "1px solid rgb(0, 109, 119)",
   };
 
+  const filledButtonStyle = {
+    backgroundColor: "rgb(0, 109, 119)",
+    color: "white",
+    border: "1px solid rgb(0, 109, 119)",
+    margin: "5px",
+  };
+
   const backButtonStyle = {
     height: "4rem",
     width: "3.5rem",
@@ -42,13 +49,6 @@ export default function UserDetails(props) {
 
   const sliderStyle = {
     color: "rgb(0, 109, 119)",
-  };
-
-  const filledButtonStyle = {
-    backgroundColor: "rgb(0, 109, 119)",
-    color: "white",
-    border: "1px solid rgb(0, 109, 119)",
-    margin: "5px",
   };
 
   // window size retrieval function, used to calculate Canvas size of uploaded avatar preview (becasue it only accepts px values.)

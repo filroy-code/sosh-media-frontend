@@ -19,6 +19,7 @@ import CommentList from "./CommentList";
 import NewCommentInput from "./NewCommentInput";
 import { stringAvatar } from "../services/AvatarColor";
 import getLoggedinUserData from "../services/getLoggedinUserData";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Post(props) {
   const userInfo = React.useContext(UserContext);
@@ -37,6 +38,14 @@ export default function Post(props) {
     backgroundColor: "rgb(237, 246, 249)",
     color: "rgb(0, 109, 119)",
     border: "1px solid black",
+    borderRadius: "5px",
+  };
+
+  const filledPopperButtonStyle = {
+    margin: "5px 0px",
+    backgroundColor: "rgb(0, 109, 119)",
+    color: "white",
+    border: "1px solid rgb(0, 109, 119)",
     borderRadius: "5px",
   };
 
@@ -75,6 +84,8 @@ export default function Post(props) {
     setCommentsToggle((prev) => !prev);
   }
 
+  const [deleteStatus, setDeleteStatus] = React.useState(false);
+
   // functions for popper usability - taken from MUI positioned popper example code.
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
@@ -99,7 +110,45 @@ export default function Post(props) {
   }));
 
   return (
-    <div className={open ? "post postOptionSelect" : "post"}>
+    <div
+      className={open ? "post postOptionSelect" : "post"}
+      onClick={
+        open
+          ? () => {
+              setOpen(false);
+              setDeleteStatus(false);
+            }
+          : null
+      }
+    >
+      {deleteStatus ? (
+        <div className="postDeleteConfirmation">
+          <motion.div
+            initial={{ x: "-100vw" }}
+            animate={{ x: "0vw", transition: { duration: 0.5 } }}
+            exit={{ x: "-100vw", transition: { duration: 0.4 } }}
+            className="confirmationWindow"
+          >
+            <h2>Delete this post?</h2>
+            <div className="confirmationWindowButtonContainer">
+              <Button
+                style={buttonStyle}
+                onClick={(event) => event.stopPropagation()}
+              >
+                Yes
+              </Button>
+              <Button
+                style={buttonStyle}
+                onClick={() => {
+                  setDeleteStatus(false);
+                }}
+              >
+                No
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      ) : null}
       <div className="postHeader">
         <div className="postAuthor">
           <Avatar
@@ -116,6 +165,7 @@ export default function Post(props) {
         {props.post.author._id === userInfo.userID && (
           <div className="postAuthor">
             <IconButton
+              disabled={deleteStatus ? true : false}
               style={open ? filledButtonStyle : buttonStyle}
               onClick={popperClickHandler("bottom")}
             >
@@ -131,18 +181,27 @@ export default function Post(props) {
                   },
                 ]}
               >
-                <IconButton style={popperButtonStyle}>
-                  <LightTooltip title="Edit this post." placement="left">
-                    <EditIcon onClick={() => console.log("Editing")}></EditIcon>
-                  </LightTooltip>
-                </IconButton>
-                <IconButton style={popperButtonStyle}>
-                  <LightTooltip title="Delete this post." placement="left">
-                    <DeleteIcon
-                      onClick={() => console.log("Deleting")}
-                    ></DeleteIcon>
-                  </LightTooltip>
-                </IconButton>
+                <LightTooltip title="Edit this post." placement="left">
+                  <IconButton
+                    style={popperButtonStyle}
+                    onClick={() => console.log("Editing")}
+                  >
+                    <EditIcon></EditIcon>
+                  </IconButton>
+                </LightTooltip>
+                <LightTooltip title="Delete this post." placement="left">
+                  <IconButton
+                    style={popperButtonStyle}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setDeleteStatus(true);
+                      setOpen(false);
+                      console.log(props.post._id);
+                    }}
+                  >
+                    <DeleteIcon></DeleteIcon>
+                  </IconButton>
+                </LightTooltip>
               </Popper>
               <SettingsIcon style={{ margin: "0px" }}></SettingsIcon>
             </IconButton>
@@ -152,7 +211,11 @@ export default function Post(props) {
       <p className="postContent">{props.post.content}</p>
       <p className="postDate">{props.post.formatted_date}</p>
       <span className="postButtonContainer">
-        <IconButton className="starsButton" onClick={starClickHandler}>
+        <IconButton
+          disabled={deleteStatus ? true : false}
+          className="starsButton"
+          onClick={starClickHandler}
+        >
           {props.post.stars.includes(userInfo.userID) ? (
             <StarIcon sx={{ color: "rgb(226, 149, 120)" }} />
           ) : (
@@ -161,7 +224,11 @@ export default function Post(props) {
           {props.post.stars.length}
         </IconButton>
         <Tooltip title="Add a comment." placement="right">
-          <IconButton className="commentsButton" onClick={commentClickHandler}>
+          <IconButton
+            disabled={deleteStatus ? true : false}
+            className="commentsButton"
+            onClick={commentClickHandler}
+          >
             {commentsToggle ? (
               <ChatBubbleIcon sx={{ color: "rgb(0, 109, 119)" }} />
             ) : (
