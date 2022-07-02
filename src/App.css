@@ -55,9 +55,13 @@ html {
   flex-wrap: wrap;
 }
 
+.flipperClass {
+  width: 98%;
+}
+
 .post {
   border: 1px solid black;
-  margin: 5px;
+  margin: 5px 5px 10px 5px;
   padding: 5px;
   width: 98%;
   border-radius: 5px;

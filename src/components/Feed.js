@@ -8,6 +8,7 @@ import { Button } from "@mui/material";
 import getLoggedinUserData from "../services/getLoggedinUserData";
 import { UserContext } from "./UserContext";
 import ExtendedUserCard from "./ExtendedUserCard";
+import { Flipped, Flipper } from "react-flip-toolkit";
 
 export default function Feed(props) {
   const { user } = useParams();
@@ -87,7 +88,9 @@ export default function Feed(props) {
       {user === userInfo.username && (
         <NewPostForm update={retrieveAppropriateUserData}></NewPostForm>
       )}
-      {postFeed}
+      <Flipper className="flipperClass" flipKey={postFeed}>
+        {postFeed}
+      </Flipper>
     </motion.div>
   );
 }
