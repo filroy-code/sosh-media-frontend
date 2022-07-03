@@ -179,19 +179,28 @@ export default function Post(props) {
         <Flipped inverseFlipId={`${props.post._id}`}>
           <div>
             {postEditState ? (
-              <div className="postHeaderEditing">
+              <motion.div
+                className="postHeaderEditing"
+                initial={{ x: "-100vw" }}
+                animate={{ x: "0vw", transition: { duration: 0.5 } }}
+                exit={{ x: "-100vw", transition: { duration: 0.4 } }}
+              >
                 <div className="editButtonContainer">
-                  <IconButton style={filledButtonStyle}>
-                    <CheckIcon></CheckIcon>
-                  </IconButton>
-                  <IconButton
-                    style={buttonStyle}
-                    onClick={() => setPostEditState(false)}
-                  >
-                    <ClearIcon></ClearIcon>
-                  </IconButton>
+                  <Tooltip title="Confirm changes." placement="left">
+                    <IconButton style={filledButtonStyle}>
+                      <CheckIcon></CheckIcon>
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Discard changes." placement="right">
+                    <IconButton
+                      style={buttonStyle}
+                      onClick={() => setPostEditState(false)}
+                    >
+                      <ClearIcon></ClearIcon>
+                    </IconButton>
+                  </Tooltip>
                 </div>
-              </div>
+              </motion.div>
             ) : (
               <div className="postHeader">
                 <div className="postAuthor">

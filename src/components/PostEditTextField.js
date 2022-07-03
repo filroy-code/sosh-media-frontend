@@ -10,14 +10,14 @@ export default function PostEditTextField(props) {
   );
   return (
     <div>
-      {/* <Button
-        onClick={() =>
-          postEditTextFieldRef.current.children[0].children[0].focus()
-        }
-      >
-        CLICK
-      </Button> */}
       <TextField
+        // onFocus sets the cursor to the end of the text input.
+        onFocus={(e) =>
+          e.currentTarget.setSelectionRange(
+            e.currentTarget.value.length,
+            e.currentTarget.value.length
+          )
+        }
         className="postContent"
         fullWidth
         onChange={props.postEditChangeHandler}
