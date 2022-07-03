@@ -70,7 +70,12 @@ export default function Sidebar(props) {
         </Avatar>
       </Button>
       <Button
-        className={location.pathname === "/exploreUsers" ? "activeTab" : null}
+        className={
+          location.pathname === "/exploreUsers" ||
+          location.pathname === `/users/${!userInfo.username}` // this does not work but is the inteded functionality.
+            ? "activeTab"
+            : null
+        }
         style={buttonStyle}
         variant="outlined"
         onClick={() => navigate("/exploreUsers", { replace: true })}

@@ -127,7 +127,7 @@ export default function Post(props) {
   }
 
   return (
-    <Flipped flipId={props.post._id}>
+    <Flipped flipId={`${props.post._id}`}>
       <div
         className={open ? "post postOptionSelect" : "post"}
         style={
@@ -167,107 +167,111 @@ export default function Post(props) {
             </motion.div>
           </div>
         ) : null}
-        <div className="postHeader">
-          <div className="postAuthor">
-            <Avatar
-              {...stringAvatar(`${props.post.author.username}`)}
-              alt={`${props.post.author.username}'s Avatar`}
-              src={props.post.author.avatar}
-              variant="rounded"
-              style={avatarStyle}
-            >
-              {props.post.author.username[0].toUpperCase()}
-            </Avatar>
-            <b>{props.post.author.username}</b> posted:
-          </div>
-          {props.post.author._id === userInfo.userID && (
-            <div className="postAuthor">
+        <Flipped inverseFlipId={`${props.post._id}`}>
+          <div>
+            <div className="postHeader">
+              <div className="postAuthor">
+                <Avatar
+                  {...stringAvatar(`${props.post.author.username}`)}
+                  alt={`${props.post.author.username}'s Avatar`}
+                  src={props.post.author.avatar}
+                  variant="rounded"
+                  style={avatarStyle}
+                >
+                  {props.post.author.username[0].toUpperCase()}
+                </Avatar>
+                <b>{props.post.author.username}</b> posted:
+              </div>
+              {props.post.author._id === userInfo.userID && (
+                <div className="postAuthor">
+                  <IconButton
+                    disabled={deleteStatus ? true : false}
+                    style={open ? filledButtonStyle : buttonStyle}
+                    onClick={popperClickHandler("bottom")}
+                  >
+                    <Popper
+                      className="postOptionPopper"
+                      open={open}
+                      anchorEl={anchorEl}
+                      placement={placement}
+                      modifiers={[
+                        {
+                          name: "flip",
+                          enabled: false,
+                        },
+                      ]}
+                    >
+                      <LightTooltip title="Edit this post." placement="left">
+                        <IconButton
+                          style={popperButtonStyle}
+                          onClick={() => console.log("Editing")}
+                        >
+                          <EditIcon></EditIcon>
+                        </IconButton>
+                      </LightTooltip>
+                      <LightTooltip title="Delete this post." placement="left">
+                        <IconButton
+                          style={popperButtonStyle}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            setDeleteStatus(true);
+                            setOpen(false);
+                            console.log(props.post._id);
+                          }}
+                        >
+                          <DeleteIcon></DeleteIcon>
+                        </IconButton>
+                      </LightTooltip>
+                    </Popper>
+                    <SettingsIcon style={{ margin: "0px" }}></SettingsIcon>
+                  </IconButton>
+                </div>
+              )}
+            </div>
+            <p className="postContent">{props.post.content}</p>
+            <p className="postDate">{props.post.formatted_date}</p>
+            <span className="postButtonContainer">
               <IconButton
                 disabled={deleteStatus ? true : false}
-                style={open ? filledButtonStyle : buttonStyle}
-                onClick={popperClickHandler("bottom")}
+                className="starsButton"
+                onClick={starClickHandler}
               >
-                <Popper
-                  className="postOptionPopper"
-                  open={open}
-                  anchorEl={anchorEl}
-                  placement={placement}
-                  modifiers={[
-                    {
-                      name: "flip",
-                      enabled: false,
-                    },
-                  ]}
-                >
-                  <LightTooltip title="Edit this post." placement="left">
-                    <IconButton
-                      style={popperButtonStyle}
-                      onClick={() => console.log("Editing")}
-                    >
-                      <EditIcon></EditIcon>
-                    </IconButton>
-                  </LightTooltip>
-                  <LightTooltip title="Delete this post." placement="left">
-                    <IconButton
-                      style={popperButtonStyle}
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        setDeleteStatus(true);
-                        setOpen(false);
-                        console.log(props.post._id);
-                      }}
-                    >
-                      <DeleteIcon></DeleteIcon>
-                    </IconButton>
-                  </LightTooltip>
-                </Popper>
-                <SettingsIcon style={{ margin: "0px" }}></SettingsIcon>
+                {props.post.stars.includes(userInfo.userID) ? (
+                  <StarIcon sx={{ color: "rgb(226, 149, 120)" }} />
+                ) : (
+                  <StarBorderIcon />
+                )}
+                {props.post.stars.length}
               </IconButton>
-            </div>
-          )}
-        </div>
-        <p className="postContent">{props.post.content}</p>
-        <p className="postDate">{props.post.formatted_date}</p>
-        <span className="postButtonContainer">
-          <IconButton
-            disabled={deleteStatus ? true : false}
-            className="starsButton"
-            onClick={starClickHandler}
-          >
-            {props.post.stars.includes(userInfo.userID) ? (
-              <StarIcon sx={{ color: "rgb(226, 149, 120)" }} />
-            ) : (
-              <StarBorderIcon />
-            )}
-            {props.post.stars.length}
-          </IconButton>
-          <Tooltip title="Add a comment." placement="right">
-            <IconButton
-              disabled={deleteStatus ? true : false}
-              className="commentsButton"
-              onClick={commentClickHandler}
-            >
+              <Tooltip title="Add a comment." placement="right">
+                <IconButton
+                  disabled={deleteStatus ? true : false}
+                  className="commentsButton"
+                  onClick={commentClickHandler}
+                >
+                  {commentsToggle ? (
+                    <ChatBubbleIcon sx={{ color: "rgb(0, 109, 119)" }} />
+                  ) : (
+                    <ChatBubbleOutlineIcon sx={{ color: "rgb(0, 109, 119)" }} />
+                  )}
+                  {props.post.comments.length}
+                </IconButton>
+              </Tooltip>
+            </span>
+            <hr></hr>
+            <div>
+              <CommentList comments={props.post.comments}></CommentList>
               {commentsToggle ? (
-                <ChatBubbleIcon sx={{ color: "rgb(0, 109, 119)" }} />
-              ) : (
-                <ChatBubbleOutlineIcon sx={{ color: "rgb(0, 109, 119)" }} />
-              )}
-              {props.post.comments.length}
-            </IconButton>
-          </Tooltip>
-        </span>
-        <hr></hr>
-        <div>
-          <CommentList comments={props.post.comments}></CommentList>
-          {commentsToggle ? (
-            <NewCommentInput
-              ref={inputRef}
-              targetPostURL={props.post.url}
-              setCommentsToggle={setCommentsToggle}
-              update={props.update}
-            ></NewCommentInput>
-          ) : null}
-        </div>
+                <NewCommentInput
+                  ref={inputRef}
+                  targetPostURL={props.post.url}
+                  setCommentsToggle={setCommentsToggle}
+                  update={props.update}
+                ></NewCommentInput>
+              ) : null}
+            </div>
+          </div>
+        </Flipped>
       </div>
     </Flipped>
   );
