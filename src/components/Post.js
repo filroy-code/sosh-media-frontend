@@ -296,7 +296,7 @@ export default function Post(props) {
             <p className="postDate">{props.post.formatted_date}</p>
             {props.post.edited ? (
               <p className="postDate">
-                <b>Edited on {props.post.formatted_edit_date}</b>
+                <i>Edited on {props.post.formatted_edit_date}</i>
               </p>
             ) : null}
             <span className="postButtonContainer">
