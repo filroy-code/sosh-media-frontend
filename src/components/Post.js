@@ -9,6 +9,8 @@ import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsIcon from "@mui/icons-material/Settings";
+import CheckIcon from "@mui/icons-material/Check";
+import ClearIcon from "@mui/icons-material/Clear";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -21,6 +23,7 @@ import { stringAvatar } from "../services/AvatarColor";
 import getLoggedinUserData from "../services/getLoggedinUserData";
 import { AnimatePresence, motion } from "framer-motion";
 import { Flipped } from "react-flip-toolkit";
+import PostEditTextField from "./PostEditTextField";
 
 export default function Post(props) {
   const userInfo = React.useContext(UserContext);
@@ -126,6 +129,12 @@ export default function Post(props) {
     setDeleteStatus("inProgress");
   }
 
+  const [postEditState, setPostEditState] = React.useState(false);
+
+  function postEditChangeHandler(event) {
+    setPostEditState(event.target.value);
+  }
+
   return (
     <Flipped flipId={`${props.post._id}`}>
       <div
@@ -169,70 +178,98 @@ export default function Post(props) {
         ) : null}
         <Flipped inverseFlipId={`${props.post._id}`}>
           <div>
-            <div className="postHeader">
-              <div className="postAuthor">
-                <Avatar
-                  {...stringAvatar(`${props.post.author.username}`)}
-                  alt={`${props.post.author.username}'s Avatar`}
-                  src={props.post.author.avatar}
-                  variant="rounded"
-                  style={avatarStyle}
-                >
-                  {props.post.author.username[0].toUpperCase()}
-                </Avatar>
-                <b>{props.post.author.username}</b> posted:
-              </div>
-              {props.post.author._id === userInfo.userID && (
-                <div className="postAuthor">
+            {postEditState ? (
+              <div className="postHeaderEditing">
+                <div className="editButtonContainer">
+                  <IconButton style={filledButtonStyle}>
+                    <CheckIcon></CheckIcon>
+                  </IconButton>
                   <IconButton
-                    disabled={deleteStatus ? true : false}
-                    style={open ? filledButtonStyle : buttonStyle}
-                    onClick={popperClickHandler("bottom")}
+                    style={buttonStyle}
+                    onClick={() => setPostEditState(false)}
                   >
-                    <Popper
-                      className="postOptionPopper"
-                      open={open}
-                      anchorEl={anchorEl}
-                      placement={placement}
-                      modifiers={[
-                        {
-                          name: "flip",
-                          enabled: false,
-                        },
-                      ]}
-                    >
-                      <LightTooltip title="Edit this post." placement="left">
-                        <IconButton
-                          style={popperButtonStyle}
-                          onClick={() => console.log("Editing")}
-                        >
-                          <EditIcon></EditIcon>
-                        </IconButton>
-                      </LightTooltip>
-                      <LightTooltip title="Delete this post." placement="left">
-                        <IconButton
-                          style={popperButtonStyle}
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            setDeleteStatus(true);
-                            setOpen(false);
-                            console.log(props.post._id);
-                          }}
-                        >
-                          <DeleteIcon></DeleteIcon>
-                        </IconButton>
-                      </LightTooltip>
-                    </Popper>
-                    <SettingsIcon style={{ margin: "0px" }}></SettingsIcon>
+                    <ClearIcon></ClearIcon>
                   </IconButton>
                 </div>
-              )}
-            </div>
-            <p className="postContent">{props.post.content}</p>
+              </div>
+            ) : (
+              <div className="postHeader">
+                <div className="postAuthor">
+                  <Avatar
+                    {...stringAvatar(`${props.post.author.username}`)}
+                    alt={`${props.post.author.username}'s Avatar`}
+                    src={props.post.author.avatar}
+                    variant="rounded"
+                    style={avatarStyle}
+                  >
+                    {props.post.author.username[0].toUpperCase()}
+                  </Avatar>
+                  <b>{props.post.author.username}</b> posted:
+                </div>
+                {props.post.author._id === userInfo.userID && (
+                  <div className="postAuthor">
+                    <IconButton
+                      disabled={deleteStatus || postEditState ? true : false}
+                      style={open ? filledButtonStyle : buttonStyle}
+                      onClick={popperClickHandler("bottom")}
+                    >
+                      <Popper
+                        className="postOptionPopper"
+                        open={open}
+                        anchorEl={anchorEl}
+                        placement={placement}
+                        modifiers={[
+                          {
+                            name: "flip",
+                            enabled: false,
+                          },
+                        ]}
+                      >
+                        <LightTooltip title="Edit this post." placement="left">
+                          <IconButton
+                            style={popperButtonStyle}
+                            onClick={() => {
+                              setPostEditState(props.post.content);
+                            }}
+                          >
+                            <EditIcon></EditIcon>
+                          </IconButton>
+                        </LightTooltip>
+                        <LightTooltip
+                          title="Delete this post."
+                          placement="left"
+                        >
+                          <IconButton
+                            style={popperButtonStyle}
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              setDeleteStatus(true);
+                              setOpen(false);
+                            }}
+                          >
+                            <DeleteIcon></DeleteIcon>
+                          </IconButton>
+                        </LightTooltip>
+                      </Popper>
+                      <SettingsIcon style={{ margin: "0px" }}></SettingsIcon>
+                    </IconButton>
+                  </div>
+                )}
+              </div>
+            )}
+            {postEditState ? (
+              <PostEditTextField
+                postEditChangeHandler={postEditChangeHandler}
+                postEditState={postEditState}
+              ></PostEditTextField>
+            ) : (
+              <p className="postContent"> {props.post.content} </p>
+            )}
+
             <p className="postDate">{props.post.formatted_date}</p>
             <span className="postButtonContainer">
               <IconButton
-                disabled={deleteStatus ? true : false}
+                disabled={deleteStatus || postEditState ? true : false}
                 className="starsButton"
                 onClick={starClickHandler}
               >
@@ -245,7 +282,7 @@ export default function Post(props) {
               </IconButton>
               <Tooltip title="Add a comment." placement="right">
                 <IconButton
-                  disabled={deleteStatus ? true : false}
+                  disabled={deleteStatus || postEditState ? true : false}
                   className="commentsButton"
                   onClick={commentClickHandler}
                 >

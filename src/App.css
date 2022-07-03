@@ -81,6 +81,11 @@ html {
   justify-content: space-between;
 }
 
+.postHeaderEditing {
+  display: flex;
+  justify-content: center;
+}
+
 .postAuthor {
   padding: 3px;
   padding-left: 10px;
@@ -146,6 +151,11 @@ html {
 
 .confirmationWindowButtonContainer {
   display: flex;
+}
+
+.editButtonContainer {
+  display: flex;
+  margin: 10px;
 }
 
 .starsButton {
