@@ -129,10 +129,28 @@ export default function Post(props) {
     setDeleteStatus("inProgress");
   }
 
-  const [postEditState, setPostEditState] = React.useState(false);
+  const [postEditState, setPostEditState] = React.useState("");
 
   function postEditChangeHandler(event) {
     setPostEditState(event.target.value);
+  }
+
+  async function editConfirm() {
+    let response = await fetch(`http://localhost:3000/users${props.post.url}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: userInfo.authToken,
+      },
+      body: JSON.stringify({ editedContent: postEditState }),
+    });
+    console.log(response);
+    if (response.status === 200) {
+      setPostEditState("");
+      props.update();
+    } else {
+      console.log("Edit submit failed.");
+    }
   }
 
   return (
@@ -187,7 +205,7 @@ export default function Post(props) {
               >
                 <div className="editButtonContainer">
                   <Tooltip title="Confirm changes." placement="left">
-                    <IconButton style={filledButtonStyle}>
+                    <IconButton onClick={editConfirm} style={filledButtonStyle}>
                       <CheckIcon></CheckIcon>
                     </IconButton>
                   </Tooltip>
@@ -276,6 +294,11 @@ export default function Post(props) {
             )}
 
             <p className="postDate">{props.post.formatted_date}</p>
+            {props.post.edited ? (
+              <p className="postDate">
+                <b>Edited on {props.post.formatted_edit_date}</b>
+              </p>
+            ) : null}
             <span className="postButtonContainer">
               <IconButton
                 disabled={deleteStatus || postEditState ? true : false}
