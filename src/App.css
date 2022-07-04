@@ -101,6 +101,7 @@ html {
   padding: 18px;
   border-radius: 5px;
   transition: background-color 1s;
+  white-space: pre-line;
 }
 
 .postDate {
@@ -178,6 +179,11 @@ html {
 
 .comment {
   padding-left: 25px;
+}
+
+.commentContent {
+  white-space: pre-line;
+  margin: 8px;
 }
 
 form {

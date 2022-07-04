@@ -26,7 +26,7 @@ export default function Comment(props) {
           </p>
           <p>{mouseOver && props.comment.formatted_date}</p>
         </div>
-        <p>{props.comment.content}</p>
+        <p className="commentContent">{props.comment.content}</p>
       </div>
       <hr></hr>
     </div>
