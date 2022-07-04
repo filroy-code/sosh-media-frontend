@@ -20,14 +20,6 @@ function ExtendedUserCard(props) {
   const userInfo = React.useContext(UserContext);
   let navigate = useNavigate();
 
-  const backButtonStyle = {
-    height: "4rem",
-    width: "3.5rem",
-    margin: "20px",
-    border: "1px solid rgb(0, 109, 119)",
-    color: "rgb(0, 109, 119)",
-  };
-
   const settingsButtonStyle = {
     height: "4rem",
     width: "3.5rem",
@@ -107,7 +99,7 @@ function ExtendedUserCard(props) {
           onClick={() => {
             setBackButtonCounter((prev) => prev + 1);
           }}
-          style={backButtonStyle}
+          style={settingsButtonStyle}
         >
           <ArrowBackIcon></ArrowBackIcon>
         </Button>
