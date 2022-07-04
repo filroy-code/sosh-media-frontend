@@ -10,10 +10,16 @@ export default function ModalUserCard(props) {
     margin: "0px 10px 0px 10px",
     border: "1px solid black",
     pointerEvents: "none",
+    userSelect: "none",
+  };
+
+  const h3Style = {
+    pointerEvents: "none",
+    userSelect: "none",
   };
 
   return (
-    <>
+    <div className="modalUserCard">
       <Avatar
         {...stringAvatar(`${props.user.username}`)}
         alt={`${props.user.username}'s Avatar`}
@@ -23,7 +29,7 @@ export default function ModalUserCard(props) {
       >
         {props.user.username[0].toUpperCase()}
       </Avatar>
-      <h3>{props.user.username}</h3>
-    </>
+      <h3 style={h3Style}>{props.user.username}</h3>
+    </div>
   );
 }

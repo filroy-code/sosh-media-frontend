@@ -5,14 +5,16 @@ import { useNavigate } from "react-router-dom";
 export default function ModalUserList(props) {
   const navigate = useNavigate();
 
-  function cardClickHandler(event) {
-    event.stopPropagation();
-    navigate(`/users/${event.target.textContent}`);
-  }
-
   let userListDisplay = props.userList.map((user) => {
     return (
-      <div className="modalUserCard" key={user._id} onClick={cardClickHandler}>
+      <div
+        className="modalUserCard"
+        key={user._id}
+        onClick={(event) => {
+          event.stopPropagation();
+          navigate(`/users/${user.username}`);
+        }}
+      >
         <ModalUserCard user={user}></ModalUserCard>
         <hr></hr>
       </div>
