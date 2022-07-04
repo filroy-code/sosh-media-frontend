@@ -50,9 +50,7 @@ function UserCard(props) {
   return (
     <div
       className="userCard"
-      onClick={() =>
-        navigate(`/users/${props.user.username}`, { replace: true })
-      }
+      onClick={() => navigate(`/users/${props.user.username}`)}
     >
       <Avatar
         {...stringAvatar(`${props.user.username}`)}

@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import { stringAvatar, stringToColor } from "../services/AvatarColor";
@@ -18,6 +19,14 @@ import ModalUserList from "./ModalUserList";
 function ExtendedUserCard(props) {
   const userInfo = React.useContext(UserContext);
   let navigate = useNavigate();
+
+  const backButtonStyle = {
+    height: "4rem",
+    width: "3.5rem",
+    margin: "20px",
+    border: "1px solid rgb(0, 109, 119)",
+    color: "rgb(0, 109, 119)",
+  };
 
   const settingsButtonStyle = {
     height: "4rem",
@@ -67,21 +76,22 @@ function ExtendedUserCard(props) {
   const followCheck = (follower) => follower._id === userInfo.userID;
 
   const [pageRendered, setPageRendered] = React.useState(false);
-  const [buttonCounter, setButtonCounter] = React.useState(0);
+  const [settingsButtonCounter, setSettingsButtonCounter] = React.useState(0);
+  const [backButtonCounter, setBackButtonCounter] = React.useState(0);
 
   React.useEffect(() => {
-    pageRendered
-      ? navigate("/userDetails", { replace: true })
-      : setPageRendered(true);
-  }, [buttonCounter]);
+    pageRendered ? navigate("/userDetails") : setPageRendered(true);
+  }, [settingsButtonCounter]);
+
+  React.useEffect(() => {
+    pageRendered ? navigate(-2) : setPageRendered(true);
+  }, [backButtonCounter]);
 
   return (
     props.user && (
       <div
         className="extendedUserCard"
-        onClick={() =>
-          navigate(`/users/${props.user.username}`, { replace: true })
-        }
+        onClick={() => navigate(`/users/${props.user.username}`)}
       >
         <Modal
           open={backdrop}
@@ -93,6 +103,14 @@ function ExtendedUserCard(props) {
             ></ModalUserList>
           }
         ></Modal>
+        <Button
+          onClick={() => {
+            setBackButtonCounter((prev) => prev + 1);
+          }}
+          style={backButtonStyle}
+        >
+          <ArrowBackIcon></ArrowBackIcon>
+        </Button>
         <div className="extendedCardUserIdentifier">
           <Avatar
             {...stringAvatar(`${props.user.username}`)}
@@ -162,7 +180,7 @@ function ExtendedUserCard(props) {
             <Button
               style={settingsButtonStyle}
               variant="outlined"
-              onClick={() => setButtonCounter((prev) => prev + 1)}
+              onClick={() => setSettingsButtonCounter((prev) => prev + 1)}
             >
               <SettingsIcon fontSize="large">
                 <Link to="/userDetails"></Link>

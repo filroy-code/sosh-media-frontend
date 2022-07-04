@@ -7,8 +7,7 @@ export default function ModalUserList(props) {
 
   function cardClickHandler(event) {
     event.stopPropagation();
-    console.log(event.target);
-    navigate(`/users/${event.target.textContent}`, { replace: true });
+    navigate(`/users/${event.target.textContent}`);
   }
 
   let userListDisplay = props.userList.map((user) => {

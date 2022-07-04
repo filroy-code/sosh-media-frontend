@@ -133,9 +133,7 @@ export default function UserDetails(props) {
     >
       <div className="userDetailsContainer">
         <Button
-          onClick={() =>
-            navigate(`/users/${userInfo.username}`, { replace: true })
-          }
+          onClick={() => navigate(`/users/${userInfo.username}`)}
           style={backButtonStyle}
         >
           <ArrowBackIcon></ArrowBackIcon>

@@ -38,7 +38,7 @@ export default function Sidebar(props) {
         className={location.pathname === "/" ? "activeTab" : null}
         style={buttonStyle}
         variant="outlined"
-        onClick={() => navigate("/", { replace: true })}
+        onClick={() => navigate("/")}
       >
         <HomeIcon fontSize="large">
           <NavLink to="/">Home</NavLink>
@@ -53,10 +53,7 @@ export default function Sidebar(props) {
         }
         style={buttonStyle}
         variant="outlined"
-        onClick={() =>
-          navigate(`/users/${userInfo.username}`, { replace: true })
-        }
-        // onClick={() => navigate("/userDetails", { replace: true })}
+        onClick={() => navigate(`/users/${userInfo.username}`)}
       >
         <Avatar
           {...stringAvatar(`${userInfo.username}`)}
@@ -79,7 +76,7 @@ export default function Sidebar(props) {
         }
         style={buttonStyle}
         variant="outlined"
-        onClick={() => navigate("/exploreUsers", { replace: true })}
+        onClick={() => navigate("/exploreUsers")}
       >
         <PeopleIcon fontSize="large">
           <NavLink to="/exploreUsers">Explore Users</NavLink>
