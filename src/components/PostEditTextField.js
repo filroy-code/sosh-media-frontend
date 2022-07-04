@@ -4,10 +4,11 @@ import { Button } from "@mui/material";
 
 export default function PostEditTextField(props) {
   const postEditTextFieldRef = React.useRef();
-  React.useEffect(
-    () => postEditTextFieldRef.current.children[0].children[0].focus(),
-    []
-  );
+  const [bgColorState, setBgColorState] = React.useState("rgb(237, 246, 249)");
+  React.useEffect(() => {
+    postEditTextFieldRef.current.children[0].children[0].focus();
+    setBgColorState("rgb(255, 221, 210)");
+  }, []);
   return (
     <div>
       <TextField
@@ -25,7 +26,7 @@ export default function PostEditTextField(props) {
         style={{
           width: "98%",
           margin: "10px",
-          backgroundColor: "rgb(255, 221, 210)",
+          backgroundColor: bgColorState,
         }}
         ref={postEditTextFieldRef}
         multiline

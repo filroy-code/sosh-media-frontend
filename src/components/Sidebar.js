@@ -72,7 +72,8 @@ export default function Sidebar(props) {
       <Button
         className={
           location.pathname === "/exploreUsers" ||
-          location.pathname === `/users/${!userInfo.username}` // this does not work but is the inteded functionality.
+          (location.pathname.split("/")[2] !== userInfo.username &&
+            location.pathname.split("/")[1] === "users")
             ? "activeTab"
             : null
         }
