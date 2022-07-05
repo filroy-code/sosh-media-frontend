@@ -35,6 +35,24 @@ export default function Sidebar(props) {
       className="sideBar"
     >
       <Button
+        onClick={async () => {
+          let response = await fetch("http://localhost:3000/homefeed", {
+            method: "GET",
+            mode: "cors",
+            headers: {
+              Authorization: userInfo.authToken,
+              Origin: "localhost:8080",
+            },
+          });
+          if (response.status === 200) {
+            let userData = await response.json();
+            console.log(userData);
+          }
+        }}
+      >
+        CLICK
+      </Button>
+      <Button
         className={location.pathname === "/" ? "activeTab" : null}
         style={buttonStyle}
         variant="outlined"

@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@mui/material";
 import getLoggedinUserData from "../services/getLoggedinUserData";
+import getLoggedinUserHomeFeed from "../services/getLoggedinUserHomeFeed";
 import { UserContext } from "./UserContext";
 import ExtendedUserCard from "./ExtendedUserCard";
 import { Flipped, Flipper } from "react-flip-toolkit";
@@ -25,8 +26,10 @@ export default function Feed(props) {
     updateUserData(userDataResult[0]);
   }
   async function retrieveUserHome() {
-    let loggedinUserData = await getLoggedinUserData(userInfo.authToken);
-    updateUserData(loggedinUserData._doc);
+    let loggedinUserHomeFeed = await getLoggedinUserHomeFeed(
+      userInfo.authToken
+    );
+    updateUserData(loggedinUserHomeFeed);
   }
 
   async function retrieveAppropriateUserData() {
@@ -39,6 +42,7 @@ export default function Feed(props) {
   }
 
   function generatePosts(userData) {
+    console.log(userData.posts);
     const posts = userData.posts;
     let postsDisplay = posts.map((post) => {
       return (
