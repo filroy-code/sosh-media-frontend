@@ -110,7 +110,6 @@ export default function LoginForm(props) {
         password: "",
       });
     }
-    console.log("submitted to server");
   }
 
   function signupLink() {

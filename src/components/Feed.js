@@ -110,6 +110,10 @@ export default function Feed(props) {
     updateUserData(newArray);
   }
 
+  async function addNewPostToFeed(post) {
+    updateUserData((prev) => [post, ...prev]);
+  }
+
   async function retrieveAppropriateUserData() {
     //if the user param is truthy, populated the feed with posts from that user. Else, the feed is the home feed for the logged in user.
     if (user) {
@@ -158,7 +162,6 @@ export default function Feed(props) {
   React.useEffect(() => {
     if (initialRenderCompleted) {
       generatePosts(userData);
-      console.log(userData);
     } else {
       setInitialRenderCompleted(true);
     }
@@ -177,11 +180,9 @@ export default function Feed(props) {
           retrieveUser={retrieveUser}
         ></ExtendedUserCard>
       ) : null}
-      {!user && (
-        <NewPostForm update={retrieveAppropriateUserData}></NewPostForm>
-      )}
+      {!user && <NewPostForm update={addNewPostToFeed}></NewPostForm>}
       {user === userInfo.username && (
-        <NewPostForm update={retrieveAppropriateUserData}></NewPostForm>
+        <NewPostForm update={addNewPostToFeed}></NewPostForm>
       )}
       <Flipper className="flipperClass" flipKey={postFeed}>
         {postFeed}

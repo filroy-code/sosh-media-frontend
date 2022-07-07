@@ -77,7 +77,6 @@ export default function SignupForm(props) {
           password: null,
         }));
       }
-      console.log(validationMessage);
       return;
     }
 
@@ -105,7 +104,6 @@ export default function SignupForm(props) {
         password: "",
       });
     }
-    console.log("submitted to server");
   }
 
   function loginLink() {
