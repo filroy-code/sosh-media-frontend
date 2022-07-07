@@ -30,7 +30,13 @@ export default function LoginForm(props) {
 
   const alertStyle = {
     margin: "10px 0px 5px 0px",
+    borderRadius: "5px",
   };
+
+  const [validationMessage, setValidationMessage] = React.useState({
+    username: false,
+    password: false,
+  });
 
   // login form state
   const [loginInfo, setLoginInfo] = React.useState({
@@ -49,6 +55,34 @@ export default function LoginForm(props) {
   // submits username and password info from login form component and stores JWT in React state if login successful.
   async function loginSubmitHandler(event) {
     event.preventDefault();
+    if (loginInfo.username.length < 1 || loginInfo.password.length < 1) {
+      if (loginInfo.username.length < 1) {
+        setValidationMessage({
+          username: "Username field must not be empty.",
+        });
+      } else {
+        setValidationMessage({
+          username: null,
+        });
+      }
+      if (loginInfo.password.length < 1) {
+        setValidationMessage((prev) => ({
+          ...prev,
+          password: "Password field must not be empty.",
+        }));
+      } else {
+        setValidationMessage({
+          password: null,
+        });
+      }
+      return;
+    }
+
+    setValidationMessage({
+      username: null,
+      password: null,
+    });
+
     let response = await fetch("http://localhost:3000/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -76,6 +110,7 @@ export default function LoginForm(props) {
         password: "",
       });
     }
+    console.log("submitted to server");
   }
 
   function signupLink() {
@@ -99,6 +134,10 @@ export default function LoginForm(props) {
         <h2>Sosh Login</h2>
         <br></br>
         <TextField
+          error={validationMessage.username ? true : false}
+          helperText={
+            validationMessage.username ? validationMessage.username : null
+          }
           variant="outlined"
           type="text"
           name="username"
@@ -108,6 +147,10 @@ export default function LoginForm(props) {
           style={inputStyle}
         />
         <TextField
+          error={validationMessage.password ? true : false}
+          helperText={
+            validationMessage.password ? validationMessage.password : null
+          }
           variant="outlined"
           type="password"
           name="password"

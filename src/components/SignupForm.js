@@ -22,10 +22,12 @@ export default function SignupForm(props) {
 
   const inputStyle = {
     margin: "5px",
+    width: "15rem",
   };
 
   const alertStyle = {
     margin: "10px 0px 5px 0px",
+    borderRadius: "5px",
   };
 
   const [signupInfo, setSignupInfo] = React.useState({
@@ -41,9 +43,49 @@ export default function SignupForm(props) {
     }));
   }
 
+  const [validationMessage, setValidationMessage] = React.useState({
+    username: null,
+    password: null,
+  });
+
   // submits username and password info from signup form component and
   async function signupSubmitHandler(event) {
     event.preventDefault();
+    if (
+      signupInfo.username.length < 3 ||
+      signupInfo.username.length > 13 ||
+      signupInfo.password.length < 3 ||
+      signupInfo.password.length > 20
+    ) {
+      if (signupInfo.username.length < 3 || signupInfo.username.length > 13) {
+        setValidationMessage({
+          username: "Username must be between 3 and 13 characters.",
+        });
+      } else {
+        setValidationMessage((prev) => ({
+          username: null,
+        }));
+      }
+      if (signupInfo.password.length < 3 || signupInfo.password.length > 20) {
+        setValidationMessage((prev) => ({
+          username: prev.username,
+          password: "Password must be between 3 and 20 characters.",
+        }));
+      } else {
+        setValidationMessage((prev) => ({
+          username: prev.username,
+          password: null,
+        }));
+      }
+      console.log(validationMessage);
+      return;
+    }
+
+    setValidationMessage({
+      username: null,
+      password: null,
+    });
+
     let response = await fetch("http://localhost:3000/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -63,6 +105,7 @@ export default function SignupForm(props) {
         password: "",
       });
     }
+    console.log("submitted to server");
   }
 
   function loginLink() {
@@ -86,6 +129,10 @@ export default function SignupForm(props) {
         <h2>Sosh Signup</h2>
         <br></br>
         <TextField
+          error={validationMessage.username ? true : false}
+          helperText={
+            validationMessage.username ? validationMessage.username : null
+          }
           variant="outlined"
           type="text"
           name="username"
@@ -95,6 +142,10 @@ export default function SignupForm(props) {
           style={inputStyle}
         />
         <TextField
+          error={validationMessage.password ? true : false}
+          helperText={
+            validationMessage.password ? validationMessage.password : null
+          }
           variant="outlined"
           type="password"
           name="password"

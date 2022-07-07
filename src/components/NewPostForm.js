@@ -30,6 +30,12 @@ export default function NewPostForm(props) {
   // submits content and author from newPostContent and creates a new post in database
   async function newPostSubmitHandler(event) {
     event.preventDefault();
+    if (newPostContent.content.length < 1) {
+      setValidationMessage("Post content must not be empty.");
+      return;
+    }
+
+    setValidationMessage(null);
     let response = await fetch(
       `http://localhost:3000/users/${userInfo.username}`,
       {
@@ -47,6 +53,8 @@ export default function NewPostForm(props) {
     }
   }
 
+  const [validationMessage, setValidationMessage] = React.useState(null);
+
   return (
     <form
       className="newPostForm"
@@ -55,6 +63,8 @@ export default function NewPostForm(props) {
       method="POST"
     >
       <TextField
+        error={validationMessage ? true : false}
+        helperText={validationMessage ? validationMessage : null}
         className="newPostInput"
         fullWidth
         multiline

@@ -29,6 +29,10 @@ const NewCommentInput = React.forwardRef((props, ref) => {
 
   async function commentSubmitHandler(event) {
     event.preventDefault();
+    if (commentState.content.length < 1) {
+      setValidationMessage("Comment cannot be empty.");
+      return;
+    }
     let response = await fetch(`http://localhost:3000/users${props.post.url}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -43,10 +47,14 @@ const NewCommentInput = React.forwardRef((props, ref) => {
     ref.current.childNodes[0].childNodes[0].focus();
   });
 
+  const [validationMessage, setValidationMessage] = React.useState(null);
+
   return (
     <div>
       <form className="commentInput" onSubmit={commentSubmitHandler}>
         <TextField
+          error={validationMessage ? true : false}
+          helperText={validationMessage ? validationMessage : null}
           ref={ref}
           multiline
           fullWidth
