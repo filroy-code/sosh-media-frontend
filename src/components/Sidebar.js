@@ -27,6 +27,8 @@ export default function Sidebar(props) {
     border: "1px solid black",
   };
 
+  const [page, setPage] = React.useState(1);
+
   return (
     <motion.nav
       initial={{ x: "100vw" }}
@@ -34,24 +36,6 @@ export default function Sidebar(props) {
       exit={{ x: "100vw", transition: { duration: 0.4 } }}
       className="sideBar"
     >
-      <Button
-        onClick={async () => {
-          let response = await fetch("http://localhost:3000/homefeed", {
-            method: "GET",
-            mode: "cors",
-            headers: {
-              Authorization: userInfo.authToken,
-              Origin: "localhost:8080",
-            },
-          });
-          if (response.status === 200) {
-            let userData = await response.json();
-            console.log(userData);
-          }
-        }}
-      >
-        CLICK
-      </Button>
       <Button
         className={location.pathname === "/" ? "activeTab" : null}
         style={buttonStyle}

@@ -24,10 +24,12 @@ import getLoggedinUserData from "../services/getLoggedinUserData";
 import { AnimatePresence, motion } from "framer-motion";
 import { Flipped } from "react-flip-toolkit";
 import PostEditTextField from "./PostEditTextField";
+import { useNavigate } from "react-router-dom";
 
-export default function Post(props) {
+const Post = React.forwardRef((props, ref) => {
   const userInfo = React.useContext(UserContext);
   const inputRef = React.useRef();
+  const navigate = useNavigate();
 
   const buttonStyle = {
     margin: "0px 10px 0px 5px",
@@ -67,6 +69,7 @@ export default function Post(props) {
   const avatarStyle = {
     margin: "0px 10px 0px 10px",
     border: "1px solid black",
+    cursor: "pointer",
   };
 
   async function starClickHandler(event) {
@@ -82,7 +85,7 @@ export default function Post(props) {
     });
     let json = await response.json();
     getLoggedinUserData(userInfo.authToken);
-    props.update();
+    props.update(props.post);
   }
 
   function commentClickHandler() {
@@ -124,7 +127,7 @@ export default function Post(props) {
       },
     });
     if (response.status === 200) {
-      props.update();
+      props.delete(props.post);
     }
     setDeleteStatus("inProgress");
   }
@@ -144,10 +147,9 @@ export default function Post(props) {
       },
       body: JSON.stringify({ editedContent: postEditState }),
     });
-    console.log(response);
     if (response.status === 200) {
       setPostEditState("");
-      props.update();
+      props.update(props.post);
     } else {
       console.log("Edit submit failed.");
     }
@@ -157,6 +159,7 @@ export default function Post(props) {
     <Flipped flipId={`${props.post._id}`}>
       <div
         className={open ? "post postOptionSelect" : "post"}
+        ref={ref ? ref : null}
         style={
           deleteStatus === "inProgress" ? { filter: "brightness(50%)" } : null
         }
@@ -223,6 +226,9 @@ export default function Post(props) {
               <div className="postHeader">
                 <div className="postAuthor">
                   <Avatar
+                    onClick={() =>
+                      navigate(`/users/${props.post.author.username}`)
+                    }
                     {...stringAvatar(`${props.post.author.username}`)}
                     alt={`${props.post.author.username}'s Avatar`}
                     src={props.post.author.avatar}
@@ -231,7 +237,15 @@ export default function Post(props) {
                   >
                     {props.post.author.username[0].toUpperCase()}
                   </Avatar>
-                  <b>{props.post.author.username}</b> posted:
+                  <b
+                    style={{ cursor: "pointer" }}
+                    onClick={() =>
+                      navigate(`/users/${props.post.author.username}`)
+                    }
+                  >
+                    {props.post.author.username}
+                  </b>{" "}
+                  posted:
                 </div>
                 {props.post.author._id === userInfo.userID && (
                   <div className="postAuthor">
@@ -333,7 +347,7 @@ export default function Post(props) {
               {commentsToggle ? (
                 <NewCommentInput
                   ref={inputRef}
-                  targetPostURL={props.post.url}
+                  post={props.post}
                   setCommentsToggle={setCommentsToggle}
                   update={props.update}
                 ></NewCommentInput>
@@ -344,4 +358,6 @@ export default function Post(props) {
       </div>
     </Flipped>
   );
-}
+});
+
+export default Post;

@@ -10,6 +10,7 @@ import getLoggedinUserHomeFeed from "../services/getLoggedinUserHomeFeed";
 import { UserContext } from "./UserContext";
 import ExtendedUserCard from "./ExtendedUserCard";
 import { Flipped, Flipper } from "react-flip-toolkit";
+import getPostData from "../services/getPostData";
 
 export default function Feed(props) {
   const { user } = useParams();
@@ -19,17 +20,94 @@ export default function Feed(props) {
 
   const [userData, updateUserData] = React.useState([]);
   const [postFeed, updatePostFeed] = React.useState([]);
-  const [dataLoaded, setDataLoaded] = React.useState(false);
+  const [dataLoaded, setDataLoaded] = React.useState(0);
+
+  // data pagination
+  const [page, setPage] = React.useState(1);
+
+  const observer = React.useRef();
+  const intersectionTrigger = React.useCallback(
+    (node) => {
+      if (!dataLoaded) {
+        return;
+      }
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          setPage((prev) => prev + 1);
+          retrieveAppropriateUserData();
+        }
+      });
+
+      if (node) {
+        observer.current.observe(node);
+      }
+    },
+    [dataLoaded, page]
+  );
 
   async function retrieveUser() {
-    let userDataResult = await getOtherUserData(user);
-    updateUserData(userDataResult[0]);
+    let userDataResult = await getOtherUserData(user, page);
+    updateUserData((prev) => {
+      let posts = [...prev, ...userDataResult.docs];
+      let filteredPosts = [];
+      posts.forEach((post) => {
+        if (filteredPosts.some((element) => element._id === post._id)) {
+          return;
+        } else {
+          filteredPosts.push(post);
+        }
+      });
+      return filteredPosts;
+    });
   }
   async function retrieveUserHome() {
     let loggedinUserHomeFeed = await getLoggedinUserHomeFeed(
-      userInfo.authToken
+      userInfo.authToken,
+      page
     );
-    updateUserData(loggedinUserHomeFeed);
+    updateUserData((prev) => {
+      let posts = [...prev, ...loggedinUserHomeFeed.docs];
+      let filteredPosts = [];
+      posts.forEach((post) => {
+        if (filteredPosts.some((element) => element._id === post._id)) {
+          return;
+        } else {
+          filteredPosts.push(post);
+        }
+      });
+      return filteredPosts;
+    });
+  }
+
+  async function updateIndividualPost(postToUpdate) {
+    let loadedPosts = userData;
+    let changedPost = await getPostData(postToUpdate._id);
+    let removalIndex;
+    loadedPosts.forEach(async (post, index) => {
+      if (post._id === postToUpdate._id) {
+        removalIndex = index;
+      }
+    });
+    loadedPosts.splice(removalIndex, 1, changedPost);
+    let newArray = [...loadedPosts];
+    updateUserData(newArray);
+  }
+
+  async function deleteIndividualPost(postToUpdate) {
+    let loadedPosts = userData;
+    let removalIndex;
+    loadedPosts.forEach(async (post, index) => {
+      if (post._id === postToUpdate._id) {
+        removalIndex = index;
+      }
+    });
+    loadedPosts.splice(removalIndex, 1);
+    let newArray = [...loadedPosts];
+    updateUserData(newArray);
   }
 
   async function retrieveAppropriateUserData() {
@@ -42,16 +120,28 @@ export default function Feed(props) {
   }
 
   function generatePosts(userData) {
-    console.log(userData.posts);
-    const posts = userData.posts;
-    let postsDisplay = posts.map((post) => {
-      return (
-        <Post
-          post={post}
-          key={post._id}
-          update={retrieveAppropriateUserData}
-        ></Post>
-      );
+    const posts = user ? Array.from(userData) : Array.from(userData);
+    let postsDisplay = posts.map((post, index) => {
+      if (index === posts.length - 5) {
+        return (
+          <Post
+            ref={intersectionTrigger}
+            post={post}
+            key={post._id}
+            update={updateIndividualPost}
+            delete={deleteIndividualPost}
+          ></Post>
+        );
+      } else {
+        return (
+          <Post
+            post={post}
+            key={post._id}
+            update={updateIndividualPost}
+            delete={deleteIndividualPost}
+          ></Post>
+        );
+      }
     });
     updatePostFeed(postsDisplay);
   }
@@ -60,7 +150,7 @@ export default function Feed(props) {
   React.useEffect(() => {
     async function retrieveAndRender() {
       await retrieveAppropriateUserData();
-      setDataLoaded(true);
+      setDataLoaded((prev) => prev + 1);
     }
     retrieveAndRender();
   }, [user]);
@@ -68,6 +158,7 @@ export default function Feed(props) {
   React.useEffect(() => {
     if (initialRenderCompleted) {
       generatePosts(userData);
+      console.log(userData);
     } else {
       setInitialRenderCompleted(true);
     }
@@ -82,7 +173,7 @@ export default function Feed(props) {
     >
       {user && dataLoaded ? (
         <ExtendedUserCard
-          user={userData}
+          user={userData[0].author}
           retrieveUser={retrieveUser}
         ></ExtendedUserCard>
       ) : null}

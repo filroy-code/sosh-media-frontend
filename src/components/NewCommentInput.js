@@ -29,17 +29,14 @@ const NewCommentInput = React.forwardRef((props, ref) => {
 
   async function commentSubmitHandler(event) {
     event.preventDefault();
-    let response = await fetch(
-      `http://localhost:3000/users${props.targetPostURL}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(commentState),
-      }
-    );
+    let response = await fetch(`http://localhost:3000/users${props.post.url}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(commentState),
+    });
     getLoggedinUserData(userInfo.authToken);
     props.setCommentsToggle((prev) => !prev);
-    props.update();
+    props.update(props.post);
   }
 
   React.useEffect(() => {

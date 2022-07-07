@@ -76,7 +76,7 @@ function ExtendedUserCard(props) {
   }, [settingsButtonCounter]);
 
   React.useEffect(() => {
-    pageRendered ? navigate(-3, { replace: true }) : setPageRendered(true);
+    pageRendered ? navigate(-2, { replace: true }) : setPageRendered(true);
   }, [backButtonCounter]);
 
   return (
