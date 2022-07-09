@@ -19,6 +19,7 @@ export default function Feed(props) {
     React.useState(false);
 
   const [userData, updateUserData] = React.useState([]);
+  const [userSocialData, setUserSocialData] = React.useState({});
   const [postFeed, updatePostFeed] = React.useState([]);
   const [dataLoaded, setDataLoaded] = React.useState(0);
 
@@ -52,7 +53,7 @@ export default function Feed(props) {
   async function retrieveUser() {
     let userDataResult = await getOtherUserData(user, page);
     updateUserData((prev) => {
-      let posts = [...prev, ...userDataResult.docs];
+      let posts = [...prev, ...userDataResult.posts.docs];
       let filteredPosts = [];
       posts.forEach((post) => {
         if (filteredPosts.some((element) => element._id === post._id)) {
@@ -63,6 +64,7 @@ export default function Feed(props) {
       });
       return filteredPosts;
     });
+    setUserSocialData(userDataResult.user[0]);
   }
   async function retrieveUserHome() {
     let loggedinUserHomeFeed = await getLoggedinUserHomeFeed(
@@ -126,7 +128,7 @@ export default function Feed(props) {
   function generatePosts(userData) {
     const posts = user ? Array.from(userData) : Array.from(userData);
     let postsDisplay = posts.map((post, index) => {
-      if (index === posts.length - 5) {
+      if (index === posts.length - 1) {
         return (
           <Post
             ref={intersectionTrigger}
@@ -176,7 +178,7 @@ export default function Feed(props) {
     >
       {user && dataLoaded ? (
         <ExtendedUserCard
-          user={userData[0].author}
+          user={userSocialData}
           retrieveUser={retrieveUser}
         ></ExtendedUserCard>
       ) : null}
