@@ -15,7 +15,7 @@ export default function PageHeader(props) {
       exit={{ y: "-100vh", transition: { duration: 0.4 } }}
       className="pageHeader"
     >
-      <h1 className="soshTitle" onClick={() => navigate("/")}>
+      <h1 className="soshTitle" id="soshTitle" onClick={() => navigate("/")}>
         Sosh
       </h1>
     </motion.div>

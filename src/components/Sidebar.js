@@ -40,7 +40,11 @@ export default function Sidebar(props) {
         className={location.pathname === "/" ? "activeTab" : null}
         style={buttonStyle}
         variant="outlined"
-        onClick={() => navigate("/")}
+        onClick={() =>
+          location.pathname === "/"
+            ? window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+            : navigate("/")
+        }
       >
         <HomeIcon fontSize="large">
           <NavLink to="/">Home</NavLink>
