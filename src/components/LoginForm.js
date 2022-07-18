@@ -1,9 +1,8 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import getLoggedinUserData from "../services/getLoggedinUserData";
 

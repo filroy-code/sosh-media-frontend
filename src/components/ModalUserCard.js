@@ -1,11 +1,8 @@
 import React from "react";
 import Avatar from "@mui/material/Avatar";
 import { stringAvatar } from "../services/AvatarColor";
-import { useNavigate } from "react-router-dom";
 
 export default function ModalUserCard(props) {
-  const navigate = useNavigate();
-
   const avatarStyle = {
     margin: "0px 10px 0px 10px",
     border: "1px solid black",

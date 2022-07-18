@@ -1,18 +1,12 @@
 import React from "react";
-import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import { stringAvatar, stringToColor } from "../services/AvatarColor";
-import { motion } from "framer-motion";
-import getOtherUserData from "../services/getOtherUserData";
-import getLoggedinUserData from "../services/getLoggedinUserData";
-import { Backdrop } from "@mui/material";
 import Modal from "./Modal";
 import ModalUserList from "./ModalUserList";
 

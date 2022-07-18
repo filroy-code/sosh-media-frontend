@@ -4,12 +4,10 @@ import NewPostForm from "./NewPostForm";
 import getOtherUserData from "../services/getOtherUserData";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Button } from "@mui/material";
-import getLoggedinUserData from "../services/getLoggedinUserData";
 import getLoggedinUserHomeFeed from "../services/getLoggedinUserHomeFeed";
 import { UserContext } from "./UserContext";
 import ExtendedUserCard from "./ExtendedUserCard";
-import { Flipped, Flipper } from "react-flip-toolkit";
+import { Flipper } from "react-flip-toolkit";
 import getPostData from "../services/getPostData";
 
 export default function Feed(props) {

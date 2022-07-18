@@ -1,7 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import IconButton from "@mui/material/IconButton";
-import TextField from "@mui/material/TextField";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
@@ -21,7 +19,7 @@ import CommentList from "./CommentList";
 import NewCommentInput from "./NewCommentInput";
 import { stringAvatar } from "../services/AvatarColor";
 import getLoggedinUserData from "../services/getLoggedinUserData";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Flipped } from "react-flip-toolkit";
 import PostEditTextField from "./PostEditTextField";
 import { useNavigate } from "react-router-dom";

@@ -1,9 +1,7 @@
 import React from "react";
-import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Comment(props) {
-  const userInfo = React.useContext(UserContext);
   const navigate = useNavigate();
   const [mouseOver, setMouseOver] = React.useState(false);
 

@@ -1,10 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
-import StarIcon from "@mui/icons-material/Star";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import Button from "@mui/material/Button";
 import { UserContext } from "./UserContext";
 import getLoggedinUserData from "../services/getLoggedinUserData";

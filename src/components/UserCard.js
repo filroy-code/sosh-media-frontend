@@ -1,13 +1,9 @@
 import React from "react";
-import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import { stringAvatar, stringToColor } from "../services/AvatarColor";
-import { motion } from "framer-motion";
-import getOtherUserData from "../services/getOtherUserData";
-import getLoggedinUserData from "../services/getLoggedinUserData";
 
 function UserCard(props) {
   const userInfo = React.useContext(UserContext);

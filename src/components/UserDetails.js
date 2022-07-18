@@ -1,9 +1,7 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import AvatarEditor from "react-avatar-editor";
 import Slider from "@mui/material/Slider";
@@ -11,7 +9,6 @@ import DataURLtoFile from "../services/DataURLToFile";
 import { stringAvatar, stringToColor } from "../services/AvatarColor";
 import { motion } from "framer-motion";
 import getLoggedinUserData from "../services/getLoggedinUserData";
-import ExtendedUserCard from "./ExtendedUserCard";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function UserDetails(props) {
