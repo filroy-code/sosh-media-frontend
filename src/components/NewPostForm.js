@@ -40,7 +40,10 @@ export default function NewPostForm(props) {
       `http://localhost:3000/users/${userInfo.username}`,
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: userInfo.authToken,
+        },
         body: JSON.stringify(newPostContent),
       }
     );
