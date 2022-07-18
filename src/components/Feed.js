@@ -23,6 +23,7 @@ export default function Feed(props) {
 
   // data pagination
   const [page, setPage] = React.useState(1);
+  const [lastPage, setLastPage] = React.useState();
 
   const observer = React.useRef();
   const intersectionTrigger = React.useCallback(
@@ -35,7 +36,7 @@ export default function Feed(props) {
       }
 
       observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
+        if (entries[0].isIntersecting && page <= lastPage) {
           setPage((prev) => prev + 1);
           retrieveAppropriateUserData();
         }
@@ -50,6 +51,7 @@ export default function Feed(props) {
 
   async function retrieveUser() {
     let userDataResult = await getOtherUserData(user, page);
+    setLastPage(userDataResult.posts.totalPages);
     updateUserData((prev) => {
       let posts = [...prev, ...userDataResult.posts.docs];
       let filteredPosts = [];
@@ -69,6 +71,7 @@ export default function Feed(props) {
       userInfo.authToken,
       page
     );
+    setLastPage(loggedinUserHomeFeed.totalPages);
     updateUserData((prev) => {
       let posts = [...prev, ...loggedinUserHomeFeed.docs];
       let filteredPosts = [];
