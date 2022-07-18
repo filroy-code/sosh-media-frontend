@@ -35,7 +35,10 @@ const NewCommentInput = React.forwardRef((props, ref) => {
     }
     let response = await fetch(`http://localhost:3000/users${props.post.url}`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: userInfo.authToken,
+      },
       body: JSON.stringify(commentState),
     });
     getLoggedinUserData(userInfo.authToken);
