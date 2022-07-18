@@ -45,13 +45,13 @@ const Post = React.forwardRef((props, ref) => {
     borderRadius: "5px",
   };
 
-  const filledPopperButtonStyle = {
-    margin: "5px 0px",
-    backgroundColor: "rgb(0, 109, 119)",
-    color: "white",
-    border: "1px solid rgb(0, 109, 119)",
-    borderRadius: "5px",
-  };
+  // const filledPopperButtonStyle = {
+  //   margin: "5px 0px",
+  //   backgroundColor: "rgb(0, 109, 119)",
+  //   color: "white",
+  //   border: "1px solid rgb(0, 109, 119)",
+  //   borderRadius: "5px",
+  // };
 
   const filledButtonStyle = {
     margin: "0px 10px 0px 5px",
@@ -62,7 +62,6 @@ const Post = React.forwardRef((props, ref) => {
   };
 
   const [commentsToggle, setCommentsToggle] = React.useState(false);
-  const [starsToggle, setStarsToggle] = React.useState(false);
 
   const avatarStyle = {
     margin: "0px 10px 0px 10px",
@@ -72,17 +71,18 @@ const Post = React.forwardRef((props, ref) => {
 
   async function starClickHandler(event) {
     event.preventDefault();
-    setStarsToggle((prev) => !prev);
     let response = await fetch(`http://localhost:3000/users${props.post.url}`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: userInfo.authToken,
+      },
       body: JSON.stringify({
         userStar: userInfo.userID,
         content: null,
       }),
     });
-    let json = await response.json();
-    getLoggedinUserData(userInfo.authToken);
+    await getLoggedinUserData(userInfo.authToken);
     props.update(props.post);
   }
 
