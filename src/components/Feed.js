@@ -9,6 +9,8 @@ import { UserContext } from "./UserContext";
 import ExtendedUserCard from "./ExtendedUserCard";
 import { Flipper } from "react-flip-toolkit";
 import getPostData from "../services/getPostData";
+import NoPostsFound from "./NoPostsFound";
+import { Button } from "@mui/material";
 
 export default function Feed(props) {
   const { user } = useParams();
@@ -187,9 +189,13 @@ export default function Feed(props) {
       {user === userInfo.username && (
         <NewPostForm update={addNewPostToFeed}></NewPostForm>
       )}
-      <Flipper className="flipperClass" flipKey={postFeed}>
-        {postFeed}
-      </Flipper>
+      {postFeed.length > 0 ? (
+        <Flipper className="flipperClass" flipKey={postFeed}>
+          {postFeed}
+        </Flipper>
+      ) : (
+        <NoPostsFound></NoPostsFound>
+      )}
     </motion.div>
   );
 }

@@ -72,6 +72,19 @@ html {
   overflow: hidden;
 }
 
+.noPostsFound {
+  border: 1px solid black;
+  margin: 5px 5px 10px 5px;
+  padding: 20px;
+  width: 96%;
+  border-radius: 5px;
+  background-color: rgb(237, 246, 249);
+  box-shadow: 8px 6px 0px -1px rgba(0,0,0,0.81);
+  align-self: center;
+  position: relative;
+  overflow: hidden;
+}
+
 .postOptionSelect {
   filter: brightness(40%)
 }
