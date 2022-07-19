@@ -82,7 +82,7 @@ export default function LoginForm(props) {
       password: null,
     });
 
-    let response = await fetch("http://localhost:3000/login", {
+    let response = await fetch("https://sosh-deployment.herokuapp.com/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(loginInfo),

@@ -20,7 +20,7 @@ export default function ExploreOtherUsers(props) {
   }
 
   async function findUsers() {
-    let response = await fetch("http://localhost:3000/users", {
+    let response = await fetch("https://sosh-deployment.herokuapp.com/users", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       //   body: JSON.stringify(loginInfo),
@@ -47,7 +47,7 @@ export default function ExploreOtherUsers(props) {
   }
 
   async function searchUsers(searchQuery) {
-    let response = await fetch("http://localhost:3000/search", {
+    let response = await fetch("https://sosh-deployment.herokuapp.com/search", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ searchQuery: searchQuery }),

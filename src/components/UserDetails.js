@@ -80,7 +80,7 @@ export default function UserDetails(props) {
       )
     );
     let response = await fetch(
-      `http://localhost:3000/users/${userInfo.userID}/details`,
+      `https://sosh-deployment.herokuapp.com/users/${userInfo.userID}/details`,
       {
         method: "PUT",
         body: image,
@@ -98,7 +98,7 @@ export default function UserDetails(props) {
 
   async function removeAvatar() {
     let response = await fetch(
-      `http://localhost:3000/users/${userInfo.userID}/details`,
+      `https://sosh-deployment.herokuapp.com/users/${userInfo.userID}/details`,
       {
         method: "PUT",
         body: JSON.stringify({ noImage: true }),

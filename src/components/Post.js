@@ -71,17 +71,20 @@ const Post = React.forwardRef((props, ref) => {
 
   async function starClickHandler(event) {
     event.preventDefault();
-    let response = await fetch(`http://localhost:3000/users${props.post.url}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: userInfo.authToken,
-      },
-      body: JSON.stringify({
-        userStar: userInfo.userID,
-        content: null,
-      }),
-    });
+    let response = await fetch(
+      `https://sosh-deployment.herokuapp.com/users${props.post.url}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: userInfo.authToken,
+        },
+        body: JSON.stringify({
+          userStar: userInfo.userID,
+          content: null,
+        }),
+      }
+    );
     await getLoggedinUserData(userInfo.authToken);
     props.update(props.post);
   }
@@ -117,13 +120,16 @@ const Post = React.forwardRef((props, ref) => {
 
   async function deleteClickHandler(event) {
     event.stopPropagation();
-    let response = await fetch(`http://localhost:3000/users${props.post.url}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: userInfo.authToken,
-      },
-    });
+    let response = await fetch(
+      `https://sosh-deployment.herokuapp.com/users${props.post.url}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: userInfo.authToken,
+        },
+      }
+    );
     if (response.status === 200) {
       props.delete(props.post);
     }
@@ -137,14 +143,17 @@ const Post = React.forwardRef((props, ref) => {
   }
 
   async function editConfirm() {
-    let response = await fetch(`http://localhost:3000/users${props.post.url}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: userInfo.authToken,
-      },
-      body: JSON.stringify({ editedContent: postEditState }),
-    });
+    let response = await fetch(
+      `https://sosh-deployment.herokuapp.com/users${props.post.url}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: userInfo.authToken,
+        },
+        body: JSON.stringify({ editedContent: postEditState }),
+      }
+    );
     if (response.status === 200) {
       setPostEditState("");
       props.update(props.post);

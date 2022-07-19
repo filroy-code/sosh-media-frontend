@@ -28,14 +28,17 @@ const NewCommentInput = React.forwardRef((props, ref) => {
       setValidationMessage("Comment cannot be empty.");
       return;
     }
-    let response = await fetch(`http://localhost:3000/users${props.post.url}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: userInfo.authToken,
-      },
-      body: JSON.stringify(commentState),
-    });
+    let response = await fetch(
+      `https://sosh-deployment.herokuapp.com/users${props.post.url}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: userInfo.authToken,
+        },
+        body: JSON.stringify(commentState),
+      }
+    );
     getLoggedinUserData(userInfo.authToken);
     props.setCommentsToggle((prev) => !prev);
     props.update(props.post);

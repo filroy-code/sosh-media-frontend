@@ -1,6 +1,6 @@
 export default async function getOtherUserData(username, page) {
   let response = await fetch(
-    `http://localhost:3000/users/${username}/${page}`,
+    `https://sosh-deployment.herokuapp.com/users/${username}/${page}`,
     {
       method: "GET",
       headers: { "Content-Type": "application/json" },

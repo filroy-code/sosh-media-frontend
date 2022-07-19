@@ -37,7 +37,7 @@ export default function NewPostForm(props) {
 
     setValidationMessage(null);
     let response = await fetch(
-      `http://localhost:3000/users/${userInfo.username}`,
+      `https://sosh-deployment.herokuapp.com/users/${userInfo.username}`,
       {
         method: "POST",
         headers: {

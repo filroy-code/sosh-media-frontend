@@ -85,7 +85,7 @@ export default function SignupForm(props) {
       password: null,
     });
 
-    let response = await fetch("http://localhost:3000/signup", {
+    let response = await fetch("https://sosh-deployment.herokuapp.com/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(signupInfo),

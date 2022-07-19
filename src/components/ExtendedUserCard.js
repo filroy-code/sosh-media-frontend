@@ -44,7 +44,7 @@ function ExtendedUserCard(props) {
       follower: userInfo.userID,
     };
     let response = await fetch(
-      `http://localhost:3000/users/${userInfo.userID}`,
+      `https://sosh-deployment.herokuapp.com/users/${userInfo.userID}`,
       {
         method: "PUT",
         body: JSON.stringify(data),
