@@ -51,7 +51,6 @@ export default function NewPostForm(props) {
       setNewPostContent({ content: "", author: userInfo.userID });
       getLoggedinUserData(userInfo.authToken);
       let responseJSON = await response.json();
-      console.log(responseJSON);
       props.update(responseJSON);
     } else {
       console.log("There was an error creating your post.");

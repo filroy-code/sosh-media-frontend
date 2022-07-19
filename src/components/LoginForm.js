@@ -95,7 +95,6 @@ export default function LoginForm(props) {
       });
       props.setStatusMessage(null);
       let userData = await getLoggedinUserData(responseJSON.token);
-      console.log(userData);
       props.setLoggedInUser({
         userID: userData._doc._id,
         username: userData._doc.username,
