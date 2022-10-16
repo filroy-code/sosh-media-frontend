@@ -5,6 +5,7 @@ import Alert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import getLoggedinUserData from "../services/getLoggedinUserData";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function LoginForm(props) {
   let navigate = useNavigate();
@@ -32,6 +33,11 @@ export default function LoginForm(props) {
     borderRadius: "5px",
   };
 
+  const spinnerStyle = {
+    margin: "16px",
+    color: "rgb(0, 109, 119)",
+  };
+
   const [validationMessage, setValidationMessage] = React.useState({
     username: false,
     password: false,
@@ -39,8 +45,8 @@ export default function LoginForm(props) {
 
   // login form state
   const [loginInfo, setLoginInfo] = React.useState({
-    username: "",
-    password: "",
+    username: "human",
+    password: "human",
   });
 
   // updates loginInfo state when user makes inputs to LoginForm component
@@ -77,6 +83,7 @@ export default function LoginForm(props) {
       return;
     }
 
+    setLoginProcessing(true);
     setValidationMessage({
       username: null,
       password: null,
@@ -109,12 +116,15 @@ export default function LoginForm(props) {
         password: "",
       });
     }
+    setLoginProcessing(false);
   }
 
   function signupLink() {
     props.setStatusMessage(null);
     navigate("/signup");
   }
+
+  const [loginProcessing, setLoginProcessing] = React.useState(false);
 
   return (
     <motion.div
@@ -170,18 +180,26 @@ export default function LoginForm(props) {
             {props.statusMessage}
           </Alert>
         ) : null}
-        <Button
-          variant="contained"
-          type="submit"
-          style={filledButtonStyle}
-          onClick={loginSubmitHandler}
-        >
-          Log-In
-        </Button>
-        <p className="loginSignupAdditionalText">OR</p>
-        <Button style={buttonStyle} variant="outlined" onClick={signupLink}>
-          Sign Up
-        </Button>
+        {loginProcessing ? (
+          <div>
+            <CircularProgress style={spinnerStyle}></CircularProgress>
+          </div>
+        ) : (
+          <>
+            <Button
+              variant="contained"
+              type="submit"
+              style={filledButtonStyle}
+              onClick={loginSubmitHandler}
+            >
+              Log-In
+            </Button>
+            <p className="loginSignupAdditionalText">OR</p>
+            <Button style={buttonStyle} variant="outlined" onClick={signupLink}>
+              Sign Up
+            </Button>
+          </>
+        )}
       </form>
     </motion.div>
   );
